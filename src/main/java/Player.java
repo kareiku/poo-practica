@@ -1,14 +1,12 @@
 public class Player {
     private final String name;
     private double score;
-
-    public Player(String name, double score) {
-        this.name = name;
-        this.score = score >= -999999.0 ? score : 0.0;
-    }
+    private Player match;
 
     public Player(String name) {
-        this(name, 0.0);
+        this.name = name;
+        score = 0.0;
+        match = null;
     }
 
     public String getName() {
@@ -21,6 +19,14 @@ public class Player {
 
     public void setScore(double score) {
         this.score = score >= -999999.0 ? score : 0.0;
+    }
+
+    public Player getMatch() {
+        return match;
+    }
+
+    public void setMatch(Player match) {
+        this.match = match;
     }
 
     public String toString() {
