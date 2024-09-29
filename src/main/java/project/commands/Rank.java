@@ -11,14 +11,22 @@ public class Rank {
     }
 
     private static LinkedList<Player> sorted(LinkedList<Player> players) {
-        LinkedList<Player> temp = new LinkedList<>(players);
-        LinkedList<Player> sorted = new LinkedList<>();
+        LinkedList<Player> aux = new LinkedList<>(players);
 
-        Player aux;
-        while(!temp.isEmpty()){
-            aux = temp.peek();
+        int index = 0;
+        int size = aux.size();
+
+        while (index < size) {
+            if (index == 0 || aux.get(index).getScore() <= aux.get(index - 1).getScore()) {
+                index++;
+            } else {
+                Player temp = aux.get(index);
+                aux.set(index, aux.get(index - 1));
+                aux.set(index - 1, temp);
+                index--;
+            }
         }
 
-        return sorted;
+        return aux;
     }
 }
