@@ -1,4 +1,4 @@
-package proyect;
+package project;
 
 public class Player {
     private final String name;

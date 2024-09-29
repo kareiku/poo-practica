@@ -1,6 +1,6 @@
-package proyect.commands;
+package project.commands;
 
-import proyect.Match;
+import project.Match;
 
 import java.util.LinkedList;
 

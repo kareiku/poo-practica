@@ -1,4 +1,4 @@
-package proyect;
+package project;
 
 public class Match {
     private Player home;

@@ -1,7 +1,7 @@
-package proyect.commands;
+package project.commands;
 
-import proyect.Player;
-import proyect.Match;
+import project.Player;
+import project.Match;
 
 import java.util.LinkedList;
 

@@ -1,6 +1,6 @@
-package proyect.commands;
+package project.commands;
 
-import proyect.Player;
+import project.Player;
 
 import java.util.LinkedList;
 

@@ -1,6 +1,6 @@
-package proyect;
+package project;
 
-import proyect.commands.*;
+import project.commands.*;
 
 import java.util.LinkedList;
 

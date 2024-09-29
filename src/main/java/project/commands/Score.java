@@ -1,6 +1,6 @@
-package proyect.commands;
+package project.commands;
 
-import proyect.Player;
+import project.Player;
 
 public class Score {
     public static void score(Player player, double score) {
