@@ -13,7 +13,7 @@ public class RandomMatchmakeCommand {
         MatchmakeCommand.matchmake(matches, home, guest);
     }
 
-    private static Player randomPlayer(LinkedList<Player> players) {
+    private Player randomPlayer(LinkedList<Player> players) {
         return players.isEmpty() ? null : players.get((int) (Math.random() * players.size()));
     }
 }
