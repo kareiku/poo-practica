@@ -6,6 +6,8 @@ import java.util.LinkedList;
 
 public class ClearMatchmakeCommand {
     public static void clearMatchmake(LinkedList<Match> matches) {
-        matches = new LinkedList<>();
+        assert matches != null;
+
+        matches.clear();
     }
 }

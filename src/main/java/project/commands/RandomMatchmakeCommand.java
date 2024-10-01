@@ -9,9 +9,8 @@ public class RandomMatchmakeCommand {
     public static void randomMatchmake(LinkedList<Player> players, LinkedList<Match> matches) {
         Player home = randomPlayer(players);
         Player guest = randomPlayer(players);
-        if (home != null && guest != null) {
-            MatchmakeCommand.matchmake(matches, home, guest);
-        }
+        assert home != null && guest != null;
+        MatchmakeCommand.matchmake(matches, home, guest);
     }
 
     private static Player randomPlayer(LinkedList<Player> players) {

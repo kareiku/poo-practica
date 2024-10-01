@@ -6,6 +6,8 @@ import java.util.LinkedList;
 
 public class CreateCommand {
     public static void create(LinkedList<Player> players, Player player) {
+        assert player != null;
+
         boolean isListed = false;
         int i = 0;
 

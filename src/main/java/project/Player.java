@@ -8,6 +8,7 @@ public class Player {
 
     public Player(String name) {
         assert name != null;
+
         this.name = name;
         score = DEFAULT_SCORE;
     }
@@ -22,6 +23,7 @@ public class Player {
 
     public void setScore(double score) {
         assert score >= MIN_SCORE;
+
         this.score = score;
     }
 
@@ -31,6 +33,7 @@ public class Player {
 
     public boolean equals(Player player) {
         assert player != null;
+
         return name.equals(player.getName());
     }
 }

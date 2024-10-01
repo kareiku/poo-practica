@@ -3,6 +3,7 @@ package project;
 import project.commands.*;
 
 import java.util.LinkedList;
+import java.util.Scanner;
 
 public class Manager {
     private final LinkedList<Player> players;
@@ -13,43 +14,21 @@ public class Manager {
         matches = new LinkedList<>();
     }
 
-    public void create(Player player) {
-        assert player != null;
-        CreateCommand.create(players, player);
+    public void read() {
+        Scanner sc = new Scanner(System.in);
+
+        String command = sc.next();
+
+        assert command != null;
+
+        this.run(command);
     }
 
-    public void remove(Player player) {
-        assert player != null;
-        RemoveCommand.remove(players, player);
-    }
+    private void run(String command) {
+        assert !command.startsWith("run ");
 
-    public void show() {
-        ShowCommand.show(players);
-    }
+        // todo select command
 
-    public void rank() {
-        RankCommand.rank(players);
-    }
-
-    public void score(Player player, double score) {
-        assert player != null;
-        ScoreCommand.score(player, score);
-    }
-
-    public void showMatchmake() {
-        ShowMatchmakeCommand.showMatchmake(matches);
-    }
-
-    public void clearMatchmake() {
-        ClearMatchmakeCommand.clearMatchmake(matches);
-    }
-
-    public void matchmake(Player home, Player guest) {
-        assert home != null && guest != null;
-        MatchmakeCommand.matchmake(matches, home, guest);
-    }
-
-    public void randomMatchmake() {
-        RandomMatchmakeCommand.randomMatchmake(players, matches);
+        
     }
 }
