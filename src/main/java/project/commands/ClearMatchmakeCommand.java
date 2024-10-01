@@ -4,7 +4,7 @@ import project.Match;
 
 import java.util.LinkedList;
 
-public class ClearMatchmake {
+public class ClearMatchmakeCommand {
     public static void clearMatchmake(LinkedList<Match> matches) {
         matches = new LinkedList<>();
     }

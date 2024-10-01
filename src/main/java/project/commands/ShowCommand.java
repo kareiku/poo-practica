@@ -4,7 +4,7 @@ import project.Player;
 
 import java.util.LinkedList;
 
-public class Show {
+public class ShowCommand {
     public static void show(LinkedList<Player> players) {
         System.out.println("Player\tScore");
         for (Player player : players) {

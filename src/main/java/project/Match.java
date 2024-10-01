@@ -5,6 +5,7 @@ public class Match {
     private Player guest;
 
     public Match(Player home, Player guest) {
+        assert home != null && guest != null;
         this.home = home;
         this.guest = guest;
     }
@@ -14,6 +15,7 @@ public class Match {
     }
 
     public void setHome(Player home) {
+        assert home != null;
         this.home = home;
     }
 
@@ -22,6 +24,7 @@ public class Match {
     }
 
     public void setGuest(Player guest) {
+        assert guest != null;
         this.guest = guest;
     }
 }

@@ -14,38 +14,42 @@ public class Manager {
     }
 
     public void create(Player player) {
-        Create.create(players, player);
+        assert player != null;
+        CreateCommand.create(players, player);
     }
 
     public void remove(Player player) {
-        Remove.remove(players, player);
+        assert player != null;
+        RemoveCommand.remove(players, player);
     }
 
     public void show() {
-        Show.show(players);
+        ShowCommand.show(players);
     }
 
     public void rank() {
-        Rank.rank(players);
+        RankCommand.rank(players);
     }
 
     public void score(Player player, double score) {
-        Score.score(player, score);
+        assert player != null;
+        ScoreCommand.score(player, score);
     }
 
     public void showMatchmake() {
-        ShowMatchmake.showMatchmake(matches);
+        ShowMatchmakeCommand.showMatchmake(matches);
     }
 
     public void clearMatchmake() {
-        ClearMatchmake.clearMatchmake(matches);
+        ClearMatchmakeCommand.clearMatchmake(matches);
     }
 
     public void matchmake(Player home, Player guest) {
-        Matchmake.matchmake(matches, home, guest);
+        assert home != null && guest != null;
+        MatchmakeCommand.matchmake(matches, home, guest);
     }
 
     public void randomMatchmake() {
-        RandomMatchmake.randomMatchmake(players, matches);
+        RandomMatchmakeCommand.randomMatchmake(players, matches);
     }
 }

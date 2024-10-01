@@ -4,7 +4,7 @@ import project.Player;
 
 import java.util.LinkedList;
 
-public class Create {
+public class CreateCommand {
     public static void create(LinkedList<Player> players, Player player) {
         boolean isListed = false;
         int i = 0;

@@ -4,29 +4,31 @@ import project.Player;
 
 import java.util.LinkedList;
 
-public class Rank {
+public class RankCommand {
     public static void rank(LinkedList<Player> players) {
         LinkedList<Player> temp = sorted(players);
-        Show.show(temp);
+        ShowCommand.show(temp);
     }
 
     private static LinkedList<Player> sorted(LinkedList<Player> players) {
         LinkedList<Player> aux = new LinkedList<>(players);
+        sort(aux);
+        return aux;
+    }
 
+    private static void sort(LinkedList<Player> list) {
         int index = 0;
-        int size = aux.size();
+        int size = list.size();
 
         while (index < size) {
-            if (index == 0 || aux.get(index).getScore() <= aux.get(index - 1).getScore()) {
+            if (index == 0 || list.get(index).getScore() <= list.get(index - 1).getScore()) {
                 index++;
             } else {
-                Player temp = aux.get(index);
-                aux.set(index, aux.get(index - 1));
-                aux.set(index - 1, temp);
+                Player temp = list.get(index);
+                list.set(index, list.get(index - 1));
+                list.set(index - 1, temp);
                 index--;
             }
         }
-
-        return aux;
     }
 }

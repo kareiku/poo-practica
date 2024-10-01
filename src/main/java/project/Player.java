@@ -7,6 +7,7 @@ public class Player {
     private static final double MIN_SCORE = -999999.0;
 
     public Player(String name) {
+        assert name != null;
         this.name = name;
         score = DEFAULT_SCORE;
     }
@@ -20,7 +21,8 @@ public class Player {
     }
 
     public void setScore(double score) {
-        this.score = score >= MIN_SCORE ? score : DEFAULT_SCORE;
+        assert score >= MIN_SCORE;
+        this.score = score;
     }
 
     public String toString() {
@@ -28,6 +30,7 @@ public class Player {
     }
 
     public boolean equals(Player player) {
+        assert player != null;
         return name.equals(player.getName());
     }
 }

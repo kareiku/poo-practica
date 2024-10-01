@@ -5,7 +5,7 @@ import project.Match;
 
 import java.util.LinkedList;
 
-public class Matchmake {
+public class MatchmakeCommand {
     public static void matchmake(LinkedList<Match> matches, Player home, Player guest) {
     }
 }

@@ -5,12 +5,12 @@ import project.Match;
 
 import java.util.LinkedList;
 
-public class RandomMatchmake {
+public class RandomMatchmakeCommand {
     public static void randomMatchmake(LinkedList<Player> players, LinkedList<Match> matches) {
         Player home = randomPlayer(players);
         Player guest = randomPlayer(players);
         if (home != null && guest != null) {
-            Matchmake.matchmake(matches, home, guest);
+            MatchmakeCommand.matchmake(matches, home, guest);
         }
     }
 
