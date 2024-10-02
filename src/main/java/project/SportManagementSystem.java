@@ -24,6 +24,8 @@ public class SportManagementSystem {
         manager.input("create Robert");
         manager.input("score Robert 3.8");
 
-        while (!manager.read().equals(EXIT_CMD)) System.out.print("> ");
+        do {
+            System.out.print("> ");
+        } while (!manager.read().equals(EXIT_CMD));
     }
 }
