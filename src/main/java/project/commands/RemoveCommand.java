@@ -5,10 +5,9 @@ import project.Player;
 import java.util.LinkedList;
 
 public class RemoveCommand {
-    // fixme
-    public static void remove(LinkedList<Player> players, Player player) {
-        for (Player element : players) {
-            if (element.getName().equals(player.getName())) {
+    public static void remove(LinkedList<Player> players, String name) {
+        for (Player player : players) {
+            if (player.getName().equals(name)) {
                 players.remove(player);
             }
         }

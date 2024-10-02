@@ -6,11 +6,9 @@ import java.util.LinkedList;
 
 public class ShowMatchmakeCommand {
     public static void showMatchmake(LinkedList<Match> matches) {
+        System.out.println("Current matches:");
         for (Match match : matches) {
-            showMatchmake(match);
+            System.out.println(match);
         }
-    }
-
-    private static void showMatchmake(Match match) {
     }
 }

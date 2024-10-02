@@ -6,6 +6,9 @@ public class SportManagementSystem {
     public static void main(String[] args) {
         Manager manager = new Manager();
 
+        System.out.println("Welcome to the Sport's Management System!");
+        System.out.println("Write a command to start managing your players.");
+
         manager.input("create Luisa");
         manager.input("score Luisa 4.5");
 
@@ -21,6 +24,6 @@ public class SportManagementSystem {
         manager.input("create Robert");
         manager.input("score Robert 3.8");
 
-        while (!manager.read().equals(EXIT_CMD)) ;
+        while (!manager.read().equals(EXIT_CMD)) System.out.print("> ");
     }
 }

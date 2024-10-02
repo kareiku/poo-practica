@@ -28,12 +28,6 @@ public class Player {
     }
 
     public String toString() {
-        return name + "\t" + score;
-    }
-
-    public boolean equals(Player player) {
-        assert player != null;
-
-        return name.equals(player.getName());
+        return String.format("%-25s %-6.1f", name, score);
     }
 }
