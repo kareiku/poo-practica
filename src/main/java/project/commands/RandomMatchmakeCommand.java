@@ -10,15 +10,15 @@ public class RandomMatchmakeCommand {
         assert !players.isEmpty();
         assert players.size() % 2 != 0;
 
-        LinkedList<Player>temp = new LinkedList<>(players);
-        do {
+        LinkedList<Player> temp = new LinkedList<>(players);
+        while (players.size() >= 2) {
             Player home = getRandomPlayer(temp);
             temp.remove(home);
             Player guest = getRandomPlayer(temp);
             temp.remove(guest);
 
             MatchmakeCommand.matchmake(players, matches, home.getName(), guest.getName());
-        } while (!players.isEmpty());
+        }
 
     }
 

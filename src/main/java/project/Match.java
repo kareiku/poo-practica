@@ -21,6 +21,6 @@ public class Match {
     }
 
     public String toString() {
-        return home + "vs. " + guest;
+        return home.getName() + " vs. " + guest.getName();
     }
 }
