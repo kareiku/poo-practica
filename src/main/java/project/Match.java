@@ -12,6 +12,14 @@ public class Match {
         this.guest = guest;
     }
 
+    public Player getHome() {
+        return home;
+    }
+
+    public Player getGuest() {
+        return guest;
+    }
+
     public String toString() {
         return home + "vs. " + guest;
     }

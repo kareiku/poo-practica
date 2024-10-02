@@ -18,6 +18,22 @@ public class MatchmakeCommand {
             }
         }
 
-        matches.add(new Match(homeAux, guestAux));
+        if (!hasMatch(matches, homeAux) && !hasMatch(matches, guestAux)) {
+            matches.add(new Match(homeAux, guestAux));
+        }
+    }
+
+    private static boolean hasMatch(LinkedList<Match> matches, Player player) {
+        boolean ret = false;
+
+        int i = 0;
+        while (!ret && i < matches.size()) {
+            Match match = matches.get(i);
+            if (match.getHome().equals(player) || match.getGuest().equals(player)) {
+                ret = true;
+            }
+            i++;
+        }
+        return ret;
     }
 }
