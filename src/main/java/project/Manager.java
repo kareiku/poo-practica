@@ -14,8 +14,10 @@ public class Manager {
         matches = new LinkedList<>();
     }
 
-    public void read() {
-        input(new Scanner(System.in).nextLine());
+    public String read() {
+        String ret;
+        input(ret = new Scanner(System.in).nextLine());
+        return ret;
     }
 
     public void input(String command) {
@@ -56,8 +58,6 @@ public class Manager {
             case "random_matchmake":
                 RandomMatchmakeCommand.randomMatchmake(players, matches);
                 break;
-            default:
-                System.err.println("Error: command not found.");
         }
     }
 }

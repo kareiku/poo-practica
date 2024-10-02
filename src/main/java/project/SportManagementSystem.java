@@ -1,6 +1,8 @@
 package project;
 
 public class SportManagementSystem {
+    private final static String EXIT_CMD = "exit";
+
     public static void main(String[] args) {
         Manager manager = new Manager();
 
@@ -18,5 +20,7 @@ public class SportManagementSystem {
 
         manager.input("create Robert");
         manager.input("score Robert 3.8");
+
+        while (!manager.read().equals(EXIT_CMD)) ;
     }
 }
