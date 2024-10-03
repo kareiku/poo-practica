@@ -2,7 +2,6 @@ package project;
 
 import project.commands.*;
 
-import java.util.LinkedList;
 import java.util.Scanner;
 
 public class CommandDecoder {

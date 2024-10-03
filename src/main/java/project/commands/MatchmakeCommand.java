@@ -2,8 +2,8 @@ package project.commands;
 
 import project.Player;
 import project.Match;
-
-import java.util.LinkedList;
+import project.LinkedList;
+import project.Iterator;
 
 public class MatchmakeCommand {
     public static void matchmake(LinkedList<Player> players, LinkedList<Match> matches, String home, String guest) {
@@ -24,16 +24,16 @@ public class MatchmakeCommand {
     }
 
     private static boolean hasMatch(LinkedList<Match> matches, Player player) {
-        boolean ret = false;
+        boolean has = false;
 
         int i = 0;
-        while (!ret && i < matches.size()) {
+        while (!has && i < matches.size()) {
             Match match = matches.get(i);
             if (match.getHome().equals(player) || match.getGuest().equals(player)) {
-                ret = true;
+                has = true;
             }
             i++;
         }
-        return ret;
+        return has;
     }
 }

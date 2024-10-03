@@ -2,7 +2,7 @@ package project.commands;
 
 import project.Player;
 
-import java.util.LinkedList;
+import project.LinkedList;
 
 public class CreateCommand {
     public static void create(LinkedList<Player> players, String name) {
@@ -19,7 +19,7 @@ public class CreateCommand {
         }
 
         if (!isListed) {
-            players.offer(new Player(name));
+            players.add(new Player(name));
         }
     }
 }

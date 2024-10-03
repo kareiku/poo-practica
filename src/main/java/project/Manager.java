@@ -1,7 +1,5 @@
 package project;
 
-import java.util.LinkedList;
-
 public class Manager {
     private final LinkedList<Player> players;
     private final LinkedList<Match> matches;

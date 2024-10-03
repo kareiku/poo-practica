@@ -3,7 +3,7 @@ package project.commands;
 import project.Player;
 import project.Match;
 
-import java.util.LinkedList;
+import project.LinkedList;
 
 public class RandomMatchmakeCommand {
     public static void randomMatchmake(LinkedList<Player> players, LinkedList<Match> matches) {

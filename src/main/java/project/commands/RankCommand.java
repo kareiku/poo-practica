@@ -1,8 +1,7 @@
 package project.commands;
 
 import project.Player;
-
-import java.util.LinkedList;
+import project.LinkedList;
 
 public class RankCommand {
     public static void rank(LinkedList<Player> players) {

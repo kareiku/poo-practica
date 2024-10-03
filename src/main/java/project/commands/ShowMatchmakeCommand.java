@@ -2,7 +2,7 @@ package project.commands;
 
 import project.Match;
 
-import java.util.LinkedList;
+import project.LinkedList;
 
 public class ShowMatchmakeCommand {
     public static void showMatchmake(LinkedList<Match> matches) {
