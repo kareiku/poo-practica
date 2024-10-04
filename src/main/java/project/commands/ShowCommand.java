@@ -6,10 +6,11 @@ import project.Iterator;
 
 public class ShowCommand {
     public static void show(LinkedList<Player> players) {
-        System.out.println(String.format("%-25s %s", "Players", "Score"));
+        System.out.printf("%-25s %s\n", "Players", "Score");
+        Iterator<Player> iterator = players.getIterator();
 
-        for (Player player : players) {
-            System.out.println(player);
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
         }
     }
 }

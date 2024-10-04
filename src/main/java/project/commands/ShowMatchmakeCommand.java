@@ -1,14 +1,16 @@
 package project.commands;
 
 import project.Match;
-
 import project.LinkedList;
+import project.Iterator;
 
 public class ShowMatchmakeCommand {
     public static void showMatchmake(LinkedList<Match> matches) {
+        Iterator<Match> iterator = matches.getIterator();
+        
         System.out.println("Current matches:");
-        for (Match match : matches) {
-            System.out.println(match);
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
         }
     }
 }

@@ -9,12 +9,15 @@ public class MatchmakeCommand {
     public static void matchmake(LinkedList<Player> players, LinkedList<Match> matches, String home, String guest) {
         Player homeAux = null;
         Player guestAux = null;
+        Iterator<Player> iterator = players.getIterator();
+        Player temp;
 
-        for (Player player : players) {
-            if (player.getName().equals(home)) {
-                homeAux = player;
-            } else if (player.getName().equals(guest)) {
-                guestAux = player;
+        while (iterator.hasNext()) {
+            temp = iterator.next();
+            if (temp.getName().equals(home)) {
+                homeAux = temp;
+            } else if (temp.getName().equals(guest)) {
+                guestAux = temp;
             }
         }
 
