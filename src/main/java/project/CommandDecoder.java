@@ -6,9 +6,9 @@ import java.util.Scanner;
 
 public class CommandDecoder {
     public static String read(LinkedList<Player> players, LinkedList<Match> matches) {
-        String ret;
-        input(players, matches, ret = new Scanner(System.in).nextLine());
-        return ret;
+        String args;
+        input(players, matches, args = new Scanner(System.in).nextLine());
+        return args;
     }
 
     public static void input(LinkedList<Player> players, LinkedList<Match> matches, String command) {
@@ -26,6 +26,7 @@ public class CommandDecoder {
                 CreateCommand.create(players, args[1]);
                 break;
             case "remove":
+                assert args.length > 1;
                 RemoveCommand.remove(players, args[1]);
                 break;
             case "show":
@@ -35,6 +36,7 @@ public class CommandDecoder {
                 RankCommand.rank(players);
                 break;
             case "score":
+                assert args.length > 1;
                 ScoreCommand.score(players, args[1], Double.parseDouble(args[2].replace(',', '.')));
                 break;
             case "show_matchmake":
@@ -44,6 +46,7 @@ public class CommandDecoder {
                 ClearMatchmakeCommand.clearMatchmake(matches);
                 break;
             case "matchmake":
+                assert args.length > 1;
                 MatchmakeCommand.matchmake(players, matches, args[1], args[2]);
                 break;
             case "random_matchmake":

@@ -7,8 +7,6 @@ public class Player {
     private static final double MIN_SCORE = -999999.0;
 
     public Player(String name) {
-        assert name != null;
-
         this.name = name;
         score = DEFAULT_SCORE;
     }
@@ -29,5 +27,9 @@ public class Player {
 
     public String toString() {
         return String.format("%-25s %-6.1f", name, score);
+    }
+
+    public boolean equals(Player player) {
+        return name.equals(player.getName());
     }
 }

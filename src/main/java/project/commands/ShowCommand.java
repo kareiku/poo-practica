@@ -7,8 +7,8 @@ import project.Iterator;
 public class ShowCommand {
     public static void show(LinkedList<Player> players) {
         System.out.printf("%-25s %s\n", "Players", "Score");
-        Iterator<Player> iterator = players.getIterator();
 
+        Iterator<Player> iterator = players.getIterator();
         while (iterator.hasNext()) {
             System.out.println(iterator.next());
         }

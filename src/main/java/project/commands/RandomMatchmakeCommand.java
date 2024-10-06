@@ -2,16 +2,15 @@ package project.commands;
 
 import project.Player;
 import project.Match;
-
 import project.LinkedList;
 
 public class RandomMatchmakeCommand {
     public static void randomMatchmake(LinkedList<Player> players, LinkedList<Match> matches) {
         assert !players.isEmpty();
-        assert players.size() % 2 != 0;
+        assert players.size() % 2 == 0;
 
         LinkedList<Player> temp = new LinkedList<>(players);
-        while (players.size() >= 2) {
+        while (temp.size() >= 2) {
             Player home = getRandomPlayer(temp);
             temp.remove(home);
             Player guest = getRandomPlayer(temp);

@@ -6,9 +6,9 @@ import project.Iterator;
 
 public class ShowMatchmakeCommand {
     public static void showMatchmake(LinkedList<Match> matches) {
-        Iterator<Match> iterator = matches.getIterator();
-        
         System.out.println("Current matches:");
+
+        Iterator<Match> iterator = matches.getIterator();
         while (iterator.hasNext()) {
             System.out.println(iterator.next());
         }

@@ -6,16 +6,18 @@ import project.Iterator;
 
 public class CreateCommand {
     public static void create(LinkedList<Player> players, String name) {
-        assert name != null;
-
         Iterator<Player> iterator = players.getIterator();
         Player temp;
+        boolean flag = false;
 
-        do {
+        while (iterator.hasNext() && !flag) {
             temp = iterator.next();
-        } while (!name.equals(temp.getName()) && iterator.hasNext());
+            if (temp.getName().equals(name)) {
+                flag = true;
+            }
+        }
 
-        if (!name.equals(temp.getName())) {
+        if (!flag) {
             players.add(new Player(name));
         }
     }

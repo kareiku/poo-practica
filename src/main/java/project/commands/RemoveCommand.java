@@ -8,12 +8,14 @@ public class RemoveCommand {
     public static void remove(LinkedList<Player> players, String name) {
         Iterator<Player> iterator = players.getIterator();
         Player temp;
+        boolean flag = false;
 
-        do {
+        while (iterator.hasNext() && !flag) {
             temp = iterator.next();
             if (temp.getName().equals(name)) {
                 players.remove(temp);
+                flag = true;
             }
-        } while (!temp.getName().equals(name) && iterator.hasNext());
+        }
     }
 }

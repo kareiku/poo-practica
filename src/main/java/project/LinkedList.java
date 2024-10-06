@@ -11,6 +11,18 @@ public class LinkedList<E> {
         size = 0;
     }
 
+    public LinkedList(LinkedList<E> list) {
+        this();
+
+        assert list != null;
+
+        Iterator<E> iterator = list.getIterator();
+
+        while (iterator.hasNext()) {
+            this.add(iterator.next());
+        }
+    }
+
     public boolean isEmpty() {
         return size == 0;
     }
@@ -20,19 +32,7 @@ public class LinkedList<E> {
     }
 
     public boolean contains(E value) {
-        boolean flag = false;
-        Node<E> temp = head;
-
-        int i = 0;
-        while (!flag && i < size) {
-            if (temp.getValue() == value) {
-                flag = true;
-            }
-            temp = temp.getNext();
-            i++;
-        }
-
-        return flag;
+        return this.indexOf(value) != -1;
     }
 
     public void add(E value) {
@@ -95,23 +95,32 @@ public class LinkedList<E> {
     }
 
     public int indexOf(E value) {
-        assert !this.isEmpty();
-
         Node<E> temp = head;
 
         int i = 0;
-        while (temp.getValue() != value && i < size) {
+        while (temp != null && temp.getValue() != value) {
+            temp = temp.getNext();
             i++;
         }
 
-        assert i != size;
-
-        return i;
+        return temp != null ? i : -1;
     }
 
     public void clear() {
         head = tail = null;
         size = 0;
+    }
+
+    public String toString() {
+        String aux = "";
+        Node<E> temp = head;
+
+        while (temp != null) {
+            aux = aux.concat(temp.getValue() + "->");
+            temp = temp.getNext();
+        }
+
+        return aux;
     }
 
     public Iterator<E> getIterator() {

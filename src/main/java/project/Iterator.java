@@ -1,19 +1,19 @@
 package project;
 
 public class Iterator<E> {
-    private Node<E> iterator;
+    private Node<E> current;
 
-    public Iterator(Node<E> iterator) {
-        this.iterator = iterator;
+    public Iterator(Node<E> current) {
+        this.current = current;
     }
 
     public boolean hasNext() {
-        return iterator.getNext() != null;
+        return current != null;
     }
 
     public E next() {
-        E value = iterator.getValue();
-        iterator = iterator.getNext();
+        E value = current.getValue();
+        current = current.getNext();
         return value;
     }
 }
