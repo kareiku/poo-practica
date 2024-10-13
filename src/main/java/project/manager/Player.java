@@ -1,4 +1,4 @@
-package project;
+package project.manager;
 
 public class Player {
     private final String name;
@@ -25,11 +25,11 @@ public class Player {
         this.score = score;
     }
 
-    public String toString() {
-        return String.format("%-25s %-6.1f", name, score);
-    }
-
     public boolean equals(Player player) {
         return name.equals(player.getName());
+    }
+
+    public String toString() {
+        return String.format("%-25s %-6.1f", name, score);
     }
 }

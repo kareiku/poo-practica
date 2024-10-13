@@ -1,4 +1,4 @@
-package project;
+package project.manager;
 
 public class Match {
     private final Player home;
@@ -12,12 +12,8 @@ public class Match {
         this.guest = guest;
     }
 
-    public Player getHome() {
-        return home;
-    }
-
-    public Player getGuest() {
-        return guest;
+    public boolean isComposedBy(Player player) {
+        return player.equals(this.home) || player.equals(this.guest);
     }
 
     public String toString() {

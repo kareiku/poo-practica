@@ -1,4 +1,4 @@
-package project;
+package project.manager;
 
 public class Node<E> {
     private E value;

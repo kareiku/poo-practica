@@ -1,4 +1,4 @@
-package project;
+package project.manager;
 
 public class LinkedList<E> {
     private Node<E> head;
@@ -16,23 +16,18 @@ public class LinkedList<E> {
 
         assert list != null;
 
-        Iterator<E> iterator = list.getIterator();
-
+        Iterator<E> iterator = list.listIterator();
         while (iterator.hasNext()) {
             this.add(iterator.next());
         }
     }
 
-    public boolean isEmpty() {
-        return size == 0;
+    public boolean contains(E value) {
+        return this.indexOf(value) != -1;
     }
 
     public int size() {
         return size;
-    }
-
-    public boolean contains(E value) {
-        return this.indexOf(value) != -1;
     }
 
     public void add(E value) {
@@ -71,6 +66,11 @@ public class LinkedList<E> {
         }
     }
 
+    public void clear() {
+        head = tail = null;
+        size = 0;
+    }
+
     public E get(int index) {
         assert index >= 0 && index < size;
 
@@ -106,9 +106,12 @@ public class LinkedList<E> {
         return temp != null ? i : -1;
     }
 
-    public void clear() {
-        head = tail = null;
-        size = 0;
+    public Iterator<E> listIterator() {
+        return new Iterator<>(head);
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
     }
 
     public String toString() {
@@ -121,9 +124,5 @@ public class LinkedList<E> {
         }
 
         return aux;
-    }
-
-    public Iterator<E> getIterator() {
-        return new Iterator<>(head);
     }
 }
