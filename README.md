@@ -1,7 +1,6 @@
 # Práctica de Programación Orientada a Objetos
-##### Grupo: CITIM12
-##### Curso: 2024/25
 ##### Versión: 1.1
+## Alumnos implicados
 | Alumno                          | Email                             | Nº Matrícula |
 |---------------------------------|-----------------------------------|--------------|
 | Navarro Muñoz, Alberto          | alberto.namunoz@alumnos.upm.es    | bu0352       |
