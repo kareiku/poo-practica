@@ -1,9 +1,10 @@
-package project.manager;
+package es.upm.etsisi.gitlab.views;
 
 public enum Message {
     WELCOME("Welcome to the Sport's Management System.\nWrite a command to start managing your players."),
-    EXIT_WITH("To kill the process, type "),
-    INPUT("> ");
+    INPUT_LINE("> "),
+    LOAD_INITIAL_DATA("Loading initial data..."),
+    BYE("Exiting the application...");
 
     private final String message;
 
@@ -11,7 +12,7 @@ public enum Message {
         this.message = message;
     }
 
-    public String toString() {
-        return message;
+    public void write() {
+        System.out.println(message);
     }
 }
