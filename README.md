@@ -1,4 +1,6 @@
 # Práctica de Programación Orientada a Objetos
+##### Grupo: CITIM12
+##### Curso: 2024/25
 ##### Versión: 1.1
 | Alumno                          | Email                             | Nº Matrícula |
 |---------------------------------|-----------------------------------|--------------|
