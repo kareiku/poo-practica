@@ -8,7 +8,7 @@ public class CreateTournamentCommand extends Command {
     public CreateTournamentCommand(TournamentList tournaments) {
         super(
                 "tournament-create",
-                "{NAME;START_DATE;END_DATE;LEAGUE;SPORT}",
+                "<name>;<start date>;<end date>;<league>;<sport>}",
                 "Creates a tournament."
         );
 

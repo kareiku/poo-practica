@@ -11,7 +11,7 @@ public class RemoveCurrentFromTournamentCommand extends Command {
     public RemoveCurrentFromTournamentCommand(ParticipantSet participants, TournamentList tournaments) {
         super(
                 "tournament-remove",
-                "{NAME}",
+                "<tournament name>",
                 "Deletes a tournament, regardless of its current state."
         );
 

@@ -7,7 +7,7 @@ public class AddPlayerToTeamCommand extends Command {
     public AddPlayerToTeamCommand(ParticipantSet participants) {
         super(
                 "team-add",
-                "{PLAYER_DNI;TEAM_NAME}",
+                "<DNI>;<team name>",
                 "Adds the specified player to the specified team."
         );
     }

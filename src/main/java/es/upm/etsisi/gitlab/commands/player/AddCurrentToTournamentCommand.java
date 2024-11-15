@@ -11,7 +11,7 @@ public class AddCurrentToTournamentCommand extends Command {
     public AddCurrentToTournamentCommand(ParticipantSet participants, TournamentList tournaments) {
         super(
                 "tournament-add",
-                "{PLAYER_DNI|TEAM_NAME;TOURNAMENT_NAME}",
+                "<DNI | team name>;<tournament name>",
                 "Adds a player or a team to a tournament."
         );
 

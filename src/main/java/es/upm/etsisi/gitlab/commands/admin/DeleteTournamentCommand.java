@@ -9,7 +9,7 @@ public class DeleteTournamentCommand extends Command {
     public DeleteTournamentCommand(TournamentList tournaments) {
         super(
                 "tournament-delete",
-                "{NAME}",
+                "<name>",
                 "Deletes the specified tournament."
         );
 

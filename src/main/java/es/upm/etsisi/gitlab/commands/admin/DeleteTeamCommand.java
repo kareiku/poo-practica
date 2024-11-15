@@ -9,7 +9,7 @@ public class DeleteTeamCommand extends Command {
     public DeleteTeamCommand(ParticipantSet participants) {
         super(
                 "team-delete",
-                "{NAME}",
+                "<name>",
                 "Removes a team from the list of teams"
         );
 

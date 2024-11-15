@@ -9,7 +9,7 @@ public class CreateTeamCommand extends Command {
     public CreateTeamCommand(ParticipantSet participants) {
         super(
                 "team-create",
-                "{NAME}",
+                "<name>",
                 "Creates a team in the system."
         );
 

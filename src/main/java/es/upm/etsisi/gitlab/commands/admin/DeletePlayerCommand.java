@@ -9,7 +9,7 @@ public class DeletePlayerCommand extends Command {
     public DeletePlayerCommand(ParticipantSet participants) {
         super(
                 "player-delete",
-                "{DNI}",
+                "<DNI>",
                 "Removes a player from the system"
         );
 

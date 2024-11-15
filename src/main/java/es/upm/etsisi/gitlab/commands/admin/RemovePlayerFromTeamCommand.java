@@ -9,7 +9,7 @@ public class RemovePlayerFromTeamCommand extends Command {
     public RemovePlayerFromTeamCommand(ParticipantSet participants) {
         super(
                 "team-remove",
-                "{PLAYER_DNI;TEAM_NAME}",
+                "<DNI>",
                 "Removes the specified player from the specified team."
         );
 

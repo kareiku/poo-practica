@@ -9,7 +9,7 @@ public class LoginCommand extends Command {
     public LoginCommand() {
         super(
                 "login",
-                "{EMAIL;PASSWORD}",
+                "<email>;<password>}",
                 "Attempts to log the specified user into the system."
         );
     }
