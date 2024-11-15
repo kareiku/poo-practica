@@ -1,0 +1,111 @@
+@startuml
+
+skinparam handwritten true
+skinparam roundcorner 13
+skinparam backgroundcolor #FFE299
+
+package "src.main.java.es.upm.etsisi.gitlab" {
+    package commands {
+        package admin {
+            class AddPlayerToTeamCommand
+            class CreatePlayerCommand
+            class CreateTeamCommand
+            class CreateTournamentCommand
+            class DeletePlayerCommand
+            class DeleteTeamCommand
+            class DeleteTournamentCommand
+            class RemovePlayerFromTeamCommand
+            class TournamentMatchmakingCommand
+        }
+
+        package player {
+            class AddCurrentToTournamentCommand
+            class RemoveCurrentFromTournamentCommand
+            class ShowStatisticsCommand
+        }
+
+        package user {
+            class ExitCommand
+            class ListTournamentsCommand
+            class LoginCommand
+            class LogoutCommand
+        }
+    }
+
+    package models {
+        enum Category
+        abstract Command
+        class Match <<deprecated>>
+        class MatchList <<deprecated>>
+        abstract Participant
+        class ParticipantSet
+        class Player
+        enum Role
+        class Team
+        class Tournament
+        class TournamentList
+        class User
+    }
+
+    package views {
+        class CLI
+        class CommandView
+        enum Error
+        enum Message
+        class ParticipantSetView
+        class TournamentListView
+    }
+
+    class SportsManagementSystem
+}
+
+SportsManagementSystem : + {static} void main(String[] args)
+SportsManagementSystem : + void start()
+SportsManagementSystem : + void pullInitialData(CLI cli)
+@enduml
+
+abstract Command {
+    - String name
+    - String usage
+    - String description
+    + Command(String name, String usage, String description)
+    + {abstract} void run(String[] args)
+    + boolean matches(String commandName)
+    + String getName()
+    + String getUsage()
+    + String getDescription()
+}
+
+class CreatePlayerCommand {
+    + CreatePlayerCommand(ParticipantSet participants)
+    + void run(String[] args)
+}
+
+class ShowStatisticsCommand {
+    + ShowStatisticsCommand(ParticipantSet participants)
+    + void run(String[] args)
+}
+
+class ExitCommand {
+    - boolean executed
+    + ExitCommand()
+    + void run(String[] args)
+    + boolean hasBeenExecuted()
+}
+
+class "{...}Command" As AnyCommand
+
+class ParticipantSet
+
+class HashSet
+
+Command <|-down- CreatePlayerCommand
+Command <|--down- ShowStatisticsCommand
+Command <|-down- ExitCommand
+Command <|--down- AnyCommand
+
+ParticipantSet <.left. ShowStatisticsCommand : "uses"
+ParticipantSet -up---|> HashSet
+
+@enduml
+    

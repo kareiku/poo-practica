@@ -7,7 +7,7 @@ public abstract class Participant {
         this.name = name;
     }
 
-    public String toString(){
+    public String getName(){
         return name;
     }
 }

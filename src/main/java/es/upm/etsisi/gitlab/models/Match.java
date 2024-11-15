@@ -7,7 +7,7 @@ public class Match {
         this.participants = participants;
     }
 
-    public String toString() {
-        return participants[0] + " vs. " + participants[1];
+    public Participant[] getParticipants() {
+        return participants;
     }
 }

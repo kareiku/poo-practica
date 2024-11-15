@@ -21,20 +21,6 @@ public class Player extends Participant {
         return this.DNI.equals(player.DNI);
     }
 
-    @Deprecated
-    public void write() {
-        System.out.printf("%s\t%s, %s\n", DNI, surnames, name);
-    }
-
-    @Deprecated
-    public void writeStatistics() {
-        for (Map.Entry<Category, Double> statistic : statistics.entrySet()) {
-            System.out.print("Player with DNI " + DNI + " has a score of " + statistic.getValue() + " in the category ");
-            statistic.getKey().write();
-            System.out.println(". ");
-        }
-    }
-
     public String toString() {
         return String.format("%s\t%s\t%s", DNI, super.toString(), surnames);
     }
