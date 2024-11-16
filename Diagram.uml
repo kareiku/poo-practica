@@ -104,7 +104,7 @@ Command <|--down- ShowStatisticsCommand
 Command <|-down- ExitCommand
 Command <|--down- AnyCommand
 
-ParticipantSet <.left. ShowStatisticsCommand : "uses"
+ParticipantSet <.left. ShowStatisticsCommand
 ParticipantSet -up---|> HashSet
 
 @enduml
