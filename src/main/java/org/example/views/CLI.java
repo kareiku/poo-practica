@@ -1,8 +1,6 @@
 package org.example.views;
 
-import org.example.commands.admin.*;
-import org.example.commands.player.*;
-import org.example.commands.user.*;
+import org.example.commands.*;
 import org.example.models.*;
 
 import java.util.*;
