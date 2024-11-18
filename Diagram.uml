@@ -1,36 +1,30 @@
 @startuml
 
+' Settings
 set separator ,
 skinparam handwritten true
 skinparam roundcorner 13
 skinparam backgroundcolor #FFE299
 
+' Structure
 package src.main.java.org.example {
     package commands {
-        package admin {
-            class AddPlayerToTeamCommand
-            class CreatePlayerCommand
-            class CreateTeamCommand
-            class CreateTournamentCommand
-            class DeletePlayerCommand
-            class DeleteTeamCommand
-            class DeleteTournamentCommand
-            class RemovePlayerFromTeamCommand
-            class TournamentMatchmakingCommand
-        }
-
-        package player {
-            class AddCurrentToTournamentCommand
-            class RemoveCurrentFromTournamentCommand
-            class ShowStatisticsCommand
-        }
-
-        package user {
-            class ExitCommand
-            class ListTournamentsCommand
-            class LoginCommand
-            class LogoutCommand
-        }
+        class AddPlayerToTeamCommand
+        class CreatePlayerCommand
+        class CreateTeamCommand
+        class CreateTournamentCommand
+        class DeletePlayerCommand
+        class DeleteTeamCommand
+        class DeleteTournamentCommand
+        class RemovePlayerFromTeamCommand
+        class TournamentMatchmakingCommand
+        class AddCurrentToTournamentCommand
+        class RemoveCurrentFromTournamentCommand
+        class ShowStatisticsCommand
+        class ExitCommand
+        class ListTournamentsCommand
+        class LoginCommand
+        class LogoutCommand
     }
 
     package models {
@@ -57,56 +51,35 @@ package src.main.java.org.example {
         class TournamentListView
     }
 
-    class SportsManagementSystem
+    package app {
+        class SportsManagementSystem
+    }
 }
 
+' Relationships
+
+' Contents
 SportsManagementSystem : + {static} void main(String[] args)
 SportsManagementSystem : + void start()
 SportsManagementSystem : + void pullInitialData(CLI cli)
-@enduml
 
-abstract Command {
-    - String name
-    - String usage
-    - String description
-    + Command(String name, String usage, String description)
-    + {abstract} void run(String[] args)
-    + boolean matches(String commandName)
-    + String getName()
-    + String getUsage()
-    + String getDescription()
-}
+Command : - String name
+Command : - String usage
+Command : - String description
+Command : + Command(String name, String usage, String description)
+Command : + {abstract} void run()
+Command : + boolean matches(String commandName)
+Command : + String getName()
+Command : + String getUsage()
+Command : + String getDescription()
 
-class CreatePlayerCommand {
-    + CreatePlayerCommand(ParticipantSet participants)
-    + void run(String[] args)
-}
+CreatePlayerCommand : + CreatePlayerCommand(ParticipantSet participants)
 
-class ShowStatisticsCommand {
-    + ShowStatisticsCommand(ParticipantSet participants)
-    + void run(String[] args)
-}
+ShowStatisticsCommand : + ShowStatisticsCommand(ParticipantSet participants)
 
-class ExitCommand {
-    - boolean executed
-    + ExitCommand()
-    + void run(String[] args)
-    + boolean hasBeenExecuted()
-}
-
-class "{...}Command" As AnyCommand
-
-class ParticipantSet
-
-class HashSet
-
-Command <|-down- CreatePlayerCommand
-Command <|--down- ShowStatisticsCommand
-Command <|-down- ExitCommand
-Command <|--down- AnyCommand
-
-ParticipantSet <.left. ShowStatisticsCommand
-ParticipantSet -up---|> HashSet
+ExitCommand : - boolean executed
+ExitCommand : + ExitCommand()
+ExitCommand : + boolean hasBeenExecuted()
 
 @enduml
     
