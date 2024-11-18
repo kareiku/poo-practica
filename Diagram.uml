@@ -2,7 +2,6 @@
 
 ' Settings
 set separator ,
-skinparam handwritten true
 skinparam roundcorner 13
 skinparam backgroundcolor #FFE299
 
