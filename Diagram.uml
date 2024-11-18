@@ -1,10 +1,11 @@
 @startuml
 
+set separator ,
 skinparam handwritten true
 skinparam roundcorner 13
 skinparam backgroundcolor #FFE299
 
-package "src.main.java.es.upm.etsisi.gitlab" {
+package src.main.java.org.example {
     package commands {
         package admin {
             class AddPlayerToTeamCommand
