@@ -1,7 +1,7 @@
-package es.upm.etsisi.gitlab.commands.admin;
+package org.example.commands;
 
-import es.upm.etsisi.gitlab.models.Command;
-import es.upm.etsisi.gitlab.models.ParticipantSet;
+import org.example.models.Command;
+import org.example.models.ParticipantSet;
 
 public class DeletePlayerCommand extends Command {
     private final ParticipantSet participants;

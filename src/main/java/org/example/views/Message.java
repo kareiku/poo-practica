@@ -1,4 +1,4 @@
-package es.upm.etsisi.gitlab.views;
+package org.example.views;
 
 public enum Message {
     WELCOME("Welcome to the Sport's Management System.\nWrite a command to start managing your players."),

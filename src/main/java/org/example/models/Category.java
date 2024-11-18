@@ -1,4 +1,4 @@
-package es.upm.etsisi.gitlab.models;
+package org.example.models;
 
 public enum Category {
     POINTS_SCORED("Puntos marcados"),

@@ -1,4 +1,4 @@
-package es.upm.etsisi.gitlab.views;
+package org.example.views;
 
 public enum Error {
     UNKNOWN_COMMAND_ERROR("Error: unkown command."),

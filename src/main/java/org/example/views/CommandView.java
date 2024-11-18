@@ -1,6 +1,6 @@
-package es.upm.etsisi.gitlab.views;
+package org.example.views;
 
-import es.upm.etsisi.gitlab.models.Command;
+import org.example.models.Command;
 
 public class CommandView {
     public CommandView() {

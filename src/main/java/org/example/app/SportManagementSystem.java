@@ -1,9 +1,9 @@
-package es.upm.etsisi.gitlab;
+package org.example.app;
 
-import es.upm.etsisi.gitlab.models.ParticipantSet;
-import es.upm.etsisi.gitlab.models.TournamentList;
-import es.upm.etsisi.gitlab.views.Message;
-import es.upm.etsisi.gitlab.views.CLI;
+import org.example.models.ParticipantSet;
+import org.example.models.TournamentList;
+import org.example.views.Message;
+import org.example.views.CLI;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

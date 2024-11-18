@@ -1,8 +1,8 @@
-package es.upm.etsisi.gitlab.commands.user;
+package org.example.commands;
 
-import es.upm.etsisi.gitlab.models.Command;
-import es.upm.etsisi.gitlab.models.Role;
-import es.upm.etsisi.gitlab.models.TournamentList;
+import org.example.models.Command;
+import org.example.models.Role;
+import org.example.models.TournamentList;
 
 public class ListTournamentsCommand extends Command {
     private Role role;

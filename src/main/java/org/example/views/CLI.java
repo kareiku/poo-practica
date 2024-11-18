@@ -1,9 +1,9 @@
-package es.upm.etsisi.gitlab.views;
+package org.example.views;
 
-import es.upm.etsisi.gitlab.commands.admin.*;
-import es.upm.etsisi.gitlab.commands.player.*;
-import es.upm.etsisi.gitlab.commands.user.*;
-import es.upm.etsisi.gitlab.models.*;
+import org.example.commands.admin.*;
+import org.example.commands.player.*;
+import org.example.commands.user.*;
+import org.example.models.*;
 
 import java.util.*;
 

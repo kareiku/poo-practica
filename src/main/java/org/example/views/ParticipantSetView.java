@@ -1,4 +1,4 @@
-package es.upm.etsisi.gitlab.views;
+package org.example.views;
 
 public class ParticipantSetView {
 }

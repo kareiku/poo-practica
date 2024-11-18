@@ -1,4 +1,4 @@
-package es.upm.etsisi.gitlab.models;
+package org.example.models;
 
 public abstract class Command {
     private final String name;

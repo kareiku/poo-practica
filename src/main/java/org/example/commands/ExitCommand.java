@@ -1,6 +1,6 @@
-package es.upm.etsisi.gitlab.commands.user;
+package org.example.commands;
 
-import es.upm.etsisi.gitlab.models.Command;
+import org.example.models.Command;
 
 public class ExitCommand extends Command {
     private boolean executed;

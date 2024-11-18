@@ -1,7 +1,7 @@
-package es.upm.etsisi.gitlab.commands.admin;
+package org.example.commands;
 
-import es.upm.etsisi.gitlab.models.Command;
-import es.upm.etsisi.gitlab.models.TournamentList;
+import org.example.models.Command;
+import org.example.models.TournamentList;
 
 public class DeleteTournamentCommand extends Command {
     private final TournamentList tournaments;

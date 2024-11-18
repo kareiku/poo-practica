@@ -1,7 +1,7 @@
-package es.upm.etsisi.gitlab.commands.user;
+package org.example.commands;
 
-import es.upm.etsisi.gitlab.models.Command;
-import es.upm.etsisi.gitlab.models.Role;
+import org.example.models.Command;
+import org.example.models.Role;
 
 public class LoginCommand extends Command {
     private Role role;

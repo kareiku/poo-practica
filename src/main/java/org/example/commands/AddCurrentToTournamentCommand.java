@@ -1,8 +1,8 @@
-package es.upm.etsisi.gitlab.commands.player;
+package org.example.commands;
 
-import es.upm.etsisi.gitlab.models.Command;
-import es.upm.etsisi.gitlab.models.ParticipantSet;
-import es.upm.etsisi.gitlab.models.TournamentList;
+import org.example.models.Command;
+import org.example.models.ParticipantSet;
+import org.example.models.TournamentList;
 
 public class AddCurrentToTournamentCommand extends Command {
     private final ParticipantSet participants;
