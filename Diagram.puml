@@ -1,35 +1,32 @@
 @startuml
 
 ' Settings
-set separator ,
+set separator none
 skinparam roundcorner 13
 skinparam backgroundcolor #FFE299
+allowmixing
 
 ' Structure
 package java {
     package lang {
-        System.out
+        Enum System
     }
 
     package util {
         interface List
         interface Map
         interface Set
-        class ArrayList
-        class HashMap
-        class HashSet
-        class LinkedList
+        class ArrayList implements List
+        class HashMap implements Map
+        class HashSet implements Set
+        class LinkedList implements List
     }
 }
 
 package src.main {
     package java.org.example {
-        package app {
-            class SportsManagementSystem
-        }
-
         package commands {
-            class PlayerCreateCommand
+            class PlayerCreateCommand extends Command
             class TeamCreateCommand
             class PlayerDeleteCommand
             class TeamDeleteCommand
@@ -86,72 +83,56 @@ package src.main {
             class ParticipantSetView
             class TournamentListView
         }
+
+        class SportsManagementSystem
     }
 
     package resources {
-        package database {
-            object players.csv
-            object teams.csv
-            object tournaments.csv
-            object users.csv
+        package "database" {
+            file admins.csv
+            file players.csv
+            file teams.csv
+            file tournaments.csv
         }
+
+        file history.txt
     }
 }
 
 ' Relationships
-List <|-down- ArrayList
-List <|-down- LinkedList
-Map <|-down- HashMap
-Set <|-down- HashSet
+SportsManagementSystem <.up CLI
+SportsManagementSystem <.up DatabaseReader
 
-SportsManagementSystem <.up. CLI
-SportsManagementSystem <.up. DatabaseReader
+' Command <|- (TournamentAddCommand, TeamAddCommand, PlayerCreateCommand, TeamCreateCommand, TournamentCreateCommand, PlayerDeleteCommand, TeamDeleteCommand, TournamentDeleteCommand, ExitCommand, TournamentListCommand, LoginCommand, LogoutCommand, TournamentRemoveCommand, TeamRemoveCommand, StatisticsShowCommand, TournamentMatchmakingCommand)
 
-Command <|-down TournamentAddCommand
-Command <|-down TeamAddCommand
-Command <|-down PlayerCreateCommand
-Command <|-down TeamCreateCommand
-Command <|-down- TournamentCreateCommand
-Command <|-down- PlayerDeleteCommand
-Command <|-down- TeamDeleteCommand
-Command <|-down- TournamentDeleteCommand
-Command <|-down-- ExitCommand
-Command <|-down-- TournamentListCommand
-Command <|-down-- LoginCommand
-Command <|-down-- LogoutCommand
-Command <|-down--- TournamentRemoveCommand
-Command <|-down--- TeamRemoveCommand
-Command <|-down--- StatisticsShowCommand
-Command <|-down--- TournamentMatchmakingCommand
+ParticipantSet o-- Participant
 
-ParticipantSet o-down- Participant
+Participant <|-- Player
+Participant <|-- Team
 
-Participant <|-down- Player
+Player o- Team
+Player --> User
 
-Participant <|-down- Team
+Tournament *-. Match
 
-Team o-- Player
-
-Tournament *-down- Match
-
-Player <.up. User
-
-CLI *-down- ParticipantSet
-CLI *-down- TournamentList
-CLI *-up---- HashMap
-CLI *-up---- ArrayList
-CLI *-down- ExitCommand
-CLI *-down- LoginCommand
-CLI *-down- LogoutCommand
-CLI *-down- CommandView
-CLI <.up. Error
-CLI <.up. Message
-Message <.up... System.out
-Error <.up... System.out
-ParticipantSetView <.down. ParticipantSet
-TournamentListView <.down. TournamentList
+CLI *-- ParticipantSet
+CLI *-- TournamentList
+CLI --* HashMap
+CLI --* ArrayList
+CLI *-- ExitCommand
+CLI *-- LoginCommand
+CLI *-- LogoutCommand
+CLI *-- CommandView
+CLI ..> Error
+CLI ..> Message
+Message ..> out
+Error ..> out
+ParticipantSet <.. ParticipantSetView
+TournamentList <.. TournamentListView
 
 ' Contents
+System : + {static} out
+
 SportsManagementSystem : + {static} void main(String[] args)
 SportsManagementSystem : + void start()
 SportsManagementSystem : + void pullInitialData(CLI cli)
@@ -174,25 +155,4 @@ ExitCommand : - boolean executed
 ExitCommand : + ExitCommand()
 ExitCommand : + boolean hasBeenExecuted()
 
-players.csv : field_1
-players.csv : field_2
-players.csv : field_3
-players.csv : field_4
-
-teams.csv : field_1
-teams.csv : field_2
-teams.csv : field_3
-teams.csv : field_4
-
-tournaments.csv : field_1
-tournaments.csv : field_2
-tournaments.csv : field_3
-tournaments.csv : field_4
-
-users.csv : field_1
-users.csv : field_2
-users.csv : field_3
-users.csv : field_4
-
 @enduml
-    

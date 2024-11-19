@@ -32,9 +32,12 @@ public class CLI {
 
     public void readUntilExit() {
         Message.WELCOME.write();
+        History history = new History("../../../../resources/history.txt");
         do {
             Message.INPUT_LINE.write();
-            this.scan(new Scanner(System.in).nextLine());
+            String statement = new Scanner(System.in).nextLine();
+            this.scan(statement);
+            history.save(statement);
         } while (!exitCommand.hasBeenExecuted());
         Message.BYE.write();
     }
