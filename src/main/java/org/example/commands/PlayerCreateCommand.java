@@ -1,17 +1,22 @@
 package org.example.commands;
 
+import org.example.drivers.DatabaseWriter;
 import org.example.models.Command;
-import org.example.models.ParticipantSet;
 
 public class PlayerCreateCommand extends Command {
-    public PlayerCreateCommand(ParticipantSet participants) {
-        super(
-                "player-create",
-                "<DNI>;<name>;<surnames>",
-                "Creates a player in the system."
-        );
+    public void execute(String[] args) {
+        new DatabaseWriter("players").create(args);
     }
 
-    public void run(String[] args) {
+    public String name() {
+        return "player-create";
+    }
+
+    public String usage() {
+        return "<DNI>;<name>;<surnames>";
+    }
+
+    public String help() {
+        return "Creates a player in the system.";
     }
 }

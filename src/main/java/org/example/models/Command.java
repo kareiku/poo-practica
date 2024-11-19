@@ -1,31 +1,17 @@
 package org.example.models;
 
 public abstract class Command {
-    private final String name;
-    private final String usage;
-    private final String description;
+    public abstract void execute(String[] args);
 
-    public Command(String name, String usage, String description) {
-        this.name = name;
-        this.usage = usage;
-        this.description = description;
+    public final boolean matches(String commandName) {
+        return this.name().equals(commandName);
     }
 
-    public abstract void run(String[] args);
+    public abstract String name();
 
-    public boolean matches(String commandName) {
-        return commandName.matches(this.name);
-    }
+    public abstract String usage();
 
-    public String getName() {
-        return name;
-    }
+    public abstract String help();
 
-    public String getUsage() {
-        return usage;
-    }
-
-    public String getDescription() {
-        return description;
-    }
+    public abstract int privilegeLevel();
 }

@@ -1,48 +1,45 @@
 package org.example.views;
 
 import org.example.commands.*;
+import org.example.drivers.Logger;
 import org.example.models.*;
 
+import java.io.IOException;
 import java.util.*;
 
 public class CLI {
-    private final ParticipantSet participants;
-    private final TournamentList tournaments;
-    private final Map<Role, List<Command>> commandMap;
-    private final List<Command> allowedCommands;
-    private final ExitCommand exitCommand;
-    private final LoginCommand loginCommand;
-    private final LogoutCommand logoutCommand;
-    private final CommandView commandView;
+    /* Commands is a HashMap where each Command has a privilege level, designated by an Integer, alike Unix does.
+     * 0:
+     * 1:
+     */
+    private final Map<Command, Integer> commands;
 
-    public CLI(ParticipantSet participants, TournamentList tournaments) {
-        this.participants = participants;
-        this.tournaments = tournaments;
-        commandMap = new HashMap<>();
-        allowedCommands = new ArrayList<>();
-        exitCommand = new ExitCommand();
-        loginCommand = new LoginCommand();
-        logoutCommand = new LogoutCommand();
-        commandView = new CommandView();
-
-        commandMap.put(Role.ADMIN, createAdminCommandList());
-        commandMap.put(Role.PLAYER, createPlayerCommandList());
-        commandMap.put(Role.USER, createUserCommandList());
+    public CLI() {
+        this.commands = new HashMap<>();
+        this.putCommands();
     }
 
-    public void readUntilExit() {
+    public void start() {
+        try (Logger logger = new Logger("../../../../resources/logs")) {
+            this.readUntilExit(logger);
+        } catch (IOException ex) {
+            System.err.println("Error when opening logger. This session's log won't be saved.");
+        }
+    }
+
+    private void readUntilExit(Logger logger) throws IOException {
         Message.WELCOME.write();
-        History history = new History("../../../../resources/history.txt");
         do {
             Message.INPUT_LINE.write();
             String statement = new Scanner(System.in).nextLine();
             this.scan(statement);
-            history.save(statement);
+            logger.log(statement);
         } while (!exitCommand.hasBeenExecuted());
         Message.BYE.write();
     }
 
-    public void scan(String statement) {
+    // fixme
+    private void scan(String statement) {
         String commandName = statement.split("\\s+")[0];
         String[] args = statement.split("\\s+")[1].split(";");
         for (Role role : commandMap.keySet()) {
@@ -50,7 +47,7 @@ public class CLI {
                 allowedCommands.addAll(commandMap.get(role));
             }
         }
-        // TODO
+        // unfinished here
 
 
         Command command = null;
@@ -63,12 +60,13 @@ public class CLI {
         }
 
         if (found) {
-            command.run(args);
+            command.execute(args);
         } else {
             Error.UNKNOWN_COMMAND_ERROR.write();
         }
     }
 
+    // fixme
     private List<Command> createAdminCommandList() {
         return new ArrayList<>(Arrays.asList(
                 new TeamAddCommand(participants),
@@ -83,6 +81,7 @@ public class CLI {
         ));
     }
 
+    // fixme
     private List<Command> createPlayerCommandList() {
         return new ArrayList<>(Arrays.asList(
                 new TournamentAddCommand(participants, tournaments),
@@ -91,6 +90,7 @@ public class CLI {
         ));
     }
 
+    // fixme
     private List<Command> createUserCommandList() {
         return new ArrayList<>(Arrays.asList(
                 new ExitCommand(),
@@ -100,9 +100,16 @@ public class CLI {
         ));
     }
 
-    private void showHelp() {
-        for (Command command : allowedCommands) {
-            System.out.printf("%s\n%s\n\n", command.getName(), command.getDescription());
+    private void putCommands() {
+        Command[] commands = {
+                new ExitCommand(),
+                new HelpCommand(),
+                new LoginCommand(),
+                new LogoutCommand(),
+        };
+
+        for (Command command : commands) {
+            this.commands.put(command, command.privilegeLevel());
         }
     }
 }

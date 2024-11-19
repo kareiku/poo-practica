@@ -7,26 +7,12 @@ skinparam backgroundcolor #FFE299
 allowmixing
 
 ' Structure
-package java {
-    package lang {
-        Enum System
-    }
-
-    package util {
-        interface List
-        interface Map
-        interface Set
-        class ArrayList implements List
-        class HashMap implements Map
-        class HashSet implements Set
-        class LinkedList implements List
-    }
-}
+object "System.out" as sout
 
 package src.main {
     package java.org.example {
         package commands {
-            class PlayerCreateCommand extends Command
+            class PlayerCreateCommand
             class TeamCreateCommand
             class PlayerDeleteCommand
             class TeamDeleteCommand
@@ -103,8 +89,6 @@ package src.main {
 SportsManagementSystem <.up CLI
 SportsManagementSystem <.up DatabaseReader
 
-' Command <|- (TournamentAddCommand, TeamAddCommand, PlayerCreateCommand, TeamCreateCommand, TournamentCreateCommand, PlayerDeleteCommand, TeamDeleteCommand, TournamentDeleteCommand, ExitCommand, TournamentListCommand, LoginCommand, LogoutCommand, TournamentRemoveCommand, TeamRemoveCommand, StatisticsShowCommand, TournamentMatchmakingCommand)
-
 ParticipantSet o-- Participant
 
 Participant <|-- Player
@@ -114,6 +98,19 @@ Player o- Team
 Player --> User
 
 Tournament *-. Match
+
+Command <|-down TournamentAddCommand
+Command <|-down TeamAddCommand
+Command <|-down PlayerCreateCommand
+Command <|-down TeamCreateCommand
+Command <|-down TournamentCreateCommand
+Command <|-down PlayerDeleteCommand
+Command <|-down TeamDeleteCommand
+Command <|-down TournamentDeleteCommand
+Command <|-down ExitCommand
+Command <|-down TournamentListCommand
+Command <|-down LoginCommand
+Command <|-down LogoutCommand
 
 CLI *-- ParticipantSet
 CLI *-- TournamentList
@@ -125,14 +122,12 @@ CLI *-- LogoutCommand
 CLI *-- CommandView
 CLI ..> Error
 CLI ..> Message
-Message ..> out
-Error ..> out
+Message ..> sout
+Error ..> sout
 ParticipantSet <.. ParticipantSetView
 TournamentList <.. TournamentListView
 
 ' Contents
-System : + {static} out
-
 SportsManagementSystem : + {static} void main(String[] args)
 SportsManagementSystem : + void start()
 SportsManagementSystem : + void pullInitialData(CLI cli)
