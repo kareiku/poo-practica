@@ -3,14 +3,14 @@ package org.example.commands;
 import org.example.models.Command;
 import org.example.models.ParticipantSet;
 
-public class CreateTeamCommand extends Command {
+public class StatisticsShowCommand extends Command {
     private final ParticipantSet participants;
 
-    public CreateTeamCommand(ParticipantSet participants) {
+    public StatisticsShowCommand(ParticipantSet participants) {
         super(
-                "team-create",
-                "<name>",
-                "Creates a team in the system."
+                "statistics-show",
+                "",
+                "Shows the statistics of the logged player or their team, in their case."
         );
 
         this.participants = participants;

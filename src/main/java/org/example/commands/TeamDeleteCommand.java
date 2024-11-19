@@ -3,14 +3,14 @@ package org.example.commands;
 import org.example.models.Command;
 import org.example.models.ParticipantSet;
 
-public class DeletePlayerCommand extends Command {
+public class TeamDeleteCommand extends Command {
     private final ParticipantSet participants;
 
-    public DeletePlayerCommand(ParticipantSet participants) {
+    public TeamDeleteCommand(ParticipantSet participants) {
         super(
-                "player-delete",
-                "<DNI>",
-                "Removes a player from the system"
+                "team-delete",
+                "<name>",
+                "Removes a team from the list of teams"
         );
 
         this.participants = participants;

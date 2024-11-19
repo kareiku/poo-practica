@@ -3,14 +3,14 @@ package org.example.commands;
 import org.example.models.Command;
 import org.example.models.ParticipantSet;
 
-public class ShowStatisticsCommand extends Command {
+public class TeamRemoveCommand extends Command {
     private final ParticipantSet participants;
 
-    public ShowStatisticsCommand(ParticipantSet participants) {
+    public TeamRemoveCommand(ParticipantSet participants) {
         super(
-                "statistics-show",
-                "",
-                "Shows the statistics of the logged player or their team, in their case."
+                "team-remove",
+                "<DNI>",
+                "Removes the specified player from the specified team."
         );
 
         this.participants = participants;

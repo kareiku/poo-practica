@@ -3,8 +3,8 @@ package org.example.commands;
 import org.example.models.Command;
 import org.example.models.ParticipantSet;
 
-public class AddPlayerToTeamCommand extends Command {
-    public AddPlayerToTeamCommand(ParticipantSet participants) {
+public class TeamAddCommand extends Command {
+    public TeamAddCommand(ParticipantSet participants) {
         super(
                 "team-add",
                 "<DNI>;<team name>",

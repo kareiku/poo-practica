@@ -68,23 +68,23 @@ public class CLI {
 
     private List<Command> createAdminCommandList() {
         return new ArrayList<>(Arrays.asList(
-                new AddPlayerToTeamCommand(participants),
-                new CreatePlayerCommand(participants),
-                new CreateTeamCommand(participants),
-                new CreateTournamentCommand(tournaments),
-                new DeletePlayerCommand(participants),
-                new DeleteTeamCommand(participants),
-                new DeleteTournamentCommand(tournaments),
-                new RemovePlayerFromTeamCommand(participants),
+                new TeamAddCommand(participants),
+                new PlayerCreateCommand(participants),
+                new TeamCreateCommand(participants),
+                new TournamentCreateCommand(tournaments),
+                new PlayerDeleteCommand(participants),
+                new TeamDeleteCommand(participants),
+                new TournamentDeleteCommand(tournaments),
+                new TeamRemoveCommand(participants),
                 new TournamentMatchmakingCommand(participants, tournaments)
         ));
     }
 
     private List<Command> createPlayerCommandList() {
         return new ArrayList<>(Arrays.asList(
-                new AddCurrentToTournamentCommand(participants, tournaments),
-                new RemoveCurrentFromTournamentCommand(participants, tournaments),
-                new ShowStatisticsCommand(participants)
+                new TournamentAddCommand(participants, tournaments),
+                new TournamentRemoveCommand(participants, tournaments),
+                new StatisticsShowCommand(participants)
         ));
     }
 
@@ -93,7 +93,7 @@ public class CLI {
                 new ExitCommand(),
                 new LoginCommand(),
                 new LogoutCommand(),
-                new ListTournamentsCommand(loginCommand.getRole(), tournaments)
+                new TournamentListCommand(loginCommand.getRole(), tournaments)
         ));
     }
 

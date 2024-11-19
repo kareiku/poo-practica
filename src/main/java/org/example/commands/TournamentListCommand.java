@@ -4,11 +4,11 @@ import org.example.models.Command;
 import org.example.models.Role;
 import org.example.models.TournamentList;
 
-public class ListTournamentsCommand extends Command {
+public class TournamentListCommand extends Command {
     private Role role;
     private final TournamentList tournaments;
 
-    public ListTournamentsCommand(Role role, TournamentList tournaments) {
+    public TournamentListCommand(Role role, TournamentList tournaments) {
         super(
                 "tournament-list",
                 "",

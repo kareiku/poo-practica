@@ -3,13 +3,14 @@ package org.example.commands;
 import org.example.models.Command;
 import org.example.models.TournamentList;
 
-public class CreateTournamentCommand extends Command {
+public class TournamentDeleteCommand extends Command {
     private final TournamentList tournaments;
-    public CreateTournamentCommand(TournamentList tournaments) {
+
+    public TournamentDeleteCommand(TournamentList tournaments) {
         super(
-                "tournament-create",
-                "<name>;<start date>;<end date>;<league>;<sport>}",
-                "Creates a tournament."
+                "tournament-delete",
+                "<name>",
+                "Deletes the specified tournament."
         );
 
         this.tournaments = tournaments;

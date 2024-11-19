@@ -4,15 +4,15 @@ import org.example.models.Command;
 import org.example.models.ParticipantSet;
 import org.example.models.TournamentList;
 
-public class RemoveCurrentFromTournamentCommand extends Command {
+public class TournamentAddCommand extends Command {
     private final ParticipantSet participants;
     private final TournamentList tournaments;
 
-    public RemoveCurrentFromTournamentCommand(ParticipantSet participants, TournamentList tournaments) {
+    public TournamentAddCommand(ParticipantSet participants, TournamentList tournaments) {
         super(
-                "tournament-remove",
-                "<tournament name>",
-                "Deletes a tournament, regardless of its current state."
+                "tournament-add",
+                "<DNI | team name>;<tournament name>",
+                "Adds a player or a team to a tournament."
         );
 
         this.participants = participants;

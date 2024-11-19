@@ -6,28 +6,39 @@ skinparam roundcorner 13
 skinparam backgroundcolor #FFE299
 
 ' Structure
+package java.util {
+    interface List
+    interface Map
+    interface Set
+    class ArrayList
+    class HashMap
+    class HashSet
+    class LinkedList
+}
+
 package src.main.java.org.example {
     package app {
         class SportsManagementSystem
     }
 
     package commands {
-        class AddPlayerToTeamCommand
-        class CreatePlayerCommand
-        class CreateTeamCommand
-        class CreateTournamentCommand
-        class DeletePlayerCommand
-        class DeleteTeamCommand
-        class DeleteTournamentCommand
-        class RemovePlayerFromTeamCommand
+        class PlayerCreateCommand
+        class TeamCreateCommand
+        class PlayerDeleteCommand
+        class TeamDeleteCommand
+        class TeamAddCommand
+        class TeamRemoveCommand
+        class TournamentCreateCommand
+        class TournamentDeleteCommand
         class TournamentMatchmakingCommand
-        class AddCurrentToTournamentCommand
-        class RemoveCurrentFromTournamentCommand
-        class ShowStatisticsCommand
-        class ExitCommand
-        class ListTournamentsCommand
+        class TournamentAddCommand
+        class TournamentRemoveCommand
+        class StatisticsShowCommand
         class LoginCommand
         class LogoutCommand
+        class TournamentListCommand
+
+        class ExitCommand
     }
 
     package models {
@@ -56,25 +67,30 @@ package src.main.java.org.example {
 }
 
 ' Relationships
+List <|-down- ArrayList
+List <|-down- LinkedList
+Map <|-down- HashMap
+Set <|-down- HashSet
+
 SportsManagementSystem <.up. CLI
 SportsManagementSystem <.up. DatabaseReader
 
-Command <|-down- AddCurrentToTournamentCommand
-Command <|-down- AddPlayerToTeamCommand
-Command <|-down- CreatePlayerCommand
-Command <|-down- CreateTeamCommand
-Command <|-down- CreateTournamentCommand
-Command <|-down- DeletePlayerCommand
-Command <|-down- DeleteTeamCommand
-Command <|-down- DeleteTournamentCommand
-Command <|-down- ExitCommand
-Command <|-down- ListTournamentsCommand
-Command <|-down- LoginCommand
-Command <|-down- LogoutCommand
-Command <|-down- RemoveCurrentFromTournamentCommand
-Command <|-down- RemovePlayerFromTeamCommand
-Command <|-down- ShowStatisticsCommand
-Command <|-down- TournamentMatchmakingCommand
+Command <|-down TournamentAddCommand
+Command <|-down TeamAddCommand
+Command <|-down PlayerCreateCommand
+Command <|-down TeamCreateCommand
+Command <|-down- TournamentCreateCommand
+Command <|-down- PlayerDeleteCommand
+Command <|-down- TeamDeleteCommand
+Command <|-down- TournamentDeleteCommand
+Command <|-down-- ExitCommand
+Command <|-down-- TournamentListCommand
+Command <|-down-- LoginCommand
+Command <|-down-- LogoutCommand
+Command <|-down--- TournamentRemoveCommand
+Command <|-down--- TeamRemoveCommand
+Command <|-down--- StatisticsShowCommand
+Command <|-down--- TournamentMatchmakingCommand
 
 ParticipantSet o-down- Participant
 
@@ -90,8 +106,8 @@ Player <.up. User
 
 CLI *-down- ParticipantSet
 CLI *-down- TournamentList
-CLI *-up- java.util.Map
-CLI *-up- java.util.List
+CLI *-up---- java.util.Map
+CLI *-up---- java.util.List
 CLI *-down- ExitCommand
 CLI *-down- LoginCommand
 CLI *-down- LogoutCommand
@@ -118,9 +134,9 @@ Command : + String getName()
 Command : + String getUsage()
 Command : + String getDescription()
 
-CreatePlayerCommand : + CreatePlayerCommand(ParticipantSet participants)
+PlayerCreateCommand : + PlayerCreateCommand(ParticipantSet participants)
 
-ShowStatisticsCommand : + ShowStatisticsCommand(ParticipantSet participants)
+StatisticsShowCommand : + StatisticsShowCommand(ParticipantSet participants)
 
 ExitCommand : - boolean executed
 ExitCommand : + ExitCommand()
