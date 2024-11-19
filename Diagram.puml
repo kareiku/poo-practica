@@ -7,6 +7,10 @@ skinparam backgroundcolor #FFE299
 
 ' Structure
 package src.main.java.org.example {
+    package app {
+        class SportsManagementSystem
+    }
+
     package commands {
         class AddPlayerToTeamCommand
         class CreatePlayerCommand
@@ -49,15 +53,55 @@ package src.main.java.org.example {
         class ParticipantSetView
         class TournamentListView
     }
-
-    package app {
-        class SportsManagementSystem
-    }
 }
 
 ' Relationships
+SportsManagementSystem <.up. CLI
+SportsManagementSystem <.up. DatabaseReader
+
+Command <|-down- AddCurrentToTournamentCommand
+Command <|-down- AddPlayerToTeamCommand
+Command <|-down- CreatePlayerCommand
+Command <|-down- CreateTeamCommand
+Command <|-down- CreateTournamentCommand
+Command <|-down- DeletePlayerCommand
+Command <|-down- DeleteTeamCommand
+Command <|-down- DeleteTournamentCommand
 Command <|-down- ExitCommand
-Command <|-down-- CreatePlayerCommand
+Command <|-down- ListTournamentsCommand
+Command <|-down- LoginCommand
+Command <|-down- LogoutCommand
+Command <|-down- RemoveCurrentFromTournamentCommand
+Command <|-down- RemovePlayerFromTeamCommand
+Command <|-down- ShowStatisticsCommand
+Command <|-down- TournamentMatchmakingCommand
+
+ParticipantSet o-down- Participant
+
+Participant <|-down- Player
+
+Participant <|-down- Team
+
+Team o-- Player
+
+Tournament *-down- Match
+
+Player <.up. User
+
+CLI *-down- ParticipantSet
+CLI *-down- TournamentList
+CLI *-up- java.util.Map
+CLI *-up- java.util.List
+CLI *-down- ExitCommand
+CLI *-down- LoginCommand
+CLI *-down- LogoutCommand
+CLI *-down- CommandView
+CLI <.up. Error
+CLI <.up. Message
+Message <.up.. System.out
+Error <.up.. System.out
+ParticipantSetView <.down. ParticipantSet
+TournamentListView <.down. TournamentList
 
 ' Contents
 SportsManagementSystem : + {static} void main(String[] args)

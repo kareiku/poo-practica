@@ -9,9 +9,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class SportManagementSystem {
+public class SportsManagementSystem {
     public static void main(String[] args) {
-        new SportManagementSystem().start();
+        new SportsManagementSystem().start();
     }
 
     private void start() {
