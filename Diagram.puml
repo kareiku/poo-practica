@@ -106,8 +106,8 @@ Player <.up. User
 
 CLI *-down- ParticipantSet
 CLI *-down- TournamentList
-CLI *-up---- java.util.Map
-CLI *-up---- java.util.List
+CLI *-up---- java.util.HashMap
+CLI *-up---- java.util.ArrayList
 CLI *-down- ExitCommand
 CLI *-down- LoginCommand
 CLI *-down- LogoutCommand
