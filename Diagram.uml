@@ -57,6 +57,7 @@ package src.main.java.org.example {
 
 ' Relationships
 Command <|-down- ExitCommand
+Command <|-down-- CreatePlayerCommand
 
 ' Contents
 SportsManagementSystem : + {static} void main(String[] args)
