@@ -13,5 +13,11 @@ public abstract class Command {
 
     public abstract String help();
 
-    public abstract int privilegeLevel();
+    // Fixme. In fact, shouldn't Command be the one extracting the privilege from the user directly?
+    //  Like, defining this in here instead of doing abstract?
+    protected abstract PrivilegeLevel privilegeLevel();
+
+    public final boolean hasPermission(User user) {
+        return user.privilegeLevel().ordinal() <= this.privilegeLevel().ordinal();
+    }
 }

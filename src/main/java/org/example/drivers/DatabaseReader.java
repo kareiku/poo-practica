@@ -8,6 +8,6 @@ public class DatabaseReader {
     }
 
     public int fieldCount() {
-        // TODO
+        return -1 /* TODO */;
     }
 }

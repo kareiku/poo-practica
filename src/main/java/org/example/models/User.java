@@ -1,16 +1,23 @@
 package org.example.models;
 
+import org.example.drivers.DatabaseReader;
+
 public class User {
+    private static final int ENCRYPTION_KEY = 0x76;
     private final String email;
-    private final String password;
-    private Role role;
+    private final int encryptedPassword;
+    private final PrivilegeLevel privilegeLevel;
 
     public User(String email, String password) {
-        this.email = email;
-        this.password = password;
+        DatabaseReader reader = new DatabaseReader("users.csv");
+        // TODO. From the database you get correctness from the login data, as well as the privilegeLevel from the correspondent field.
     }
 
-    public Role verify(String email, String password) {
-        return email.equals(this.email) && password.equals(this.password) ? role : null;
+    private int encrypt(String password) {
+        return -1 /* TODO */;
+    }
+
+    public PrivilegeLevel privilegeLevel() {
+        return this.privilegeLevel;
     }
 }

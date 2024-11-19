@@ -2,17 +2,17 @@ package org.example.views;
 
 import org.example.commands.*;
 import org.example.drivers.Logger;
-import org.example.models.*;
+import org.example.models.Command;
+import org.example.models.User;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Scanner;
 
 public class CLI {
-    /* Commands is a HashMap where each Command has a privilege level, designated by an Integer, alike Unix does.
-     * 0:
-     * 1:
-     */
-    private final Map<Command, Integer> commands;
+    private final Map<String, Command> commands;
+    private User currentUser;
 
     public CLI() {
         this.commands = new HashMap<>();
@@ -34,82 +34,58 @@ public class CLI {
             String statement = new Scanner(System.in).nextLine();
             this.scan(statement);
             logger.log(statement);
-        } while (!exitCommand.hasBeenExecuted());
+        } while (!((ExitCommand) commands.get("exit")).hasBeenExecuted());
         Message.BYE.write();
     }
 
-    // fixme
     private void scan(String statement) {
         String commandName = statement.split("\\s+")[0];
         String[] args = statement.split("\\s+")[1].split(";");
-        for (Role role : commandMap.keySet()) {
-            if (loginCommand.getRole().hasPermission(role)) {
-                allowedCommands.addAll(commandMap.get(role));
+        Command commandToRun = this.selectCommand(commandName);
+        if (commandToRun != null) {
+            if (commandToRun.hasPermission(currentUser)) {
+                commandToRun.execute(args);
+            } else {
+                Error.NO_PERMISSION.write();
             }
-        }
-        // unfinished here
-
-
-        Command command = null;
-        Iterator<Command> commandIterator = allowedCommands.iterator();
-        boolean found = false;
-
-        while (!found && commandIterator.hasNext()) {
-            command = commandIterator.next();
-            found = command.matches(commandName);
-        }
-
-        if (found) {
-            command.execute(args);
         } else {
             Error.UNKNOWN_COMMAND_ERROR.write();
         }
     }
 
-    // fixme
-    private List<Command> createAdminCommandList() {
-        return new ArrayList<>(Arrays.asList(
-                new TeamAddCommand(participants),
-                new PlayerCreateCommand(participants),
-                new TeamCreateCommand(participants),
-                new TournamentCreateCommand(tournaments),
-                new PlayerDeleteCommand(participants),
-                new TeamDeleteCommand(participants),
-                new TournamentDeleteCommand(tournaments),
-                new TeamRemoveCommand(participants),
-                new TournamentMatchmakingCommand(participants, tournaments)
-        ));
-    }
-
-    // fixme
-    private List<Command> createPlayerCommandList() {
-        return new ArrayList<>(Arrays.asList(
-                new TournamentAddCommand(participants, tournaments),
-                new TournamentRemoveCommand(participants, tournaments),
-                new StatisticsShowCommand(participants)
-        ));
-    }
-
-    // fixme
-    private List<Command> createUserCommandList() {
-        return new ArrayList<>(Arrays.asList(
-                new ExitCommand(),
-                new LoginCommand(),
-                new LogoutCommand(),
-                new TournamentListCommand(loginCommand.getRole(), tournaments)
-        ));
+    private Command selectCommand(String commandName) {
+        Command commandToRun = null;
+        boolean commandFound = false;
+        for (String commandID : commands.keySet()) {
+            if (!commandFound && (commandFound = commandID.equals(commandName))) { // Fixme. Pretty illegible, isn't it?
+                commandToRun = commands.get(commandID);
+            }
+        }
+        return commandToRun;
     }
 
     private void putCommands() {
-        Command[] commands = {
+        final Command[] commands = {
                 new ExitCommand(),
-                new HelpCommand(),
+                new HelpCommand(null), // Fixme. The fuck is a null as parameter doing here?
                 new LoginCommand(),
                 new LogoutCommand(),
+                new PlayerCreateCommand(),
+                new PlayerDeleteCommand(),
+                new StatisticsShowCommand(),
+                new TeamAddCommand(),
+                new TeamCreateCommand(),
+                new TeamDeleteCommand(),
+                new TeamRemoveCommand(),
+                new TournamentAddCommand(),
+                new TournamentCreateCommand(),
+                new TournamentDeleteCommand(),
+                new TournamentListCommand(),
+                new TournamentMatchmakingCommand(),
+                new TournamentRemoveCommand()
         };
-
         for (Command command : commands) {
-            this.commands.put(command, command.privilegeLevel());
+            this.commands.put(command.name(), command);
         }
     }
 }

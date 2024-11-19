@@ -26,7 +26,11 @@ public class HelpCommand extends Command {
         return "Displays help information for each command.";
     }
 
-    public int privilegeLevel() {
-        return 1;
+    protected PrivilegeLevel privilegeLevel() {
+        return PrivilegeLevel.GUEST;
+    }
+
+    public boolean hasPermission() {
+        return this.privilegeLevel().ordinal() <= PrivilegeLevel.GUEST.ordinal();
     }
 }

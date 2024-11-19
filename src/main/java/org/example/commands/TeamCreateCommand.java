@@ -1,21 +1,29 @@
 package org.example.commands;
 
 import org.example.models.Command;
-import org.example.models.ParticipantSet;
 
 public class TeamCreateCommand extends Command {
-    private final ParticipantSet participants;
-
-    public TeamCreateCommand(ParticipantSet participants) {
-        super(
-                "team-create",
-                "<name>",
-                "Creates a team in the system."
-        );
-
-        this.participants = participants;
+    public void execute(String[] args) {
+        // TODO
     }
 
-    public void run(String[] args) {
+    public String name() {
+        return "team-create";
+    }
+
+    public String usage() {
+        return "<name>";
+    }
+
+    public String help() {
+        return "Adds a team to the database.";
+    }
+
+    protected PrivilegeLevel privilegeLevel() {
+        return /* Fixme. Again and again... */ null;
+    }
+
+    public boolean hasPermission() {
+        return this.privilegeLevel() == PrivilegeLevel.ADMIN;
     }
 }

@@ -1,21 +1,29 @@
 package org.example.commands;
 
 import org.example.models.Command;
-import org.example.models.ParticipantSet;
 
 public class PlayerDeleteCommand extends Command {
-    private final ParticipantSet participants;
-
-    public PlayerDeleteCommand(ParticipantSet participants) {
-        super(
-                "player-delete",
-                "<DNI>",
-                "Removes a player from the system"
-        );
-
-        this.participants = participants;
+    public void execute(String[] args) {
+        // TODO
     }
 
-    public void run(String[] args) {
+    public String name() {
+        return "player-delete";
+    }
+
+    public String usage() {
+        return "<DNI>";
+    }
+
+    public String help() {
+        return "Removes a player from the system.";
+    }
+
+    protected PrivilegeLevel privilegeLevel() {
+        return PrivilegeLevel.PLAYER /* Fixme. WAIT! Isn't current privilege level always extracted from currently-logged user? */;
+    }
+
+    public boolean hasPermission() {
+        return this.privilegeLevel() == PrivilegeLevel.ADMIN;
     }
 }

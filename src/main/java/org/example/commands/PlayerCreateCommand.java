@@ -19,4 +19,12 @@ public class PlayerCreateCommand extends Command {
     public String help() {
         return "Creates a player in the system.";
     }
+
+    protected PrivilegeLevel privilegeLevel() {
+        return PrivilegeLevel.ADMIN;
+    }
+
+    public boolean hasPermission() {
+        return this.privilegeLevel() == PrivilegeLevel.ADMIN;
+    }
 }

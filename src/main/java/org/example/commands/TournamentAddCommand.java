@@ -1,24 +1,29 @@
 package org.example.commands;
 
 import org.example.models.Command;
-import org.example.models.ParticipantSet;
-import org.example.models.TournamentList;
 
 public class TournamentAddCommand extends Command {
-    private final ParticipantSet participants;
-    private final TournamentList tournaments;
-
-    public TournamentAddCommand(ParticipantSet participants, TournamentList tournaments) {
-        super(
-                "tournament-add",
-                "<DNI | team name>;<tournament name>",
-                "Adds a player or a team to a tournament."
-        );
-
-        this.participants = participants;
-        this.tournaments = tournaments;
+    public void execute(String[] args) {
+        // TODO
     }
 
-    public void run(String[] args) {
+    public String name() {
+        return "tournament-add";
+    }
+
+    public String usage() {
+        return "<DNI | team name>;<tournament name>";
+    }
+
+    public String help() {
+        return "Adds a player or a team to a tournament.";
+    }
+
+    protected PrivilegeLevel privilegeLevel() {
+        return /* Fixme. Again and again... */ null;
+    }
+
+    public boolean hasPermission() {
+        return this.privilegeLevel() == PrivilegeLevel.ADMIN;
     }
 }

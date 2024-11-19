@@ -1,32 +1,33 @@
 package org.example.commands;
 
 import org.example.models.Command;
-import org.example.models.Role;
-import org.example.models.TournamentList;
 
 public class TournamentListCommand extends Command {
-    private Role role;
-    private final TournamentList tournaments;
-
-    public TournamentListCommand(Role role, TournamentList tournaments) {
-        super(
-                "tournament-list",
-                "",
-                "Lists the ongoing tournaments" +
-                        (role.isRole(Role.PLAYER) ?
-                                "where you are participating." :
-                                ".")
-        );
-
-        this.role = role;
-        this.tournaments = tournaments;
+    public void execute(String[] args) {
+        if (this.privilegeLevel() == PrivilegeLevel.PLAYER) {
+            // TODO Print those tournaments in the list related to the player.
+        } else {
+            // TODO Print all of the tournaments in the list.
+        }
     }
 
-    public void run(String[] args) {
-        if (role.isRole(Role.PLAYER)) {
-            // TODO Print those tournaments in the list related to the player
-        } else {
-            // TODO Print all of the tournaments in the list
-        }
+    public String name() {
+        return "tournament-list";
+    }
+
+    public String usage() {
+        return "";
+    }
+
+    public String help() {
+        return "List the ongoing tournaments. Reduced format to the ones you're participant, if such user is logged.";
+    }
+
+    protected PrivilegeLevel privilegeLevel() {
+        return /* Fixme. Again and again... */ null;
+    }
+
+    public boolean hasPermission() {
+        return this.privilegeLevel().ordinal() <= PrivilegeLevel.GUEST.ordinal();
     }
 }

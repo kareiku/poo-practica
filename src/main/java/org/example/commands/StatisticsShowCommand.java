@@ -1,21 +1,29 @@
 package org.example.commands;
 
 import org.example.models.Command;
-import org.example.models.ParticipantSet;
 
 public class StatisticsShowCommand extends Command {
-    private final ParticipantSet participants;
-
-    public StatisticsShowCommand(ParticipantSet participants) {
-        super(
-                "statistics-show",
-                "",
-                "Shows the statistics of the logged player or their team, in their case."
-        );
-
-        this.participants = participants;
+    public void execute(String[] args) {
+        // TODO
     }
 
-    public void run(String[] args) {
+    public String name() {
+        return "statistics-show";
+    }
+
+    public String usage() {
+        return "";
+    }
+
+    public String help() {
+        return "Shows the statistics of the logged player or their team, in their case.";
+    }
+
+    protected PrivilegeLevel privilegeLevel() {
+        return /* Fixme. Third case with the problem of getting the privilege from the current user. */ null;
+    }
+
+    public boolean hasPermission() {
+        return this.privilegeLevel().ordinal() <= PrivilegeLevel.GUEST.ordinal();
     }
 }
