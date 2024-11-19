@@ -1,0 +1,76 @@
+@startuml
+
+set separator none
+skinparam backgroundcolor #FFE299
+allowmixing
+
+package src {
+    package main {
+        package java {
+            package org {
+                package example {
+                    package commands {
+                        class ExitCommand
+                        class HelpCommand
+                        class LoginCommand
+                        class LogoutCommand
+                        class PlayerCreateCommand
+                        class PlayerDeleteCommand
+                        class StatisticsShowCommand
+                        class TeamAddCommand
+                        class TeamCreateCommand
+                        class TeamDeleteCommand
+                        class TeamRemoveCommand
+                        class TournamentAddCommand
+                        class TournamentCreateCommand
+                        class TournamentDeleteCommand
+                        class TournamentListCommand
+                        class TournamentMatchmakingCommand
+                        class TournamentRemoveCommand
+                    }
+                    package drivers {
+                        class DatabaseReader
+                        class DatabaseWriter
+                        class Logger
+                    }
+                    package models {
+                        enum Category
+                        abstract Command
+                        abstract Participant
+                        class Player
+                        enum PrivilegeLevel
+                        class Team
+                        class Tournament
+                        class User
+                    }
+                    package views {
+                        class CLI
+                        class CommandView
+                        enum Error
+                        enum Message
+                    }
+                    class SportsManagementSystem
+                }
+            }
+        }
+        package resources {
+            package diagrams {
+                file packages.puml
+                file relations.puml
+            }
+            package logs {
+                file example.log
+            }
+            package schemas {
+                package sportsmanager {
+                    file players.csv
+                    file teams.csv
+                    file tournaments.csv
+                    file users.csv
+                }
+            }
+        }
+    }
+}
+
+@enduml

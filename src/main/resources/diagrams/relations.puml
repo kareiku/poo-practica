@@ -1,0 +1,93 @@
+@startuml
+
+set separator none
+skinparam backgroundcolor #FFE299
+allowmixing
+
+class ExitCommand
+class HelpCommand
+class LoginCommand
+class LogoutCommand
+class PlayerCreateCommand
+class PlayerDeleteCommand
+class StatisticsShowCommand
+class TeamAddCommand
+class TeamCreateCommand
+class TeamDeleteCommand
+class TeamRemoveCommand
+class TournamentAddCommand
+class TournamentCreateCommand
+class TournamentDeleteCommand
+class TournamentListCommand
+class TournamentMatchmakingCommand
+class TournamentRemoveCommand
+
+class DatabaseReader
+class DatabaseWriter
+class Logger
+
+enum Category
+abstract Command
+abstract Participant
+class Player
+enum PrivilegeLevel
+class Team
+class Tournament
+class User
+
+class CLI
+class CommandView
+enum Error
+enum Message
+
+class SportsManagementSystem
+
+Command <|-up- ExitCommand
+ExitCommand -up- HelpCommand
+HelpCommand -up- LoginCommand
+LoginCommand -up- LogoutCommand
+LogoutCommand -up- PlayerCreateCommand
+PlayerCreateCommand -up- PlayerDeleteCommand
+PlayerDeleteCommand -up- StatisticsShowCommand
+StatisticsShowCommand -up- TeamAddCommand
+TeamAddCommand -up- TeamCreateCommand
+TeamCreateCommand -up- TeamDeleteCommand
+TeamDeleteCommand -up- TeamRemoveCommand
+TeamRemoveCommand -up- TournamentAddCommand
+TournamentAddCommand -up- TournamentCreateCommand
+TournamentCreateCommand -up- TournamentDeleteCommand
+TournamentDeleteCommand -up- TournamentListCommand
+TournamentListCommand -up- TournamentMatchmakingCommand
+TournamentMatchmakingCommand -up- TournamentRemoveCommand
+
+HashMap -* CLI
+CommandView --* CLI
+
+HashMap o-up- String
+HashMap o-left Command
+
+Command <.. User
+
+CLI ---* SportsManagementSystem
+
+Participant <|-- Player
+Participant <|-- Team
+
+Logger <.. String
+
+Tournament o-- Player
+Tournament o-- Team
+
+Player *-- User
+
+DatabaseWriter .> PlayerCreateCommand
+DatabaseWriter .> PlayerDeleteCommand
+DatabaseWriter .> TeamCreateCommand
+DatabaseWriter .> TeamDeleteCommand
+DatabaseWriter .> TournamentCreateCommand
+DatabaseWriter .> TournamentDeleteCommand
+
+DatabaseReader .> TournamentListCommand
+DatabaseReader .> StatisticsShowCommand
+
+@enduml
