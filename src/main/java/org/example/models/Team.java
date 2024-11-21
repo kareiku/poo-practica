@@ -9,6 +9,7 @@ public class Team extends LinkedList<Player> {
         this.name = name;
     }
 
+    @Deprecated
     public String toString() {
         StringBuilder format = new StringBuilder("Team " + name + " composition: ");
         for (Player player : this) {

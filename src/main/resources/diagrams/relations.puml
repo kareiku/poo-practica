@@ -3,6 +3,8 @@
 set separator none
 skinparam backgroundcolor #FFE299
 allowmixing
+skinparam nodesep 60
+skinparam ranksep 150
 
 class ExitCommand
 class HelpCommand
@@ -42,23 +44,27 @@ enum Message
 
 class SportsManagementSystem
 
-Command <|-up- ExitCommand
-ExitCommand -up- HelpCommand
-HelpCommand -up- LoginCommand
-LoginCommand -up- LogoutCommand
-LogoutCommand -up- PlayerCreateCommand
-PlayerCreateCommand -up- PlayerDeleteCommand
-PlayerDeleteCommand -up- StatisticsShowCommand
-StatisticsShowCommand -up- TeamAddCommand
-TeamAddCommand -up- TeamCreateCommand
-TeamCreateCommand -up- TeamDeleteCommand
-TeamDeleteCommand -up- TeamRemoveCommand
-TeamRemoveCommand -up- TournamentAddCommand
-TournamentAddCommand -up- TournamentCreateCommand
-TournamentCreateCommand -up- TournamentDeleteCommand
-TournamentDeleteCommand -up- TournamentListCommand
-TournamentListCommand -up- TournamentMatchmakingCommand
-TournamentMatchmakingCommand -up- TournamentRemoveCommand
+diamond commandConnector
+
+commandConnector -up-|> Command
+
+commandConnector -- ExitCommand
+commandConnector -- HelpCommand
+commandConnector -- LoginCommand
+commandConnector -- LogoutCommand
+commandConnector -- PlayerCreateCommand
+commandConnector -- PlayerDeleteCommand
+commandConnector -- StatisticsShowCommand
+commandConnector -- TeamAddCommand
+commandConnector -- TeamCreateCommand
+commandConnector -- TeamDeleteCommand
+commandConnector -- TeamRemoveCommand
+commandConnector -- TournamentAddCommand
+commandConnector -- TournamentCreateCommand
+commandConnector -- TournamentDeleteCommand
+commandConnector -- TournamentListCommand
+commandConnector -- TournamentMatchmakingCommand
+commandConnector -- TournamentRemoveCommand
 
 HashMap -* CLI
 CommandView --* CLI
@@ -68,7 +74,8 @@ HashMap o-left Command
 
 Command <.. User
 
-CLI ---* SportsManagementSystem
+CLI -* SportsManagementSystem
+CLI .> Logger
 
 Participant <|-- Player
 Participant <|-- Team
@@ -80,14 +87,20 @@ Tournament o-- Team
 
 Player *-- User
 
-DatabaseWriter .> PlayerCreateCommand
-DatabaseWriter .> PlayerDeleteCommand
-DatabaseWriter .> TeamCreateCommand
-DatabaseWriter .> TeamDeleteCommand
-DatabaseWriter .> TournamentCreateCommand
-DatabaseWriter .> TournamentDeleteCommand
 
-DatabaseReader .> TournamentListCommand
-DatabaseReader .> StatisticsShowCommand
+diamond DatabaseReaderConnector
+diamond DatabaseWriterConnector
+
+DatabaseReaderConnector .up.> DatabaseReader
+DatabaseWriterConnector .up.> DatabaseWriter
+
+DatabaseWriterConnector -- PlayerCreateCommand
+DatabaseWriterConnector -- PlayerDeleteCommand
+DatabaseWriterConnector -- TeamCreateCommand
+DatabaseWriterConnector -- TeamDeleteCommand
+DatabaseWriterConnector -- TournamentCreateCommand
+DatabaseWriterConnector -- TournamentDeleteCommand
+DatabaseReaderConnector -- TournamentListCommand
+DatabaseReaderConnector -- StatisticsShowCommand
 
 @enduml

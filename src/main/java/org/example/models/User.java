@@ -1,23 +1,31 @@
 package org.example.models;
 
-import org.example.drivers.DatabaseReader;
+import org.example.controller.DatabaseReader;
 
 public class User {
     private static final int ENCRYPTION_KEY = 0x76;
     private final String email;
-    private final int encryptedPassword;
-    private final PrivilegeLevel privilegeLevel;
+    private final String password;
+    private final int privilegeLevel;
+
+    public User(Role role) {
+        this.email = null;
+        this.password = null;
+        this.privilegeLevel = role.ordinal();
+    }
 
     public User(String email, String password) {
-        DatabaseReader reader = new DatabaseReader("users.csv");
+        DatabaseReader reader = new DatabaseReader();
+
+        this.password = password;
         // TODO. From the database you get correctness from the login data, as well as the privilegeLevel from the correspondent field.
     }
 
     private int encrypt(String password) {
-        return -1 /* TODO */;
+        char[] encryption = password.toCharArray();
     }
 
-    public PrivilegeLevel privilegeLevel() {
+    public Role privilegeLevel() {
         return this.privilegeLevel;
     }
 }

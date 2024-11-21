@@ -1,5 +1,5 @@
 package org.example.models;
 
-public enum PrivilegeLevel {
+public enum Role {
     ADMIN, PLAYER, GUEST;
 }

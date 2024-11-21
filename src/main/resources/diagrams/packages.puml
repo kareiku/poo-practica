@@ -3,6 +3,8 @@
 set separator none
 skinparam backgroundcolor #FFE299
 allowmixing
+skinparam nodesep 12
+left to right direction
 
 package src {
     package main {
@@ -59,14 +61,11 @@ package src {
                 file relations.puml
             }
             package logs {
-                file example.log
+                file "yyyy-MM-dd-HH:mm:ss.log"
             }
             package schemas {
                 package sportsmanager {
-                    file players.csv
-                    file teams.csv
-                    file tournaments.csv
-                    file users.csv
+                    file data.csv
                 }
             }
         }

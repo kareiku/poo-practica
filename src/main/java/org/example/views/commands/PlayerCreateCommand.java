@@ -1,11 +1,12 @@
-package org.example.commands;
+package org.example.views.commands;
 
-import org.example.drivers.DatabaseWriter;
-import org.example.models.Command;
+import org.example.controller.DatabaseWriter;
+import org.example.views.Command;
+import org.example.models.Role;
 
 public class PlayerCreateCommand extends Command {
     public void execute(String[] args) {
-        new DatabaseWriter("players").create(args);
+        new DatabaseWriter().create(args);
     }
 
     public String name() {
@@ -20,11 +21,11 @@ public class PlayerCreateCommand extends Command {
         return "Creates a player in the system.";
     }
 
-    protected PrivilegeLevel privilegeLevel() {
-        return PrivilegeLevel.ADMIN;
+    protected int privilegeLevel() {
+        return Role.ADMIN.ordinal();
     }
 
     public boolean hasPermission() {
-        return this.privilegeLevel() == PrivilegeLevel.ADMIN;
+        return this.privilegeLevel() == Role.ADMIN.ordinal();
     }
 }

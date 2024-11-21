@@ -1,8 +1,9 @@
 package org.example.views;
 
-import org.example.commands.*;
-import org.example.drivers.Logger;
-import org.example.models.Command;
+import org.example.views.commands.*;
+import org.example.controller.Logger;
+import org.example.models.Error;
+import org.example.models.Role;
 import org.example.models.User;
 
 import java.io.IOException;
@@ -17,13 +18,20 @@ public class CLI {
     public CLI() {
         this.commands = new HashMap<>();
         this.putCommands();
+        this.currentUser = new User(Role.GUEST);
     }
 
     public void start() {
-        try (Logger logger = new Logger("../../../../resources/logs")) {
+        Logger logger = null;
+        try {
+            logger = new Logger("../../../../resources/logs");
             this.readUntilExit(logger);
         } catch (IOException ex) {
             System.err.println("Error when opening logger. This session's log won't be saved.");
+        } finally {
+            if (logger != null) {
+                logger.close();
+            }
         }
     }
 
@@ -46,7 +54,7 @@ public class CLI {
             if (commandToRun.hasPermission(currentUser)) {
                 commandToRun.execute(args);
             } else {
-                Error.NO_PERMISSION.write();
+                org.example.models.Error.NO_PERMISSION.write();
             }
         } else {
             Error.UNKNOWN_COMMAND_ERROR.write();

@@ -1,22 +1,22 @@
-package org.example.commands;
+package org.example.views.commands;
 
-import org.example.models.Command;
+import org.example.views.Command;
 
-public class TournamentMatchmakingCommand extends Command {
+public class TournamentAddCommand extends Command {
     public void execute(String[] args) {
         // TODO
     }
 
     public String name() {
-        return "tournament-matchmaking";
+        return "tournament-add";
     }
 
     public String usage() {
-        return "" /* TODO */;
+        return "<DNI | team name>;<tournament name>";
     }
 
     public String help() {
-        return "" /* TODO */;
+        return "Adds a player or a team to a tournament.";
     }
 
     protected PrivilegeLevel privilegeLevel() {

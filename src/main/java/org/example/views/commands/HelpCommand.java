@@ -1,7 +1,6 @@
-package org.example.commands;
+package org.example.views.commands;
 
-import org.example.models.Command;
-import org.example.views.CommandView;
+import org.example.views.Command;
 
 public class HelpCommand extends Command {
     private final Command command;
@@ -11,7 +10,6 @@ public class HelpCommand extends Command {
     }
 
     public void execute(String[] args) {
-        new CommandView().write(command);
     }
 
     public String name() {

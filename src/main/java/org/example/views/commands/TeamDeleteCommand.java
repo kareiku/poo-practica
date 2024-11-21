@@ -1,14 +1,14 @@
-package org.example.commands;
+package org.example.views.commands;
 
-import org.example.models.Command;
+import org.example.views.Command;
 
-public class TournamentDeleteCommand extends Command {
+public class TeamDeleteCommand extends Command {
     public void execute(String[] args) {
         // TODO
     }
 
     public String name() {
-        return "tournament-delete";
+        return "team-delete";
     }
 
     public String usage() {
@@ -16,7 +16,7 @@ public class TournamentDeleteCommand extends Command {
     }
 
     public String help() {
-        return "Deletes the specified tournament.";
+        return "Removes a team from the database.";
     }
 
     protected PrivilegeLevel privilegeLevel() {

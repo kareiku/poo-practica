@@ -1,0 +1,4 @@
+email,password,privilegeLevel,playerName,playerSurnames,playerDNI,playerStats,teamName
+root,root,0
+eri@example.org,eriMeansLove,1,Eri,lorem,
+manzana@frutas.shop,manzanita123,1,Fuji,Manzana

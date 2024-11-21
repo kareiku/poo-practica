@@ -1,6 +1,6 @@
-package org.example.commands;
+package org.example.views.commands;
 
-import org.example.models.Command;
+import org.example.views.Command;
 
 public class StatisticsShowCommand extends Command {
     public void execute(String[] args) {
