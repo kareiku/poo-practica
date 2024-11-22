@@ -4,9 +4,9 @@ import org.example.controller.DatabaseReader;
 
 public class User {
     private static final int ENCRYPTION_KEY = 0x76;
-    private final String email;
-    private final String password;
-    private final int privilegeLevel;
+    private String email;
+    private String password;
+    private int privilegeLevel;
 
     public User(Role role) {
         this.email = null;

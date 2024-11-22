@@ -48,7 +48,7 @@ public class CLI {
 
     private void scan(String statement) {
         String commandName = statement.split("\\s+")[0];
-        String[] args = statement.split("\\s+")[1].split(";");
+        String[] args = statement.split("\\s+", 2)[1].split(";");
         Command commandToRun = this.selectCommand(commandName);
         if (commandToRun != null) {
             if (commandToRun.hasPermission(currentUser)) {
