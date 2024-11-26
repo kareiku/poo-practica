@@ -1,5 +1,7 @@
 package org.example.models;
 
 public enum Role {
-    ADMIN, PLAYER, GUEST;
+    ADMIN,
+    PLAYER,
+    GUEST
 }

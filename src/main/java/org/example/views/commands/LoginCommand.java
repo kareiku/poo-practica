@@ -1,8 +1,18 @@
 package org.example.views.commands;
 
+import org.example.models.Role;
+import org.example.models.User;
 import org.example.views.Command;
 
+import java.util.List;
+
 public class LoginCommand extends Command {
+    private final List<User> users;
+
+    public LoginCommand() {
+        super("login", "<email>;<password>", "Attempts to log the specified user into the system.", Role.GUEST);
+    }
+
     public void execute(String[] args) {
         /*
          TODO?
@@ -10,25 +20,17 @@ public class LoginCommand extends Command {
           - If it's a valid user, get its privilege level.
           - Set the user privilege to role.
         */
+        User user = new User(args[0], args[1]);
     }
 
-    public String name() {
-        return "login";
-    }
-
-    public String usage() {
-        return "<email>;<password>";
-    }
-
-    public String help() {
-        return "Attempts to log the specified user into the system.";
-    }
-
-    protected PrivilegeLevel privilegeLevel() {
-        return /* Fixme. Here comes the first problem: the privilege level in here changes when getting the user from the database. */ null;
-    }
-
-    public boolean hasPermission() {
-        return this.privilegeLevel() == PrivilegeLevel.GUEST;
+    private boolean checkUser(User requiredUser) {
+        for (User user : this.users) {
+            if (user.getEmail().equals(requiredUser.getEmail())
+                    &&
+                    user.getPassword().equals(requiredUser.getPassword())) {
+                // ...
+            }
+        }
+        return false; // fixme
     }
 }

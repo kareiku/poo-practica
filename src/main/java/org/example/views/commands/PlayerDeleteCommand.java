@@ -1,29 +1,20 @@
 package org.example.views.commands;
 
+import org.example.models.Player;
+import org.example.models.Role;
 import org.example.views.Command;
 
+import java.util.List;
+
 public class PlayerDeleteCommand extends Command {
+    private final List<Player> players;
+
+    public PlayerDeleteCommand(List<Player> players) {
+        super("player-delete", "<DNI>", "Removes a player from the system.", Role.ADMIN);
+        this.players = players;
+    }
+
     public void execute(String[] args) {
-        // TODO
-    }
-
-    public String name() {
-        return "player-delete";
-    }
-
-    public String usage() {
-        return "<DNI>";
-    }
-
-    public String help() {
-        return "Removes a player from the system.";
-    }
-
-    protected PrivilegeLevel privilegeLevel() {
-        return PrivilegeLevel.PLAYER /* Fixme. WAIT! Isn't current privilege level always extracted from currently-logged user? */;
-    }
-
-    public boolean hasPermission() {
-        return this.privilegeLevel() == PrivilegeLevel.ADMIN;
+        this.players.removeIf(player -> player.isPlayer(args[0]));
     }
 }

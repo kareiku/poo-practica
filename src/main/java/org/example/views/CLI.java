@@ -1,23 +1,22 @@
 package org.example.views;
 
-import org.example.views.commands.*;
+import org.example.controller.CommandController;
 import org.example.controller.Logger;
 import org.example.models.Error;
 import org.example.models.Role;
 import org.example.models.User;
+import org.example.views.commands.ExitCommand;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.Scanner;
 
-public class CLI {
+public final class CLI {
     private final Map<String, Command> commands;
     private User currentUser;
 
     public CLI() {
-        this.commands = new HashMap<>();
-        this.putCommands();
+        this.commands = new CommandController().getCommands();
         this.currentUser = new User(Role.GUEST);
     }
 
@@ -27,7 +26,7 @@ public class CLI {
             logger = new Logger("../../../../resources/logs");
             this.readUntilExit(logger);
         } catch (IOException ex) {
-            System.err.println("Error when opening logger. This session's log won't be saved.");
+            System.err.println("Error when logging the statement. Exiting now...");
         } finally {
             if (logger != null) {
                 logger.close();
@@ -70,30 +69,5 @@ public class CLI {
             }
         }
         return commandToRun;
-    }
-
-    private void putCommands() {
-        final Command[] commands = {
-                new ExitCommand(),
-                new HelpCommand(null), // Fixme. The fuck is a null as parameter doing here?
-                new LoginCommand(),
-                new LogoutCommand(),
-                new PlayerCreateCommand(),
-                new PlayerDeleteCommand(),
-                new StatisticsShowCommand(),
-                new TeamAddCommand(),
-                new TeamCreateCommand(),
-                new TeamDeleteCommand(),
-                new TeamRemoveCommand(),
-                new TournamentAddCommand(),
-                new TournamentCreateCommand(),
-                new TournamentDeleteCommand(),
-                new TournamentListCommand(),
-                new TournamentMatchmakingCommand(),
-                new TournamentRemoveCommand()
-        };
-        for (Command command : commands) {
-            this.commands.put(command.name(), command);
-        }
     }
 }

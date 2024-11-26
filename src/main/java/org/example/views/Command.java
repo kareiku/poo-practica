@@ -15,12 +15,16 @@ public abstract class Command {
         this.role = role;
     }
 
+    public final String getName() {
+        return this.name;
+    }
+
     public final void showHelp() {
         System.out.printf("%s\nUsage: %s %s\n%s\n\n",
-                name,
-                name,
-                usage,
-                description);
+                this.name,
+                this.name,
+                this.usage,
+                this.description);
     }
 
     public abstract void execute(String[] args);
