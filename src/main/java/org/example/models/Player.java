@@ -1,24 +1,19 @@
 package org.example.models;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Player extends Participant {
     private final User user;
     private final String surname;
     private final String DNI;
-    private final Map<Category, Double> statistics;
 
     public Player(String email, String password, String name, String surname, String DNI) {
         super(name);
         this.user = new User(email, password);
         this.surname = surname;
         this.DNI = DNI;
-        this.statistics = new HashMap<>();
     }
 
     public void rate(Category category, double score) {
-        this.statistics.replace(category, score);
+        this.getStatistics().replace(category, score);
     }
 
     public boolean equals(Player player) {
@@ -27,13 +22,13 @@ public class Player extends Participant {
 
     // fixme what.
     public double statsIn(Category category) {
-        return this.statistics.get(category);
+        return this.getStatistics().get(category);
     }
 
     // fixme: send to ParticipantView... or PlayerView?
     public String getStatistics(String option) {
-        StringBuilder format = new StringBuilder();
-        this.statistics.forEach((value, key) -> format
+        StringBuilder statistics = new StringBuilder();
+        this.getStatistics().forEach((value, key) -> statistics
                 .append("Player with DNI ")
                 .append(this.DNI)
                 .append(" has a score of ")
@@ -41,6 +36,6 @@ public class Player extends Participant {
                 .append(" in the category ")
                 .append(key)
                 .append(".\n"));
-        return format.toString();
+        return statistics.toString();
     }
 }

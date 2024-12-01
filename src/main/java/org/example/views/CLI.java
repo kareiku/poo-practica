@@ -7,16 +7,12 @@ import org.example.models.Message;
 import java.util.Scanner;
 
 public class CLI {
-    private final Controller controller;
-
-    public CLI() {
-        this.controller = new Controller();
-    }
+    private final Controller controller = new Controller(); // fixme (question) Do I really need to make empty constructors for little things like this?
 
     public void start() {
         System.out.println(Message.WELCOME.message);
         do {
-            System.out.print(Message.INPUT_LINE.message); // fixme message is completely static, so... is it okay to have it public?
+            System.out.print(Message.INPUT_LINE.message); // fixme Being message completely static... is it okay to have public attributes?
             this.controller.handleInput(new Scanner(System.in).nextLine());
         } while (!this.controller.exitHasBeenExecuted());
         System.out.println(Message.BYE.message);

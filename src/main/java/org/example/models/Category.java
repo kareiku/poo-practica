@@ -7,13 +7,9 @@ public enum Category {
     PREVIOUSLY_WON_TOURNAMENTS("Torneos ganados en el pasado"),
     TOURNAMENT_EARNINGS("Dinero generado en el torneo");
 
-    private final String name;
+    public final String name;
 
     Category(String name) {
         this.name = name;
-    }
-
-    public String toString() {
-        return name;
     }
 }

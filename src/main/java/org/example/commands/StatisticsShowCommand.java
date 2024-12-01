@@ -15,7 +15,7 @@ public class StatisticsShowCommand extends Command {
 
     public void execute(String[] args) {
         StringBuilder message = new StringBuilder();
-        Iterator<Participant> iterator = participants.iterator();
+        Iterator<Participant> iterator = participant.getStatistics().iterator();
         while (iterator.hasNext()) {
             message.append(iterator.next());
         }

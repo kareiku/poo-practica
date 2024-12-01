@@ -1,22 +1,16 @@
 package org.example.commands;
 
 import org.example.models.Participant;
-import org.example.models.ParticipantSet;
 import org.example.models.Player;
-import org.example.models.Role;
-import org.example.views.CommandView;
 
 import java.util.Iterator;
 
-public class PlayerDeleteCommand extends CommandView implements Command {
-    private final ParticipantSet participants;
-
-    public PlayerDeleteCommand(ParticipantSet participants) {
-        super("player-delete", "<DNI>", "Removes a player from the system.", Role.ADMIN);
-        this.participants = participants;
+public class PlayerDeleteCommand extends Command {
+    public PlayerDeleteCommand(String name, String usage, String description) {
+        super(name, usage, description);
     }
 
-    private void execute(Player player) {
+    public void execute(String[] args) {
         Iterator<Participant> iterator = participants.iterator();
         while (iterator.hasNext()) {
             Participant participant = iterator.next();
