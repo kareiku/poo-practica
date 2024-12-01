@@ -1,22 +1,20 @@
-package org.example.views.commands;
+package org.example.commands;
 
-import org.example.views.Command;
-
-public class TournamentDeleteCommand extends Command {
+public class TournamentAddCommand implements Command {
     public void execute(String[] args) {
         // TODO
     }
 
     public String name() {
-        return "tournament-delete";
+        return "tournament-add";
     }
 
     public String usage() {
-        return "<name>";
+        return "<DNI | team name>;<tournament name>";
     }
 
     public String help() {
-        return "Deletes the specified tournament.";
+        return "Adds a player or a team to a tournament.";
     }
 
     protected PrivilegeLevel privilegeLevel() {

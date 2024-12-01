@@ -17,17 +17,17 @@ public class Player extends Participant {
         this.statistics = new HashMap<>();
     }
 
+    public void rate(Category category, double score) {
+        this.statistics.replace(category, score);
+    }
+
     public boolean equals(Player player) {
-        return this.isPlayer((player.DNI));
+        return this.DNI.equals(player.DNI);
     }
 
-    public boolean isPlayer(String DNI) {
-        return this.DNI.equals(DNI);
-    }
-
-    @Deprecated
-    public String toString() {
-        return String.format("%s\t%s\t%s", DNI, super.toString(), surname);
+    // fixme what.
+    public double statsIn(Category category) {
+        return this.statistics.get(category);
     }
 
     // fixme: send to ParticipantView... or PlayerView?

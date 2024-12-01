@@ -1,22 +1,22 @@
-package org.example.views.commands;
+package org.example.commands;
 
-import org.example.views.Command;
+import org.example.views.CommandView;
 
-public class TeamCreateCommand extends Command {
+public class TournamentMatchmakingCommand extends CommandView {
     public void execute(String[] args) {
         // TODO
     }
 
     public String name() {
-        return "team-create";
+        return "tournament-matchmaking";
     }
 
     public String usage() {
-        return "<name>";
+        return "" /* TODO */;
     }
 
     public String help() {
-        return "Adds a team to the database.";
+        return "" /* TODO */;
     }
 
     protected PrivilegeLevel privilegeLevel() {

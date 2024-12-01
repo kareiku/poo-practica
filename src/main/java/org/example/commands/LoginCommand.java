@@ -1,12 +1,12 @@
-package org.example.views.commands;
+package org.example.commands;
 
 import org.example.models.Role;
 import org.example.models.User;
-import org.example.views.Command;
+import org.example.views.CommandView;
 
 import java.util.List;
 
-public class LoginCommand extends Command {
+public class LoginCommand extends CommandView {
     private final List<User> users;
 
     public LoginCommand() {

@@ -1,13 +1,10 @@
-package org.example.views.commands;
-
-import org.example.models.Role;
-import org.example.views.Command;
+package org.example.commands;
 
 public class ExitCommand extends Command {
     private boolean executed;
 
-    public ExitCommand() {
-        super("exit", "", "Exits the application, regardless of the current state. It does save changes.", Role.GUEST);
+    public ExitCommand(String name, String usage, String description) {
+        super(name, usage, description);
         this.executed = false;
     }
 

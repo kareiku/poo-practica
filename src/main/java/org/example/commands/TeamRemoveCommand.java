@@ -1,8 +1,8 @@
-package org.example.views.commands;
+package org.example.commands;
 
-import org.example.views.Command;
+import org.example.views.CommandView;
 
-public class TeamRemoveCommand extends Command {
+public class TeamRemoveCommand extends CommandView {
     public void execute(String[] args) {
         // TODO
     }

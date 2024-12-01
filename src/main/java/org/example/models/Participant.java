@@ -7,7 +7,7 @@ public abstract class Participant {
         this.name = name;
     }
 
-    public String getName(){
-        return this.name;
+    public boolean equals(Participant participant) {
+        return this.name.equals(participant.name);
     }
 }

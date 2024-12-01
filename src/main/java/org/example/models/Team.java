@@ -1,21 +1,34 @@
 package org.example.models;
 
-import java.util.LinkedList;
+import java.util.HashSet;
+import java.util.Set;
 
-public class Team extends LinkedList<Player> {
-    private final String name;
+public class Team extends Participant {
+    private final Set<Player> players;
 
     public Team(String name) {
-        this.name = name;
+        super(name);
+        this.players = new HashSet<>();
     }
 
-    @Deprecated
-    public String toString() {
-        StringBuilder format = new StringBuilder("Team " + name + " composition: ");
-        for (Player player : this) {
-            format.append(player);
+    public void add(Player player) {
+        this.players.add(player);
+    }
+
+    public void remove(Player player) {
+        this.players.remove(player);
+    }
+
+    // fixme don't think this should be here
+    public double[] geometricMeans() {
+        double[] means = new double[Category.values().length];
+        double product = 1;
+        for (int i = 0; i < means.length; i++) {
+            for (Player player : players) {
+                product *= player.statsIn(Category.values()[i]);
+            }
+            means[i] = Math.pow(product, 1. / players.size());
         }
-        format.append(".");
-        return format.toString();
+        return means;
     }
 }

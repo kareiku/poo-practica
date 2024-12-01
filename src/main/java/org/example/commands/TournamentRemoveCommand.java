@@ -1,22 +1,22 @@
-package org.example.views.commands;
+package org.example.commands;
 
-import org.example.views.Command;
+import org.example.views.CommandView;
 
-public class TeamDeleteCommand extends Command {
+public class TournamentRemoveCommand extends CommandView {
     public void execute(String[] args) {
         // TODO
     }
 
     public String name() {
-        return "team-delete";
+        return "tournament-remove";
     }
 
     public String usage() {
-        return "<name>";
+        return "<tournament name>";
     }
 
     public String help() {
-        return "Removes a team from the database.";
+        return "Deletes a tournament, regardless of its current state.";
     }
 
     protected PrivilegeLevel privilegeLevel() {

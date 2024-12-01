@@ -1,9 +1,9 @@
-package org.example.views.commands;
+package org.example.commands;
 
 import org.example.models.Role;
-import org.example.views.Command;
+import org.example.views.CommandView;
 
-public class LogoutCommand extends Command {
+public class LogoutCommand extends CommandView {
     public LogoutCommand() {
         super("logout", "", "Attempts to log off the current user from the system, if logged.", Role.GUEST);
     }

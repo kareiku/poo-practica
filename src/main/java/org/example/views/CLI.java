@@ -1,71 +1,51 @@
 package org.example.views;
 
-import org.example.controller.CommandController;
-import org.example.controller.Logger;
+import org.example.controllers.Controller;
 import org.example.models.Error;
-import org.example.models.Role;
-import org.example.models.User;
-import org.example.views.commands.ExitCommand;
+import org.example.models.Message;
 
-import java.io.IOException;
-import java.util.Map;
 import java.util.Scanner;
 
-public final class CLI {
-    private final Map<String, Command> commands;
-    private User currentUser;
+public class CLI {
+    private final Controller controller;
 
     public CLI() {
-        this.commands = new CommandController().getCommands();
-        this.currentUser = new User(Role.GUEST);
+        this.controller = new Controller();
     }
 
     public void start() {
-        Logger logger = null;
-        try {
-            logger = new Logger("../../../../resources/logs");
-            this.readUntilExit(logger);
-        } catch (IOException ex) {
-            System.err.println("Error when logging the statement. Exiting now...");
-        } finally {
-            if (logger != null) {
-                logger.close();
-            }
-        }
-    }
-
-    private void readUntilExit(Logger logger) throws IOException {
-        Message.WELCOME.write();
+        System.out.println(Message.WELCOME.message);
         do {
-            Message.INPUT_LINE.write();
-            String statement = new Scanner(System.in).nextLine();
-            this.scan(statement);
-            logger.log(statement);
-        } while (!((ExitCommand) commands.get("exit")).hasBeenExecuted());
-        Message.BYE.write();
+            System.out.print(Message.INPUT_LINE.message); // fixme message is completely static, so... is it okay to have it public?
+            this.controller.handleInput(new Scanner(System.in).nextLine());
+        } while (!this.controller.exitHasBeenExecuted());
+        System.out.println(Message.BYE.message);
     }
 
+    @Deprecated // fixme delegate to Controller
     private void scan(String statement) {
         String commandName = statement.split("\\s+")[0];
         String[] args = statement.split("\\s+", 2)[1].split(";");
-        Command commandToRun = this.selectCommand(commandName);
+        CommandView commandToRun = this.selectCommand(commandName);
         if (commandToRun != null) {
             if (commandToRun.hasPermission(currentUser)) {
                 commandToRun.execute(args);
             } else {
-                org.example.models.Error.NO_PERMISSION.write();
+                Error.NO_PERMISSION.write();
             }
         } else {
             Error.UNKNOWN_COMMAND_ERROR.write();
         }
     }
 
-    private Command selectCommand(String commandName) {
-        Command commandToRun = null;
+    @Deprecated // fixme delegate to Controller
+    private CommandView selectCommand(String commandName) {
+        CommandView commandToRun = null;
         boolean commandFound = false;
         for (String commandID : commands.keySet()) {
-            if (!commandFound && (commandFound = commandID.equals(commandName))) { // Fixme. Pretty illegible, isn't it?
+            if (!commandFound) {
                 commandToRun = commands.get(commandID);
+                commandFound = commandID.equals(commandName);
             }
         }
         return commandToRun;
