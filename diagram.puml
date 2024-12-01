@@ -6,6 +6,7 @@ package models {
     enum Category
     enum Role
     enum Error
+    enum Message
 
     abstract class Participant {
         +id: int
@@ -103,10 +104,6 @@ package views {
         +start(): void
     }
 
-    enum Message {
-        <<enum>>
-    }
-
     class CommandView {
         +displayHelp(): void
         +showError(String): void
@@ -120,7 +117,7 @@ Controller --> CommandController
 CommandController --> CommandFactory
 CommandController --> Command
 Command --> CommandView
-Command --> SessionManager
+Command -[hidden]-> SessionManager
 Command -[hidden]-> DatabaseController
 
 Controller --> AuthController
@@ -136,5 +133,6 @@ Command --> Tournament
 
 Tournament --> ParticipantSet
 Participant --> Category
+Message <-[hidden]right- Database
 
 @enduml
