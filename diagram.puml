@@ -1,0 +1,140 @@
+@startuml
+
+class SportsManagementSystem
+
+package models {
+    enum Category
+    enum Role
+    enum Error
+
+    abstract class Participant {
+        +id: int
+        +name: String
+    }
+
+    class Player extends Participant
+    class Team extends Participant
+
+    class ParticipantSet {
+        +add(Participant): void
+        +remove(Participant): void
+        +findById(int): Participant
+    }
+
+    class Tournament {
+        +id: int
+        +name: String
+        +participants: ParticipantSet
+    }
+
+    class TournamentList {
+        +add(Tournament): void
+        +remove(Tournament): void
+        +findById(int): Tournament
+    }
+
+    class User {
+        +username: String
+        +password: String
+        +role: Role
+    }
+
+    class Database {
+        +load(): void
+        +save(): void
+    }
+}
+
+package controllers {
+    class Controller {
+        +handleInput(String): void
+    }
+
+    class CommandController {
+        +parseCommand(String): Command
+    }
+
+    class CommandFactory {
+        +createCommand(String): Command
+    }
+
+    class AuthController {
+        +login(String, String): void
+        +logout(): void
+        +isLoggedIn(): boolean
+    }
+
+    class DatabaseController {
+        +loadData(): void
+        +saveData(): void
+    }
+
+    class SessionManager {
+        +getCurrentUser(): User
+        +setCurrentUser(User): void
+    }
+}
+
+package commands {
+    abstract class Command {
+        +execute(String[]): void
+    }
+/'
+    class ExitCommand extends Command
+    class LoginCommand extends Command
+    class LogoutCommand extends Command
+    class PlayerCreateCommand extends Command
+    class PlayerDeleteCommand extends Command
+    class StatisticsShowCommand extends Command
+    class TeamAddCommand extends Command
+    class TeamCreateCommand extends Command
+    class TeamDeleteCommand extends Command
+    class TeamRemoveCommand extends Command
+    class TournamentAddCommand extends Command
+    class TournamentDeleteCommand extends Command
+    class TournamentListCommand extends Command
+    class TournamentMatchmakingCommand extends Command
+    class TournamentRemoveCommand extends Command
+'/
+}
+
+package views {
+    class CLI {
+        +start(): void
+    }
+
+    enum Message {
+        <<enum>>
+    }
+
+    class CommandView {
+        +displayHelp(): void
+        +showError(String): void
+        +showResult(String): void
+    }
+}
+
+SportsManagementSystem --> CLI
+CLI --> Controller
+Controller --> CommandController
+CommandController --> CommandFactory
+CommandController --> Command
+Command --> CommandView
+Command --> SessionManager
+Command -[hidden]-> DatabaseController
+
+Controller --> AuthController
+AuthController --> SessionManager
+Controller --> DatabaseController
+DatabaseController --> Database
+
+SessionManager --> User
+User --> Role
+
+Command --> Participant
+Command --> Tournament
+
+Tournament --> ParticipantSet
+Participant --> Category
+
+@enduml
