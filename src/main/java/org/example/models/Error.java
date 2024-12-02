@@ -9,5 +9,6 @@ public enum Error {
     PLAYER_ALREADY_EXISTS,
     ALREADY_LOGGED,
     NO_SUCH_USER,
-    NOT_LOGGED_IN
+    NOT_LOGGED_IN,
+    EMPTY_STATEMENT
 }

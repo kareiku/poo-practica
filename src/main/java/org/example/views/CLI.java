@@ -1,6 +1,7 @@
 package org.example.views;
 
 import org.example.controllers.CommandController;
+import org.example.models.Error;
 import org.example.models.Message;
 
 import java.util.Scanner;
@@ -12,7 +13,8 @@ public class CLI {
         System.out.println(Message.WELCOME.message);
         do {
             System.out.print(Message.INPUT_LINE.message); // fixme Being message completely static... is it okay to have public attributes?
-            this.commandController.handleInput(new Scanner(System.in).nextLine());
+            Error error = this.commandController.handleInput(new Scanner(System.in).nextLine());
+            System.err.println(error);
         } while (!this.commandController.exitHasBeenExecuted());
         System.out.println(Message.BYE.message);
     }

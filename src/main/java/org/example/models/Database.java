@@ -8,7 +8,7 @@ import java.io.PrintWriter;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-public class Database {
+public class Database { // fixme (question) Static Math-style or object-based?
     private static final String path = "../../../../resources/schemas/sportsmanager/";
     private final String table;
 

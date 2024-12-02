@@ -13,7 +13,7 @@ public class CommandBuilder {
         this.addCommands();
     }
 
-    public Map<String, Command> getCommandMap() {
+    public Map<String, Command> buildCommands() {
         return this.commandMap;
     }
 

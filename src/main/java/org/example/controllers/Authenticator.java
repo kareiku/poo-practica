@@ -21,7 +21,7 @@ public class Authenticator {
     }
 
     public Error logout() {
-        if (isLoggedIn()) {
+        if (this.isLoggedIn()) {
             this.user = null;
             this.role = Role.GUEST;
             return Error.NONE;
