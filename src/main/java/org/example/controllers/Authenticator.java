@@ -41,4 +41,7 @@ public class Authenticator {
         }
         return exists;
     }
+
+    public boolean hasPermission(Role[] whoCanExecute /* fixme argument name */) {
+    }
 }

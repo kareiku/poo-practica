@@ -1,6 +1,7 @@
 package org.example.controllers;
 
 import org.example.commands.*;
+import org.example.models.Role;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +23,12 @@ public class CommandBuilder {
     }
 
     private void addCommands() {
-        this.addCommand(new ExitCommand("exit", "", "Saves changes and exits the application."));
+        this.addCommand(new ExitCommand(
+                "exit",
+                "",
+                "Saves changes and exits the application.",
+                new Role[]{Role.ADMIN, Role.PLAYER, Role.GUEST}
+        ));
         this.addCommand(new PlayerCreateCommand("player-create", "<DNI>;<name>;<surnames>", "Creates a player in the system."));
         this.addCommand(new PlayerDeleteCommand("player-delete", "<DNI>", "Removes a player from the system."));
         this.addCommand(new StatisticsShowCommand("statistics-show", "", "Shows the statistics of the logged player or their team, in their case."));
