@@ -32,5 +32,5 @@ public abstract class Command {
         return roles;
     }
 
-    protected abstract Error execute(String[] args);
+    public abstract Error execute(String[] args);
 }
