@@ -30,11 +30,11 @@ public class CommandBuilder {
         this.addCommand(new TeamCreateCommand("team-create", "<name>", "Adds a team to the database."));
         this.addCommand(new TeamDeleteCommand("team-delete", "<name>", "Removes a team from the database."));
         this.addCommand(new TeamRemoveCommand("team-remove", "<DNI>", "Removes the specified player from the specified team."));
-        this.addCommand(new TournamentAddCommand());
-        this.addCommand(new TournamentCreateCommand());
-        this.addCommand(new TournamentDeleteCommand());
-        this.addCommand(new TournamentListCommand());
-        this.addCommand(new TournamentMatchmakingCommand());
-        this.addCommand(new TournamentRemoveCommand());
+        this.addCommand(new TournamentAddCommand("tournament-add", "<DNI | team name>;<tournament name>", "Adds a player or a team to a tournament."));
+        this.addCommand(new TournamentCreateCommand("tournament-create", "<name>;<start date>;<end date>;<league>;<sport>", "Creates a tournament."));
+        this.addCommand(new TournamentDeleteCommand("tournament-delete", "<name>", "Deletes the specified tournament."));
+        this.addCommand(new TournamentListCommand("tournament-list", "", "List the ongoing tournaments. Reduced format to the ones you're participant, if such user is logged."));
+        this.addCommand(new TournamentMatchmakingCommand("tournament-matchmaking", "", ""));
+        this.addCommand(new TournamentRemoveCommand("tournament-remove", "<tournament name>", "Deletes a tournament, regardless of its current state."));
     }
 }
