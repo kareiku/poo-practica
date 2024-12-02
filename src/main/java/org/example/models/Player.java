@@ -1,13 +1,11 @@
 package org.example.models;
 
 public class Player extends Participant {
-    private final User user;
     private final String surname;
     private final String DNI;
 
-    public Player(String email, String password, String name, String surname, String DNI) {
+    public Player(String name, String surname, String DNI) {
         super(name);
-        this.user = new User(email, password);
         this.surname = surname;
         this.DNI = DNI;
     }

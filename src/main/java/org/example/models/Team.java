@@ -11,6 +11,9 @@ public class Team extends Participant {
         this.players = new HashSet<>();
     }
 
+    protected void rate(Category category, double score) {
+    }
+
     public void add(Player player) {
         this.players.add(player);
     }
