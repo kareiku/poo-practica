@@ -23,15 +23,13 @@ public class CommandBuilder {
 
     private void addCommands() {
         this.addCommand(new ExitCommand("exit", "", "Saves changes and exits the application."));
-        this.addCommand(new LoginCommand());
-        this.addCommand(new LogoutCommand());
         this.addCommand(new PlayerCreateCommand("player-create", "<DNI>;<name>;<surnames>", "Creates a player in the system."));
         this.addCommand(new PlayerDeleteCommand("player-delete", "<DNI>", "Removes a player from the system."));
-        this.addCommand(new StatisticsShowCommand());
-        this.addCommand(new TeamAddCommand());
-        this.addCommand(new TeamCreateCommand());
-        this.addCommand(new TeamDeleteCommand());
-        this.addCommand(new TeamRemoveCommand());
+        this.addCommand(new StatisticsShowCommand("statistics-show", "", "Shows the statistics of the logged player or their team, in their case."));
+        this.addCommand(new TeamAddCommand("team-add", "<DNI>;<team name>", "Adds the specified player to the specified team."));
+        this.addCommand(new TeamCreateCommand("team-create", "<name>", "Adds a team to the database."));
+        this.addCommand(new TeamDeleteCommand("team-delete", "<name>", "Removes a team from the database."));
+        this.addCommand(new TeamRemoveCommand("team-remove", "<DNI>", "Removes the specified player from the specified team."));
         this.addCommand(new TournamentAddCommand());
         this.addCommand(new TournamentCreateCommand());
         this.addCommand(new TournamentDeleteCommand());

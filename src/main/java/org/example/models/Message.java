@@ -7,7 +7,7 @@ public enum Message {
     INPUT_LINE(":~$ "),
     BYE("Exiting the application...");
 
-    public final String message;
+    public final String message; // fixme (question) Is this correct?
 
     Message(String message) {
         this.message = message;

@@ -1,16 +1,34 @@
 package org.example.controllers;
 
-import org.example.commands.Command;
-import org.example.views.CommandView;
-
 public class CommandController {
-    public void parseCommand(String statement) {
+    // fixme (down) Same as in CLI.
+    private final Authenticator authenticator = new Authenticator();
+
+    // fixme (please)
+    public void handleInput(String statement) {
+        String command = statement.split("\\s+")[0];
+        command.matches(switch (dest)
+        case "login" -> authenticator.login();
+        )
+        if (command.matches("login|logout")) {
+            command.matches("login") ->
+        } else {
+        }
     }
 
-    public void showHelp() {
-        this.commands.forEach((commandName, command) -> new CommandView().showHelp(command));
+    public boolean exitHasBeenExecuted() {
+        return false;
     }
 
-    public void execute(Command command) {
+    private void getCommand() {
+    }
+
+    private void runCommand() {
+    }
+
+    private void delegate() {
+    }
+
+    private void decodeInput() {
     }
 }
