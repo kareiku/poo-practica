@@ -47,4 +47,8 @@ public class Database { // fixme (question) Static Math-style or object-based?
             System.err.println(ex.getMessage());
         }
     }
+
+    public void deleteData(String line) {
+
+    }
 }

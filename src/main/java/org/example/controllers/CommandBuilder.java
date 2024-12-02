@@ -29,18 +29,72 @@ public class CommandBuilder {
                 "Saves changes and exits the application.",
                 new Role[]{Role.ADMIN, Role.PLAYER, Role.GUEST}
         ));
-        this.addCommand(new PlayerCreateCommand("player-create", "<DNI>;<name>;<surnames>", "Creates a player in the system."));
-        this.addCommand(new PlayerDeleteCommand("player-delete", "<DNI>", "Removes a player from the system."));
-        this.addCommand(new StatisticsShowCommand("statistics-show", "", "Shows the statistics of the logged player or their team, in their case."));
-        this.addCommand(new TeamAddCommand("team-add", "<DNI>;<team name>", "Adds the specified player to the specified team."));
-        this.addCommand(new TeamCreateCommand("team-create", "<name>", "Adds a team to the database."));
-        this.addCommand(new TeamDeleteCommand("team-delete", "<name>", "Removes a team from the database."));
-        this.addCommand(new TeamRemoveCommand("team-remove", "<DNI>", "Removes the specified player from the specified team."));
-        this.addCommand(new TournamentAddCommand("tournament-add", "<DNI | team name>;<tournament name>", "Adds a player or a team to a tournament."));
-        this.addCommand(new TournamentCreateCommand("tournament-create", "<name>;<start date>;<end date>;<league>;<sport>", "Creates a tournament."));
-        this.addCommand(new TournamentDeleteCommand("tournament-delete", "<name>", "Deletes the specified tournament."));
-        this.addCommand(new TournamentListCommand("tournament-list", "", "List the ongoing tournaments. Reduced format to the ones you're participant, if such user is logged."));
-        this.addCommand(new TournamentMatchmakingCommand("tournament-matchmaking", "", ""));
-        this.addCommand(new TournamentRemoveCommand("tournament-remove", "<tournament name>", "Deletes a tournament, regardless of its current state."));
+        this.addCommand(new PlayerCreateCommand(
+                "player-create",
+                "<DNI>;<name>;<surnames>",
+                "Creates a player in the system.",
+                new Role[]{Role.ADMIN}
+        ));
+        this.addCommand(new PlayerDeleteCommand(
+                "player-delete",
+                "<DNI>",
+                "Removes a player from the system.",
+                new Role[]{Role.ADMIN}
+        ));
+        this.addCommand(new StatisticsShowCommand(
+                "statistics-show",
+                "",
+                "Shows the statistics of the logged player or their team, in their case."
+        ));
+        this.addCommand(new TeamAddCommand(
+                "team-add",
+                "<DNI>;<team name>",
+                "Adds the specified player to the specified team."
+        ));
+        this.addCommand(new TeamCreateCommand(
+                "team-create",
+                "<name>",
+                "Adds a team to the database."
+        ));
+        this.addCommand(new TeamDeleteCommand(
+                "team-delete",
+                "<name>",
+                "Removes a team from the database."
+        ));
+        this.addCommand(new TeamRemoveCommand(
+                "team-remove",
+                "<DNI>",
+                "Removes the specified player from the specified team."
+        ));
+        this.addCommand(new TournamentAddCommand(
+                "tournament-add",
+                "<DNI | team name>;<tournament name>",
+                "Adds a player or a team to a tournament."
+        ));
+        this.addCommand(new TournamentCreateCommand(
+                "tournament-create",
+                "<name>;<start date>;<end date>;<league>;<sport>",
+                "Creates a tournament."
+        ));
+        this.addCommand(new TournamentDeleteCommand(
+                "tournament-delete",
+                "<name>",
+                "Deletes the specified tournament."
+        ));
+        this.addCommand(new TournamentListCommand(
+                "tournament-list",
+                "",
+                "List the ongoing tournaments. Reduced format to the ones you're participant, if such user is logged."
+        ));
+        this.addCommand(new TournamentMatchmakingCommand(
+                "tournament-matchmaking",
+                "",
+                ""
+        ));
+        this.addCommand(new TournamentRemoveCommand(
+                "tournament-remove",
+                "<tournament name>",
+                "Deletes a tournament, regardless of its current state."
+        ));
     }
 }

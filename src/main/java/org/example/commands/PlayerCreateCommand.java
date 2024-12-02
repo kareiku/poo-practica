@@ -1,12 +1,13 @@
 package org.example.commands;
 
 import org.example.models.Database;
+import org.example.models.Role;
 
 import java.util.Deque;
 
 public class PlayerCreateCommand extends Command {
-    public PlayerCreateCommand(String name, String usage, String description) {
-        super(name, usage, description);
+    public PlayerCreateCommand(String name, String usage, String description, Role[] roles) {
+        super(name, usage, description, roles);
     }
 
     public void execute(String[] args) {
