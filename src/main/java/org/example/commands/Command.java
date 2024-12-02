@@ -28,7 +28,7 @@ public abstract class Command {
         return description;
     }
 
-    public Role[] getRoles() {
+    protected Role[] getRoles() {
         return roles;
     }
 
