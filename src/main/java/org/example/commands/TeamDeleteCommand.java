@@ -6,6 +6,5 @@ public class TeamDeleteCommand extends Command {
     }
 
     public void execute(String[] args) {
-        // TODO
     }
 }

@@ -6,6 +6,5 @@ public class TeamAddCommand extends Command {
     }
 
     public void execute(String[] args) {
-        this.participants.add();
     }
 }
