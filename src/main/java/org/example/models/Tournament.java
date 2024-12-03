@@ -8,7 +8,7 @@ import java.util.Set;
 public class Tournament {
     private final String name;
     private final Date start;
-    private final Date end
+    private final Date end;
     private final String league;
     private final String sport;
     private final Set<Participant> participants;

@@ -11,7 +11,7 @@ public class Controller {
     private final User currentUser;
     private final UserSet users;
     private final ParticipantSet participants;
-    private final TournamentSet tournaments;
+    private final TournamentList tournaments;
     private final Map<Role, Map<String, Command>> commandMap;
     private Map<String, Command> availableCommandsMap;
 
@@ -19,7 +19,7 @@ public class Controller {
         this.currentUser = new User(Role.GUEST);
         this.users = new UserSet();
         this.participants = new ParticipantSet();
-        this.tournaments = new TournamentSet();
+        this.tournaments = new TournamentList();
         this.commandMap = new CommandBuilder().buildCommands();
     }
 
