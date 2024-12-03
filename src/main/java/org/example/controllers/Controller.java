@@ -1,5 +1,6 @@
 package org.example.controllers;
 
+import org.example.CommandBuilder;
 import org.example.views.commands.Command;
 import org.example.models.Error;
 import org.example.models.Role;

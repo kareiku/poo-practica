@@ -1,12 +1,12 @@
 package org.example.models;
 
 public class Player extends Participant {
-    private final String surname;
+    private final String surnames;
     private final String DNI;
 
-    public Player(String name, String surname, String DNI) {
+    public Player(String name, String surnames, String DNI) {
         super(name);
-        this.surname = surname;
+        this.surnames = surnames;
         this.DNI = DNI;
     }
 
@@ -16,6 +16,10 @@ public class Player extends Participant {
 
     public boolean equals(Player player) {
         return this.DNI.equals(player.DNI);
+    }
+
+    public double ratingIn(Category category) {
+        return this.getStatistics().get(category);
     }
 
     public String statisticsFormat(String option) {
@@ -36,7 +40,7 @@ public class Player extends Participant {
                 .append(" has a score of ")
                 .append(value)
                 .append(" in the category ")
-                .append(key.name)
+                .append(key.getName())
                 .append(".\n"));
         return format.toString();
     }
@@ -57,9 +61,9 @@ public class Player extends Participant {
         Double[] scores = this.getStatistics().values().toArray(new Double[0]);
         format.append('{').append('\n');
         for (int i = 0; i < categories.length - 1; i++) {
-            format.append(String.format("\t\"%s\": %f,\n", categories[i].name, scores[i]));
+            format.append(String.format("\t\"%s\": %f,\n", categories[i].getName(), scores[i]));
         }
-        format.append(String.format("\t\"%s\": %f\n", categories[categories.length - 1].name, scores[categories.length]));
+        format.append(String.format("\t\"%s\": %f\n", categories[categories.length - 1].getName(), scores[categories.length]));
         format.append('}').append('\n');
         return format.toString();
     }

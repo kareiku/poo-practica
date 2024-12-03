@@ -26,13 +26,13 @@ public class Database {
                 data.push(line);
             }
         } catch (IOException ex) {
-            System.err.println(ex.getMessage());
+            assert false;
         } finally {
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException ex) {
-                    System.err.println(ex.getMessage());
+                    assert false;
                 }
             }
         }
@@ -43,7 +43,7 @@ public class Database {
         try (PrintWriter writer = new PrintWriter(new FileWriter(path + this.table, true))) {
             writer.println(line);
         } catch (IOException ex) {
-            System.err.println(ex.getMessage());
+            assert false;
         }
     }
 
@@ -59,7 +59,7 @@ public class Database {
     private void emptyTable() {
         try (FileWriter writer = new FileWriter(path + this.table)) {
         } catch (IOException ex) {
-            System.err.println(ex.getMessage());
+            assert false;
         }
     }
 }

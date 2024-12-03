@@ -5,33 +5,44 @@ import org.example.models.Error;
 import org.example.models.Role;
 import org.example.models.User;
 
-import java.util.Deque;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Authenticator {
-    private User user = null;
-    private Role role = Role.GUEST;
+    private final Set<User> users;
+    private User currentUser;
+
+    public Authenticator() {
+        this.users = new HashSet<>();
+        this.currentUser = new User(Role.GUEST);
+        this.loadUsers(new Database("users.csv"));
+    }
 
     public Error login(String email, String password) {
         if (this.isLoggedIn()) {
             return Error.ALREADY_LOGGED;
-        } else if (this.existsUser(email, password)) {
-            this.user = new User(email, password, this.role);
+        } else if (this.users.contains(email, password)) {
+            this.currentUser = new User(email, password, this.currentUser.getRole());
             return Error.NONE;
         } else return Error.NO_SUCH_USER;
     }
 
     public Error logout() {
         if (this.isLoggedIn()) {
-            this.user = null;
-            this.role = Role.GUEST;
+            this.currentUser = new User(Role.GUEST);
             return Error.NONE;
         } else return Error.NOT_LOGGED_IN;
     }
 
     private boolean isLoggedIn() {
-        return this.user != null && !this.user.hasRole(Role.GUEST);
+        return this.currentUser != null && !(this.currentUser.getRole() == Role.GUEST));
     }
 
+    private void loadUsers(Database database){
+        this.users()
+    }
+
+    // fixme
     private boolean existsUser(String email, String password) {
         final Deque<String> data = new Database("users.csv").loadData();
         boolean exists = false;

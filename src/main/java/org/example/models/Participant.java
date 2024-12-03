@@ -12,8 +12,8 @@ public abstract class Participant {
         this.statistics = new HashMap<>();
     }
 
-    public Map<Category, Double> getStatistics() {
-        return statistics;
+    protected Map<Category, Double> getStatistics() {
+        return this.statistics;
     }
 
     public boolean equals(Participant participant) {

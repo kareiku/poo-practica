@@ -3,8 +3,7 @@ package org.example.views;
 import org.example.controllers.Controller;
 import org.example.models.Error;
 import org.example.models.Message;
-
-import java.util.Scanner;
+import org.example.Console;
 
 public class CLI {
     private final Controller controller;
@@ -14,13 +13,13 @@ public class CLI {
     }
 
     public void start() {
-        System.out.println(Message.WELCOME.getMessage());
+        Console.getInstance().println(Message.WELCOME.getMessage());
         do {
-            System.out.print(Message.INPUT_LINE.getMessage());
-            Error error = this.controller.handleInput(new Scanner(System.in).nextLine());
+            Console.getInstance().print(Message.INPUT_LINE.getMessage());
+            Error error = this.controller.handleInput(Console.getInstance().readLine());
             System.err.println(error);
         } while (!this.controller.exitHasBeenExecuted());
-        System.out.println(Message.BYE.getMessage());
+        Console.getInstance().println(Message.BYE.getMessage());
     }
 
     public static void main(String[] args) {

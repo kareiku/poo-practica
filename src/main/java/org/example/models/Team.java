@@ -27,7 +27,7 @@ public class Team extends Participant {
         double product = 1;
         for (int i = 0; i < categories.length - 1; i++) {
             for (Player player : players) {
-                product *= player.getStatistics().get(categories[i]);
+                product *= player.ratingIn(categories[i]);
             }
             statistics.put(categories[i], Math.pow(product, 1. / players.size()));
         }
@@ -38,7 +38,7 @@ public class Team extends Participant {
         StringBuilder format = new StringBuilder();
         Map<Category, Double> statistics = this.geometricMeans();
         statistics.forEach((key, value) -> format
-                .append(key.name).append(":\t").append(value));
+                .append(key.getName()).append(":\t").append(value));
         return format.toString();
     }
 }

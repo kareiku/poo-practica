@@ -1,19 +1,20 @@
-package org.example.controllers;
+package org.example;
 
+import org.example.models.Role;
 import org.example.views.commands.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommandBuilder {
-    private final Map<String, Command> commandMap;
+    private final Map<Role, Map<String, Command>> commandMap;
 
     public CommandBuilder() {
         this.commandMap = new HashMap<>();
         this.addCommands();
     }
 
-    public Map<String, Command> buildCommands() {
+    public Map<Role, Map<String, Command>> buildCommands() {
         return this.commandMap;
     }
 
