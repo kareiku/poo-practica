@@ -38,18 +38,10 @@ public class Authenticator {
         return this.currentUser != null && !(this.currentUser.getRole() == Role.GUEST));
     }
 
-    private void loadUsers(Database database){
-        this.users()
+    public Role currentUserRole() {
+        return this.currentUser.getRole();
     }
 
-    // fixme
-    private boolean existsUser(String email, String password) {
-        final Deque<String> data = new Database("users.csv").loadData();
-        boolean exists = false;
-        while (!data.isEmpty()) {
-            String element = data.pop();
-            exists = element.startsWith(email + "," + password);
-        }
-        return exists;
+    private void loadUsers(Database database) {
     }
 }
