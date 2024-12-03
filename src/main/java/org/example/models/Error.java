@@ -2,8 +2,9 @@ package org.example.models;
 
 public enum Error {
     NONE,
-    UNKNOWN_COMMAND_ERROR,
+    COMMAND_NOT_FOUND,
     NO_PERMISSION,
+    EXISTENT_PLAYER,
     ALREADY_LOGGED,
     NO_SUCH_USER,
     NOT_LOGGED_IN,

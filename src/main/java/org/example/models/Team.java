@@ -1,6 +1,8 @@
 package org.example.models;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class Team extends Participant {
@@ -11,9 +13,6 @@ public class Team extends Participant {
         this.players = new HashSet<>();
     }
 
-    protected void rate(Category category, double score) {
-    }
-
     public void add(Player player) {
         this.players.add(player);
     }
@@ -22,16 +21,24 @@ public class Team extends Participant {
         this.players.remove(player);
     }
 
-    // fixme don't think this should be here
-    public double[] geometricMeans() {
-        double[] means = new double[Category.values().length];
+    private Map<Category, Double> geometricMeans() {
+        Map<Category, Double> statistics = new HashMap<>();
+        Category[] categories = Category.values();
         double product = 1;
-        for (int i = 0; i < means.length; i++) {
+        for (int i = 0; i < categories.length - 1; i++) {
             for (Player player : players) {
-                product *= player.statsIn(Category.values()[i]);
+                product *= player.getStatistics().get(categories[i]);
             }
-            means[i] = Math.pow(product, 1. / players.size());
+            statistics.put(categories[i], Math.pow(product, 1. / players.size()));
         }
-        return means;
+        return statistics;
+    }
+
+    public String statisticsFormat(String option) {
+        StringBuilder format = new StringBuilder();
+        Map<Category, Double> statistics = this.geometricMeans();
+        statistics.forEach((key, value) -> format
+                .append(key.name).append(":\t").append(value));
+        return format.toString();
     }
 }

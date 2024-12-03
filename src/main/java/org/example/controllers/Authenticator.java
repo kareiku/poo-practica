@@ -41,14 +41,4 @@ public class Authenticator {
         }
         return exists;
     }
-
-    public static boolean hasPermission(Role[] roles) {
-        boolean hasPermission = false;
-        for (Role role : roles) {
-            if (!hasPermission) {
-                hasPermission = this.role == role;
-            }
-        }
-        return hasPermission;
-    }
 }

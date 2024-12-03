@@ -1,10 +1,13 @@
-package org.example.commands;
+package org.example.views.commands;
+
+import org.example.models.Error;
 
 public class TournamentCreateCommand extends Command {
     public TournamentCreateCommand(String name, String usage, String description) {
         super(name, usage, description);
     }
 
-    public void execute(String[] args) {
+    public Error execute(String[] args) {
+        return Error.NONE;
     }
 }

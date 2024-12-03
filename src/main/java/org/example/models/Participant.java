@@ -12,13 +12,13 @@ public abstract class Participant {
         this.statistics = new HashMap<>();
     }
 
+    public Map<Category, Double> getStatistics() {
+        return statistics;
+    }
+
     public boolean equals(Participant participant) {
         return this.name.equals(participant.name);
     }
 
-    protected Map<Category, Double> getStatistics() {
-        return this.statistics;
-    }
-
-    protected abstract void rate(Category category, double score);
+    public abstract String statisticsFormat(String options);
 }

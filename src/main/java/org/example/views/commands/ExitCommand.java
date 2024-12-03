@@ -1,13 +1,12 @@
-package org.example.commands;
+package org.example.views.commands;
 
 import org.example.models.Error;
-import org.example.models.Role;
 
 public class ExitCommand extends Command {
     private boolean executed;
 
-    public ExitCommand(String name, String usage, String description, Role[] roles) {
-        super(name, usage, description, roles);
+    public ExitCommand(String name, String usage, String description) {
+        super(name, usage, description);
         this.executed = false;
     }
 

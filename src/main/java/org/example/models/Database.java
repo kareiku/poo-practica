@@ -8,7 +8,7 @@ import java.io.PrintWriter;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-public class Database { // fixme (question) Static Math-style or object-based?
+public class Database {
     private static final String path = "../../../../resources/schemas/sportsmanager/";
     private final String table;
 
@@ -16,7 +16,6 @@ public class Database { // fixme (question) Static Math-style or object-based?
         this.table = table;
     }
 
-    // fixme what.
     public Deque<String> loadData() {
         Deque<String> data = new ArrayDeque<>();
         BufferedReader reader = null;
@@ -48,7 +47,19 @@ public class Database { // fixme (question) Static Math-style or object-based?
         }
     }
 
-    public void deleteData(String line) {
+    public void removeData(String line) {
+        Deque<String> data = loadData();
+        data.remove(line);
+        this.emptyTable();
+        while (!data.isEmpty()) {
+            this.storeData(data.pop());
+        }
+    }
 
+    private void emptyTable() {
+        try (FileWriter writer = new FileWriter(path + this.table)) {
+        } catch (IOException ex) {
+            System.err.println(ex.getMessage());
+        }
     }
 }
