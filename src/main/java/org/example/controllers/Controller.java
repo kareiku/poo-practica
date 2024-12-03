@@ -1,13 +1,14 @@
 package org.example.controllers;
 
-import org.example.views.commands.Command;
+import org.example.models.*;
 import org.example.models.Error;
-import org.example.models.Role;
+import org.example.views.commands.Command;
 import org.example.views.commands.ExitCommand;
 
 import java.util.Map;
 
 public class Controller {
+    private final User currentUser;
     private final UserSet users;
     private final ParticipantSet participants;
     private final TournamentSet tournaments;
@@ -15,12 +16,15 @@ public class Controller {
     private Map<String, Command> availableCommandsMap;
 
     public Controller() {
-        this.authenticator = new Authenticator();
+        this.currentUser = new User(Role.GUEST);
+        this.users = new UserSet();
+        this.participants = new ParticipantSet();
+        this.tournaments = new TournamentSet();
         this.commandMap = new CommandBuilder().buildCommands();
     }
 
     public Error handleInput(String statement) {
-        this.availableCommandsMap = commandMap.get(this.authenticator.currentUserRole());
+        this.availableCommandsMap = commandMap.get(this.currentUser.getRole());
         statement = statement.toLowerCase();
         if (statement.isEmpty()) {
             return Error.EMPTY_STATEMENT;

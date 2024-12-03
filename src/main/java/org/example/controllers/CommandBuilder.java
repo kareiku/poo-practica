@@ -38,6 +38,6 @@ public class CommandBuilder {
     }
 
     private void addCommand(Role role, Command command) {
-        this.commandMap.putIfAbsent(command.getName(), command);
+        this.commandMap.putIfAbsent(role, command.getName(), command);
     }
 }
