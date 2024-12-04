@@ -3,7 +3,6 @@ package org.example.controllers;
 import org.example.models.*;
 import org.example.Error;
 import org.example.views.commands.Command;
-import org.example.views.commands.ExitCommand;
 
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +23,7 @@ public class Controller {
         this.teams = new Database("teams.csv").loadTeams();
         this.tournaments = new Database("tournaments.csv").loadTournaments();
         this.users = new Database("users.csv").loadUsers();
-        this.commands = new CommandBuilder().buildCommands();
+        this.commands = new CommandFactory().buildCommands();
     }
 
     public void handleInput(String statement) {
@@ -39,16 +38,6 @@ public class Controller {
                 }
             }
         }
-        if (this.exitHasBeenExecuted()) {
-            new Database("players.csv").storePlayers(this.players);
-            new Database("teams.csv").storePlayers(this.teams);
-            new Database("tournaments.csv").storePlayers(this.tournaments);
-            new Database("users.csv").storePlayers(this.users);
-        }
-    }
-
-    public boolean exitHasBeenExecuted() {
-        return ((ExitCommand) commands.get("exit")).hasBeenExecuted();
     }
 
     private Player parsePlayer(String identifier) {

@@ -5,16 +5,15 @@ import org.example.views.commands.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CommandBuilder {
+public class CommandFactory {
     private final Map<String, Command> commands;
 
-    public CommandBuilder() {
+    public CommandFactory() {
         this.commands = new HashMap<>();
-        this.createCommands();
     }
 
-    public Map<String, Command> buildCommands() {
-        return this.commands;
+    public Command getCommand(String commandName) {
+        return this.commands.get(commandName);
     }
 
     private void addCommand(Command command) {
@@ -22,7 +21,6 @@ public class CommandBuilder {
     }
 
     private void createCommands() {
-        this.addCommand(new ExitCommand("exit", "", "Saves changes and exits the application."));
         this.addCommand(new LoginCommand("login", "<email>;<password>", "Attempts to log in the specified user"));
         this.addCommand(new LogoutCommand("logout", "", "Attempts to log out the currently logged on user."));
         this.addCommand(new PlayerCreateCommand("player-create", "<DNI>;<name>;<surnames>", "Creates a player in the system."));

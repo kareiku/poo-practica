@@ -39,7 +39,7 @@ public class Team implements Participant {
         return statistics;
     }
 
-    public String statisticsFormat(String option) {
+    public String getStatisticsFormat(String option) {
         StringBuilder format = new StringBuilder();
         Map<Category, Double> statistics = this.geometricMeans();
         statistics.forEach((key, value) -> format
