@@ -3,22 +3,23 @@ package org.example.controllers;
 import org.example.Error;
 import org.example.models.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Controller {
-    private final User currentUser;
+    private final Database database;
+    private User currentUser;
     private final Map<String, User> users;
     private final Map<String, Player> players;
     private final Map<String, Team> teams;
     private final Map<String, Tournament> tournaments;
 
     public Controller() {
+        this.database = new Database();
         this.currentUser = new User(Role.GUEST);
-        this.players = new HashMap<>();
-        this.teams = new HashMap<>();
-        this.tournaments = new HashMap<>();
-        this.users = new HashMap<>();
+        this.players = this.database.loadPlayers();
+        this.teams = this.database.loadTeams();
+        this.tournaments = this.database.loadTournaments();
+        this.users = this.database.loadUsers();
     }
 
     public boolean hasPermission(Role[] roles) {
@@ -34,9 +35,22 @@ public class Controller {
     }
 
     public Error login(String email, String password) {
-        Error error = Error.NONE;
-        // TODO
+        Error error;
+        User user = this.users.get(email);
+        if (user == null) {
+            error = Error.NO_SUCH_USER;
+        } else {
+            error = user.isPasswordValid(password) ? Error.NONE : Error.INCORRECT_PASSWORD;
+            if (error == Error.NONE) {
+                this.currentUser = user;
+            }
+        }
         return error;
+    }
+
+    public Error logout() {
+        this.currentUser = new User(Role.GUEST);
+        return Error.NONE;
     }
 
     public Error addPlayer(String forename, String surname, String DNI) {
@@ -45,5 +59,10 @@ public class Controller {
 
     public Error deletePlayer(String DNI) {
         return this.players.remove(DNI) != null ? Error.NONE : Error.INEXISTENT_PLAYER;
+    }
+
+    public Error showStats() {
+        // TODO (current player)
+        return null;
     }
 }
