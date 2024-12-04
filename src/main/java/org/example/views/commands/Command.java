@@ -1,6 +1,6 @@
 package org.example.views.commands;
 
-import org.example.models.Error;
+import org.example.Error;
 
 public abstract class Command {
     private final String name;

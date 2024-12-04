@@ -1,7 +1,7 @@
 package org.example.controllers;
 
 import org.example.models.Database;
-import org.example.models.Error;
+import org.example.Error;
 import org.example.models.Role;
 import org.example.models.User;
 
@@ -27,11 +27,8 @@ public class Authenticator {
         } else return Error.NO_SUCH_USER;
     }
 
-    public Error logout() {
-        if (this.isLoggedIn()) {
-            this.currentUser = new User(Role.GUEST);
-            return Error.NONE;
-        } else return Error.NOT_LOGGED_IN;
+    public void logout() {
+        this.currentUser = new User(Role.GUEST);
     }
 
     private boolean isLoggedIn() {

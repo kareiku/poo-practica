@@ -3,28 +3,21 @@ package org.example.models;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Player extends Participant {
+public class Player implements Participant {
+    private final String forename;
     private final String surnames;
     private final String DNI;
     private final Map<Category, Double> statistics;
 
-    public Player(String name, String surnames, String DNI) {
-        super(name);
+    public Player(String forename, String surnames, String DNI) {
+        this.forename = forename;
         this.surnames = surnames;
         this.DNI = DNI;
         this.statistics = new HashMap<>();
     }
 
-    public Map<Category, Double> getStatistics() {
-        return statistics;
-    }
-
-    public void rate(Category category, double score) {
-        this.statistics.replace(category, score);
-    }
-
-    public boolean equals(Player player) {
-        return this.DNI.equals(player.DNI);
+    public boolean matches(String identifier) {
+        return this.DNI.equals(identifier);
     }
 
     public double ratingIn(Category category) {

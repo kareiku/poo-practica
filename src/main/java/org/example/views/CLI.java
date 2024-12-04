@@ -1,7 +1,6 @@
 package org.example.views;
 
 import org.example.controllers.Controller;
-import org.example.models.Error;
 import org.example.models.Message;
 import org.example.Console;
 
@@ -16,8 +15,7 @@ public class CLI {
         Console.getInstance().println(Message.WELCOME.getMessage());
         do {
             Console.getInstance().print(Message.INPUT_LINE.getMessage());
-            Error error = this.controller.handleInput(Console.getInstance().readLine());
-            System.err.println(error);
+            this.controller.handleInput(Console.getInstance().readLine());
         } while (!this.controller.exitHasBeenExecuted());
         Console.getInstance().println(Message.BYE.getMessage());
     }

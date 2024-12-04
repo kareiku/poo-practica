@@ -15,7 +15,15 @@ public class User {
         this.role = role;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
     public Role getRole() {
-        return role;
+        return this.role;
     }
 }

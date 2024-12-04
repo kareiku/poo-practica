@@ -5,12 +5,17 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Team extends Participant {
+public class Team implements Participant {
+    private final String name;
     private final Set<Player> players;
 
     public Team(String name) {
-        super(name);
+        this.name = name;
         this.players = new HashSet<>();
+    }
+
+    public boolean matches(String identifier) {
+        return this.name.equals(identifier);
     }
 
     public void add(Player player) {

@@ -1,6 +1,6 @@
 package org.example.views.commands;
 
-import org.example.models.Error;
+import org.example.Error;
 
 public class TournamentMatchmakingCommand extends Command {
     public TournamentMatchmakingCommand(String name, String usage, String description) {

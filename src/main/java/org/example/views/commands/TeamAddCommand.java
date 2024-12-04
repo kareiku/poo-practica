@@ -1,6 +1,6 @@
 package org.example.views.commands;
 
-import org.example.models.Error;
+import org.example.Error;
 
 public class TeamAddCommand extends Command {
     public TeamAddCommand(String name, String usage, String description) {

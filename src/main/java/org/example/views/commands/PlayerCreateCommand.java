@@ -1,7 +1,7 @@
 package org.example.views.commands;
 
 import org.example.models.Database;
-import org.example.models.Error;
+import org.example.Error;
 
 import java.util.Deque;
 
