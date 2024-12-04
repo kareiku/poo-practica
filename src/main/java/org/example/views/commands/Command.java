@@ -6,5 +6,5 @@ public abstract class Command {
     protected Command(Controller controller) {
     }
 
-    public abstract void execute(String... args);
+    public abstract void execute(String[] args);
 }

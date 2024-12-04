@@ -49,7 +49,7 @@ public class Controller {
     }
 
     @Deprecated
-    private Error createPlayer(String... args) {
+    private Error createPlayer(String[] args) {
         if (!this.players.add(new Player(args[0], args[1], args[2]))) {
             return Error.EXISTENT_PLAYER;
         }
@@ -57,7 +57,7 @@ public class Controller {
     }
 
     @Deprecated
-    private void deletePlayer(String... args) {
+    private void deletePlayer(String[] args) {
         this.players.remove(new Player(null, null, args[0]));
     }
 }
