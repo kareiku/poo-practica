@@ -8,5 +8,8 @@ public class LoginCommand extends Command {
     }
 
     public void execute(String[] args) {
+        if(args.length>=2){
+
+        }
     }
 }

@@ -21,6 +21,18 @@ public class Controller {
         this.users = new HashMap<>();
     }
 
+    public boolean hasPermission(Role... roles) {
+        boolean hasPermission = false;
+        int i = 0;
+        while (!hasPermission && i < roles.length) {
+            if (roles[i] == currentUser.getRole()) {
+                hasPermission = true;
+            }
+            i++;
+        }
+        return hasPermission;
+    }
+
     public Error addPlayer(String forename, String surname, String DNI) {
         return this.players.putIfAbsent(DNI, new Player(forename, surname, DNI)) == null ? Error.NONE : Error.EXISTENT_PLAYER;
     }

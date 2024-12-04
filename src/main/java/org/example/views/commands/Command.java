@@ -9,7 +9,7 @@ public abstract class Command {
         this.controller = controller;
     }
 
-    protected Controller controller() {
+    protected Controller getController() {
         return this.controller;
     }
 
