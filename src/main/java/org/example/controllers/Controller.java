@@ -4,26 +4,22 @@ import org.example.models.*;
 import org.example.Error;
 import org.example.views.commands.Command;
 
-import java.util.Iterator;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class Controller {
     private final User currentUser;
-    private final Set<User> users;
-    private final Set<Player> players;
-    private final Set<Team> teams;
-    private final List<Tournament> tournaments;
-    private final Map<String, Command> commands;
+    private final Map<String, User> users;
+    private final Map<String, Player> players;
+    private final Map<String, Team> teams;
+    private final Map<String, Tournament> tournaments;
 
     public Controller() {
         this.currentUser = new User(Role.GUEST);
-        this.players = new Database("players.csv").loadPlayers();
-        this.teams = new Database("teams.csv").loadTeams();
-        this.tournaments = new Database("tournaments.csv").loadTournaments();
-        this.users = new Database("users.csv").loadUsers();
-        this.commands = new CommandFactory().buildCommands();
+        this.players = new HashMap<>();
+        this.teams = new HashMap<>();
+        this.tournaments = new HashMap<>();
+        this.users = new HashMap<>();
     }
 
     public void handleInput(String statement) {
