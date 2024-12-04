@@ -25,5 +25,5 @@ public abstract class Command {
                 this.description);
     }
 
-    public abstract Error execute(String[] args);
+    public abstract Error execute(String... args);
 }

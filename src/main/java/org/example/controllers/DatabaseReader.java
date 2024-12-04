@@ -2,12 +2,13 @@ package org.example.controllers;
 
 import org.example.models.*;
 
-import java.util.Deque;
+import java.util.*;
 
 public class DatabaseReader {
-    public UserSet loadUsers() {
-        UserSet users = new UserSet();
+    public Set<User> loadUsers() {
+        Set<User> users = new HashSet<>();
         Deque<String> usersData = new Database("users.csv").loadData();
+        usersData.pop();
         while (!usersData.isEmpty()) {
             String userData = usersData.pop();
             users.add(this.parseUser(userData));
@@ -31,26 +32,29 @@ public class DatabaseReader {
         }
     }
 
-    public ParticipantSet loadParticipants() {
-        ParticipantSet participants = new ParticipantSet();
+    public Set<Participant> loadParticipants() {
+        Set<Participant> participants = new HashSet<>();
         Deque<String> playersData = new Database("players.csv").loadData();
         Deque<String> teamsData = new Database("teams.csv").loadData();
+        playersData.pop();
         while (!playersData.isEmpty()) {
             String playerData = playersData.pop();
             // todo
         }
+        teamsData.pop();
         while (!teamsData.isEmpty()) {
-            String teamData = playersData.pop();
+            String teamData = teamsData.pop();
             // todo
         }
         return participants;
     }
 
-    public TournamentList loadTournaments() {
-        TournamentList tournaments = new TournamentList();
+    public List<Tournament> loadTournaments() {
+        List<Tournament> tournaments = new LinkedList<>();
         Deque<String> tournamentsData = new Database("tournaments.csv").loadData();
+        tournamentsData.pop();
         while (!tournamentsData.isEmpty()) {
-            String tournamentData tournamentsData.pop();
+            String tournamentData = tournamentsData.pop();
             // todo
         }
         return tournaments;

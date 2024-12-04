@@ -5,14 +5,16 @@ import org.example.models.Error;
 import org.example.views.commands.Command;
 import org.example.views.commands.ExitCommand;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Controller {
     private final User currentUser;
-    private final UserSet users;
-    private final ParticipantSet participants;
-    private final TournamentList tournaments;
-    private Map<String, Command> commands;
+    private final Set<User> users;
+    private final Set<Participant> participants;
+    private final List<Tournament> tournaments;
+    private final Map<String, Command> commands;
 
     public Controller() {
         this.currentUser = new User(Role.GUEST);
