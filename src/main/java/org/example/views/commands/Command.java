@@ -10,7 +10,7 @@ public abstract class Command {
     }
 
     protected Controller controller() {
-        return controller;
+        return this.controller;
     }
 
     public abstract void execute(String[] args);
