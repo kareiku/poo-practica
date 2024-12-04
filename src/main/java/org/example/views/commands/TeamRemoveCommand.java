@@ -1,4 +1,12 @@
 package org.example.views.commands;
 
-public class TeamRemoveCommand {
+import org.example.controllers.Controller;
+
+public class TeamRemoveCommand extends Command {
+    public TeamRemoveCommand(Controller controller) {
+        super(controller);
+    }
+
+    public void execute(String[] args) {
+    }
 }
