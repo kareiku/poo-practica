@@ -21,7 +21,7 @@ public class Controller {
         this.users = new HashMap<>();
     }
 
-    public boolean hasPermission(Role... roles) {
+    public boolean hasPermission(Role[] roles) {
         boolean hasPermission = false;
         int i = 0;
         while (!hasPermission && i < roles.length) {
@@ -31,6 +31,12 @@ public class Controller {
             i++;
         }
         return hasPermission;
+    }
+
+    public Error login(String email, String password) {
+        Error error = Error.NONE;
+        // TODO
+        return error;
     }
 
     public Error addPlayer(String forename, String surname, String DNI) {
