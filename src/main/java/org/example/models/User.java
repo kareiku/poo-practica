@@ -15,15 +15,11 @@ public class User {
         this.role = role;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
     public Role getRole() {
         return this.role;
+    }
+
+    public boolean isPasswordValid(String password) {
+        return this.password.equals(password);
     }
 }

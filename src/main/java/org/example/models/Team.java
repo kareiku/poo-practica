@@ -29,17 +29,17 @@ public class Team implements Participant {
     private Map<Category, Double> geometricMeans() {
         Map<Category, Double> statistics = new HashMap<>();
         Category[] categories = Category.values();
-        double product = 1;
+        double product = 1.0;
         for (int i = 0; i < categories.length - 1; i++) {
             for (Player player : players) {
-                product *= player.ratingIn(categories[i]);
+                product *= player.getStat(categories[i]);
             }
             statistics.put(categories[i], Math.pow(product, 1. / players.size()));
         }
         return statistics;
     }
 
-    public String getStatisticsFormat(String option) {
+    public String getStatisticsFormat() {
         StringBuilder format = new StringBuilder();
         Map<Category, Double> statistics = this.geometricMeans();
         statistics.forEach((key, value) -> format

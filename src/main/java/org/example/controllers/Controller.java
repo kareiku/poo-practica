@@ -1,8 +1,7 @@
 package org.example.controllers;
 
-import org.example.models.*;
 import org.example.Error;
-import org.example.views.commands.Command;
+import org.example.models.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,42 +21,11 @@ public class Controller {
         this.users = new HashMap<>();
     }
 
-    public void handleInput(String statement) {
-        statement = statement.toLowerCase();
-        if (!statement.isEmpty()) {
-            String commandName = statement.split("\\s+", 2)[0];
-            String[] args = statement.split("\\s+", 2)[1].split(";");
-            Command command = commands.get(commandName);
-            if (command != null &&) {
-                if (new PermissionChecker().hasPermission(command, currentUser.getRole())) {
-                    command.execute(args);
-                }
-            }
-        }
+    public Error addPlayer(String forename, String surname, String DNI) {
+        return this.players.putIfAbsent(DNI, new Player(forename, surname, DNI)) == null ? Error.NONE : Error.EXISTENT_PLAYER;
     }
 
-    private Player parsePlayer(String identifier) {
-        Player res = null;
-        Iterator<Player> iterator = this.players.iterator();
-        while (res == null && iterator.hasNext()) {
-            Player player = iterator.next();
-            if (player.matches(identifier)) {
-                res = player;
-            }
-        }
-        return res;
-    }
-
-    @Deprecated
-    private Error createPlayer(String[] args) {
-        if (!this.players.add(new Player(args[0], args[1], args[2]))) {
-            return Error.EXISTENT_PLAYER;
-        }
-        return Error.NONE;
-    }
-
-    @Deprecated
-    private void deletePlayer(String[] args) {
-        this.players.remove(new Player(null, null, args[0]));
+    public Error deletePlayer(String DNI) {
+        return this.players.remove(DNI) != null ? Error.NONE : Error.INEXISTENT_PLAYER;
     }
 }

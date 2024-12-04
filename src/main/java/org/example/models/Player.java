@@ -16,7 +16,7 @@ public class Player implements Participant {
         this.DNI = DNI;
         this.stats = new HashMap<>();
         for (Category category : Category.values()) {
-            this.stats.put(category, 0.);
+            this.stats.put(category, 0.0);
         }
         this.user = null;
     }
@@ -33,7 +33,7 @@ public class Player implements Participant {
         return this.DNI.equals(identifier);
     }
 
-    public double ratingIn(Category category) {
+    public double getStat(Category category) {
         return this.stats.get(category);
     }
 
