@@ -1,17 +1,26 @@
 package org.example.models;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Player extends Participant {
     private final String surnames;
     private final String DNI;
+    private final Map<Category, Double> statistics;
 
     public Player(String name, String surnames, String DNI) {
         super(name);
         this.surnames = surnames;
         this.DNI = DNI;
+        this.statistics = new HashMap<>();
+    }
+
+    public Map<Category, Double> getStatistics() {
+        return statistics;
     }
 
     public void rate(Category category, double score) {
-        this.getStatistics().replace(category, score);
+        this.statistics.replace(category, score);
     }
 
     public boolean equals(Player player) {
@@ -19,7 +28,7 @@ public class Player extends Participant {
     }
 
     public double ratingIn(Category category) {
-        return this.getStatistics().get(category);
+        return this.statistics.get(category);
     }
 
     public String statisticsFormat(String option) {
@@ -34,7 +43,7 @@ public class Player extends Participant {
 
     private String statisticsDefault() {
         StringBuilder format = new StringBuilder();
-        this.getStatistics().forEach((key, value) -> format
+        this.statistics.forEach((key, value) -> format
                 .append("Player with DNI ")
                 .append(this.DNI)
                 .append(" has a score of ")
@@ -47,7 +56,7 @@ public class Player extends Participant {
 
     private String statisticsCSV() {
         StringBuilder format = new StringBuilder();
-        Double[] ratings = this.getStatistics().values().toArray(new Double[0]);
+        Double[] ratings = this.statistics.values().toArray(new Double[0]);
         for (int i = 0; i < ratings.length - 1; i++) {
             format.append(ratings[i]).append(',');
         }
@@ -57,8 +66,8 @@ public class Player extends Participant {
 
     private String statisticsJSON() {
         StringBuilder format = new StringBuilder();
-        Category[] categories = this.getStatistics().keySet().toArray(new Category[0]);
-        Double[] scores = this.getStatistics().values().toArray(new Double[0]);
+        Category[] categories = this.statistics.keySet().toArray(new Category[0]);
+        Double[] scores = this.statistics.values().toArray(new Double[0]);
         format.append('{').append('\n');
         for (int i = 0; i < categories.length - 1; i++) {
             format.append(String.format("\t\"%s\": %f,\n", categories[i].getName(), scores[i]));

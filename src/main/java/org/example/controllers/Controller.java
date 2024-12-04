@@ -44,4 +44,8 @@ public class Controller {
     public boolean exitHasBeenExecuted() {
         return ((ExitCommand) commands.get("exit")).hasBeenExecuted();
     }
+
+    private Error createPlayer(String... args){
+        this.participants.add(new Player(args[0], args[1], args[2]));
+    }
 }
