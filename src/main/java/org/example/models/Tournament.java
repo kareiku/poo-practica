@@ -5,17 +5,17 @@ import java.util.*;
 
 public class Tournament {
     private final String name;
-    private final Date start;
-    private final Date end;
+    private final String startDate;
+    private final String endDate;
     private final String league;
     private final String sport;
     private final Set<Participant> participants;
     private final List<Match> matchups;
 
-    public Tournament(String name, Date start, Date end, String league, String sport) {
+    public Tournament(String name, String startDate, String endDate, String league, String sport) {
         this.name = name;
-        this.start = start;
-        this.end = end;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.league = league;
         this.sport = sport;
         this.participants = new HashSet<>();
@@ -28,12 +28,16 @@ public class Tournament {
 
     public boolean inProgress() {
         Date now = Date.from(Instant.now());
-        return now.after(this.start) && now.before(this.end);
+        return now.after(this.toDate(this.startDate)) && now.before(this.toDate(this.endDate));
     }
 
     public boolean hasFinished() {
         Date now = Date.from(Instant.now());
-        return now.after(this.end);
+        return now.after(this.toDate(this.endDate));
+    }
+
+    private Date toDate(String date){
+        return Date.from(Instant.parse(date));
     }
 
     public boolean add(Participant participant) {
@@ -49,7 +53,7 @@ public class Tournament {
     }
 
     public String getFormat() {
-        return String.format("Tournament \"%s\"\nFrom: %s, until: %s.\n%s league: \"%s\"", name, start.toString(), end.toString(), sport, league);
+        return String.format("Tournament \"%s\"\nFrom: %s, until: %s.\n%s league: \"%s\"", name, startDate.toString(), endDate.toString(), sport, league);
     }
 
     public void manualMatchmake(Participant... participants) {

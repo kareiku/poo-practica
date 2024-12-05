@@ -7,19 +7,26 @@ import java.util.Set;
 
 public class Team implements Participant {
     private final String name;
+    private final String adminEmail;
     private final Set<Player> players;
 
-    public Team(String name) {
+    public Team(String adminEmail, String name, String... DNIs) {
         this.name = name;
+        this.adminEmail = adminEmail;
         this.players = new HashSet<>();
+        if (DNIs != null) {
+            for (String DNI : DNIs) {
+                this.players.add(new Player(null, null, DNI));
+            }
+        }
+    }
+
+    public Team(String adminEmail, String name) {
+        this(adminEmail, name, null, null);
     }
 
     public String getIdentifier() {
         return this.name;
-    }
-
-    public boolean matches(String identifier) {
-        return this.name.equals(identifier);
     }
 
     public boolean add(Player player) {
@@ -47,11 +54,17 @@ public class Team implements Participant {
         return statistics;
     }
 
-    public String getStatisticsFormat() {
+    public String getStatsFormat(String option) {
         StringBuilder format = new StringBuilder();
         Map<Category, Double> statistics = this.geometricMeans();
         statistics.forEach((key, value) -> format
                 .append(key.getName()).append(":\t").append(value));
         return format.toString();
+    }
+
+    public double rating() {
+        double[] rating = {0.0};
+        this.geometricMeans().forEach(((category, score) -> rating[0] += score));
+        return rating[0] / Category.values().length;
     }
 }

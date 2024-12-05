@@ -10,15 +10,20 @@ public class Player implements Participant {
     private final Map<Category, Double> stats;
     private final User user;
 
-    public Player(String forename, String surname, String DNI) {
+    public Player(String email, String forename, String surname, String DNI, Double... stats) {
         this.forename = forename;
         this.surname = surname;
         this.DNI = DNI;
         this.stats = new HashMap<>();
-        for (Category category : Category.values()) {
-            this.stats.put(category, 0.0);
+        Category[] categories = Category.values();
+        for (int i = 0; i < categories.length; i++) {
+            this.stats.put(categories[i], stats != null ? stats[i] : 0.0);
         }
-        this.user = null;
+        this.user = new User(email, email, Role.PLAYER);
+    }
+
+    public Player(String forename, String surname, String DNI) {
+        this(null, forename, surname, DNI);
     }
 
     public String getIdentifier() {
@@ -27,10 +32,6 @@ public class Player implements Participant {
 
     public boolean isUser(User user) {
         return this.user == user;
-    }
-
-    public boolean matches(String DNI) {
-        return this.DNI.equals(DNI);
     }
 
     public double getStat(Category category) {
@@ -81,5 +82,11 @@ public class Player implements Participant {
         format.append(String.format("\t\"%s\": %f\n", categories[categories.length - 1].getName(), scores[scores.length - 1]));
         format.append('}').append('\n');
         return format.toString();
+    }
+
+    public double rating() {
+        double[] rating = {0.0};
+        this.stats.forEach(((category, score) -> rating[0] += score));
+        return rating[0] / Category.values().length;
     }
 }

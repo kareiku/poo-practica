@@ -3,11 +3,9 @@ package org.example.controllers;
 import org.example.utils.Error;
 import org.example.models.*;
 
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 public class Controller {
-    private final Database database;
     private User currentUser;
     private final Map<String, User> users;
     private final Map<String, Player> players;
@@ -15,12 +13,12 @@ public class Controller {
     private final Map<String, Tournament> tournaments;
 
     public Controller() {
-        this.database = new Database();
+        Database database = new Database();
         this.currentUser = new User(Role.GUEST);
-        this.players = this.database.loadPlayers();
-        this.teams = this.database.loadTeams();
-        this.tournaments = this.database.loadTournaments();
-        this.users = this.database.loadUsers();
+        this.players = database.loadPlayers();
+        this.teams = database.loadTeams();
+        this.tournaments = database.loadTournaments();
+        this.users = database.loadUsers();
     }
 
     private Player getPlayerFromCurrentUser() {
@@ -89,6 +87,9 @@ public class Controller {
     }
 
     public String showStats(String option) {
+        if ("-e".equals(option)) {
+            return this.getTeamFromPlayer(this.getPlayerFromCurrentUser()).getStatsFormat(null);
+        }
         return this.getPlayerFromCurrentUser().getStatsFormat(option);
     }
 
@@ -99,7 +100,7 @@ public class Controller {
 
     public Error createTeam(String name) {
         if (!this.teams.containsKey(name)) {
-            this.teams.put(name, new Team(name));
+            this.teams.put(name, new Team(this.currentUser.getEmail(), name));
             return Error.NONE;
         }
         return Error.EXISTENT_TEAM;
@@ -132,11 +133,7 @@ public class Controller {
                     if ("-e".equals(option)) {
                         Team team = getTeamFromPlayer(player);
                         if (team != null) {
-                            if (!tournament.contains(team)) {
-                                tournament.add(team);
-                            } else {
-                                return Error.PARTICIPANT_ALREADY_IN_TOURNAMENT;
-                            }
+                            return tournament.add(team) ? Error.NONE : Error.PARTICIPANT_ALREADY_IN_TOURNAMENT;
                         } else {
                             return Error.INEXISTENT_TEAM;
                         }
@@ -155,9 +152,9 @@ public class Controller {
         return Error.NONE;
     }
 
-    public Error createTournament(String name, Date start, Date end, String league, String sport) {
+    public Error createTournament(String name, String startDate, String endDate, String league, String sport) {
         if (!this.tournaments.containsKey(name)) {
-            this.tournaments.put(name, new Tournament(name, start, end, league, sport));
+            this.tournaments.put(name, new Tournament(name, startDate, endDate, league, sport));
             return Error.NONE;
         }
         return Error.EXISTENT_TOURNAMENT;
@@ -168,25 +165,27 @@ public class Controller {
     }
 
     public String listTournaments() {
-        switch (this.currentUser.getRole()) {
-            case ADMIN:
-                this.tournaments.forEach((name, tournament) -> {
-                    if (tournament.hasFinished()) {
-                        tournaments.remove(name);
-                    }
-                });
-                return this.tournamentListing(false);
-            case PLAYER:
-                return this.tournamentListing(false);
-            case GUEST:
-                return this.tournamentListing(true);
+        if (this.currentUser.getRole() == Role.ADMIN) {
+            this.tournaments.forEach((name, tournament) -> {
+                if (tournament.hasFinished()) {
+                    tournaments.remove(name);
+                }
+            });
         }
-        return null;
+        return this.tournamentListing(this.currentUser.getRole());
     }
 
-    private String tournamentListing(boolean random) {
+    private String tournamentListing(Role role) {
+        List<Tournament> tournaments = new ArrayList<>(this.tournaments.values());
         StringBuilder format = new StringBuilder();
-        this.tournaments.forEach((name, tournament) -> format.append(tournament.getFormat()));
+        if (role == Role.ADMIN || role == Role.PLAYER) {
+            tournaments.sort(Comparator.comparingDouble(Participant::rating));
+        } else {
+            Collections.shuffle(tournaments);
+        }
+        for (Tournament tournament : tournaments) {
+            format.append(tournament.getFormat());
+        }
         return format.toString();
     }
 
@@ -214,12 +213,12 @@ public class Controller {
     }
 
     public Error removeFromTournament(String tournamentName, String option) {
+        Tournament tournament = this.tournaments.get(tournamentName);
+        Player player = this.getPlayerFromCurrentUser();
         if ("-e".equals(option)) {
-            // TODO
-            return null;
+            return tournament.remove(this.getTeamFromPlayer(player)) ? Error.NONE : Error.INEXISTENT_TEAM;
         } else {
-            // TODO
-            return null;
+            return tournament.remove(player) ? Error.NONE : Error.INEXISTENT_PLAYER;
         }
     }
 }
