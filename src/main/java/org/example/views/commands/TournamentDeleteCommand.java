@@ -6,9 +6,10 @@ import org.example.utils.Error;
 
 public class TournamentDeleteCommand extends Command {
     public TournamentDeleteCommand(Controller controller) {
-        super(controller);
+        super(controller, 1, Error.NO_PERMISSION, Role.ADMIN);
     }
 
     protected Error executeTemplate(String[] args) {
+        return this.getController().deleteTournament(args[0]);
     }
 }
