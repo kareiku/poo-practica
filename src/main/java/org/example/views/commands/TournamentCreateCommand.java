@@ -18,7 +18,7 @@ public class TournamentCreateCommand extends Command {
     protected Error executeTemplate(String[] args) {
         final String dateFormat = "\\d{2}-\\d{2}-\\d{4}";
         if (args[1].matches(dateFormat) && args[2].matches(dateFormat)) {
-            return this.getController().createTournament(args[0], this.toDate(args[1]), this.toDate(args[2]), args[3], args[4]);
+            return this.getController().createTournament(args[0], args[1], args[2], args[3], args[4]);
         } else {
             return Error.INCORRECT_ARGUMENT_FORMAT;
         }

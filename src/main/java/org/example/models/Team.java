@@ -67,4 +67,8 @@ public class Team implements Participant {
         this.geometricMeans().forEach(((category, score) -> rating[0] += score));
         return rating[0] / Category.values().length;
     }
+
+    public String getFormat() {
+        return name + " (" + adminEmail + ")";
+    }
 }

@@ -6,4 +6,6 @@ public interface Participant {
     String getStatsFormat(String option);
 
     double rating();
+
+    String getFormat();
 }

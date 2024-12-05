@@ -179,13 +179,11 @@ public class Controller {
         List<Tournament> tournaments = new ArrayList<>(this.tournaments.values());
         StringBuilder format = new StringBuilder();
         if (role == Role.ADMIN || role == Role.PLAYER) {
-            tournaments.sort(Comparator.comparingDouble(Participant::rating));
+            tournaments.forEach((tournament -> format.append(tournament.getFormat()).append(tournament.getSortedParticipantsFormat())));
         } else {
             Collections.shuffle(tournaments);
         }
-        for (Tournament tournament : tournaments) {
-            format.append(tournament.getFormat());
-        }
+        tournaments.forEach((tournament -> format.append(tournament.getFormat()).append("\n")));
         return format.toString();
     }
 

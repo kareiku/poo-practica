@@ -89,4 +89,8 @@ public class Player implements Participant {
         this.stats.forEach(((category, score) -> rating[0] += score));
         return rating[0] / Category.values().length;
     }
+
+    public String getFormat(){
+        return forename + " " + surname + " (" + DNI + ")";
+    }
 }

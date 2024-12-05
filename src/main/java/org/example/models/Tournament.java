@@ -36,7 +36,7 @@ public class Tournament {
         return now.after(this.toDate(this.endDate));
     }
 
-    private Date toDate(String date){
+    private Date toDate(String date) {
         return Date.from(Instant.parse(date));
     }
 
@@ -72,6 +72,12 @@ public class Tournament {
                     participantList.remove(random.nextInt(participantList.size()))
             ));
         }
+    }
+
+    public String getSortedParticipantsFormat() {
+        StringBuilder format = new StringBuilder();
+        this.participants.forEach((participant -> format.append(participant.getFormat()).append(("\n"))));
+        return format.toString();
     }
 }
 
