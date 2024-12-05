@@ -23,8 +23,8 @@ public abstract class Command {
     }
 
     public void execute(String[] args) {
-        if (this.getController().hasPermission(roles)) {
-            if (args.length >= requiredArgumentCount) {
+        if (this.getController().hasPermission(this.roles)) {
+            if (args.length >= this.requiredArgumentCount) {
                 Error error = this.executeTemplate(args);
                 if (error != Error.NONE) {
                     Console.getInstance().println(error.getMessage());
@@ -33,7 +33,7 @@ public abstract class Command {
                 Console.getInstance().println(Error.INCORRECT_ARGUMENT_COUNT.getMessage());
             }
         } else {
-            Console.getInstance().println(permissionError.getMessage());
+            Console.getInstance().println(this.permissionError.getMessage());
         }
     }
 
