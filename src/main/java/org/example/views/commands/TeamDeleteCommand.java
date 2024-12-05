@@ -7,6 +7,6 @@ public class TeamDeleteCommand extends Command {
         super(controller);
     }
 
-    public void execute(String[] args) {
+    protected Error executeTemplate(String[] args) {
     }
 }

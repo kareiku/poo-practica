@@ -10,6 +10,5 @@ public class TeamAddCommand extends Command {
     }
 
     protected Error executeTemplate(String[] args) {
-        return null; // TODO
     }
 }
