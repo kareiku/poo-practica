@@ -72,62 +72,52 @@ public class Controller {
     }
 
     public Error addToTeam(String DNI, String teamName) {
-        Error error;
         // TODO
-        return error;
+        return null;
     }
 
     public Error createTeam() {
-        Error error;
         // TODO
-        return error;
+        return null;
     }
 
     public Error deleteTeam() {
-        Error error;
         // TODO
-        return error;
+        return null;
     }
 
     public Error removeFromTeam() {
-        Error error;
         // TODO
-        return error;
+        return null;
     }
 
     public Error addToTournament(String identifier, String tournamentName) {
-        Error error;
         // TODO
-        return error;
+        return null;
     }
 
     public Error createTournament() {
-        Error error;
         // TODO
-        return error;
+        return null;
     }
 
     public Error deleteTournament() {
-        Error error;
         // TODO
-        return error;
+        return null;
     }
 
-    public Error listTournaments() {
-        Error error;
+    public String listTournaments() {
         // TODO
-        return error;
+        return "";
     }
 
     public Error tournamentMatchmake() {
-        Error error;
         // TODO
-        return error;
+        return null;
     }
 
     public Error removeTournament(String tournamentName) {
-        Error error;
         // TODO
-        return error;
+        return null;
     }
 }

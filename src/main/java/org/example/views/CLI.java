@@ -26,7 +26,7 @@ public class CLI {
             } else {
                 Console.getInstance().println(Error.COMMAND_NOT_FOUND.getMessage());
             }
-        } while (!statement.equalsIgnoreCase("exit"));
+        } while (!statement.equals("exit"));
         Console.getInstance().println(Message.BYE.getMessage());
     }
 

@@ -5,13 +5,47 @@ import org.example.models.Team;
 import org.example.models.Tournament;
 import org.example.models.User;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
 public class Database {
+    private static final String PATH = "../../../../resources/schemas/sportsmanager/";
+
+    private <T> List<T> loadData(String filename, CSVParser<T> parser) {
+        List<T> data = new ArrayList<>();
+        try (CSVReader reader = new CSVReader(new FileReader(PATH + filename))) {
+            String[] row;
+            while((row = reader.readNext())!= null){
+                data.add(parser.parse(row, false));
+            }
+        } catch (Exception ex) {
+            assert false;
+        }
+        return data;
+    }
+
+    private void storeData(String file, Deque<String> data) {
+        try (CSVWriter writer = new CSVWriter(new FileWriter(PATH + file))) {
+            while (!data.isEmpty()) {
+
+                writer.writeNext();
+            }
+        } catch (Exception ex) {
+            assert false;
+        }
+    }
+
+    private void emptyFile(String file) {
+        try (FileWriter writer = new FileWriter(PATH + file)) {
+            assert true;
+        } catch (Exception ex) {
+            assert false;
+        }
+    }
+
     public Map<String, Player> loadPlayers() {
         Map<String, Player> players = new HashMap<>();
-        // TODO
+        List<Player> data = this.loadData("players.csv");
         return players;
     }
 
@@ -43,57 +77,5 @@ public class Database {
 
     public void storeTournaments() {
         // TODO
-    }
-
-    public void storeUsers() {
-        // TODO
-    }
-
-    private Player parsePlayer(String playerData) {
-        Player player = null;
-        // TODO
-        return player;
-    }
-
-    private Team parseTeam(String teamData) {
-        Team team = null;
-        // TODO
-        return team;
-    }
-
-    private Tournament parseTournament(String tournamentData) {
-        Tournament tournament = null;
-        // TODO
-        return tournament;
-    }
-
-    private User parseUser(String userData) {
-        User user = null;
-        // TODO
-        return user;
-    }
-
-    private String unParsePlayer(Player player) {
-        String playerData = null;
-        // TODO
-        return playerData;
-    }
-
-    private String unParseTeam(Team team) {
-        String teamData = null;
-        // TODO
-        return teamData;
-    }
-
-    private String unParseTournament(Tournament tournament) {
-        String tournamentData = null;
-        // TODO
-        return tournamentData;
-    }
-
-    private String unParseUser(User user) {
-        String userData = null;
-        // TODO
-        return userData;
     }
 }
