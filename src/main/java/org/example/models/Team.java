@@ -30,6 +30,10 @@ public class Team implements Participant {
         return this.players.remove(player);
     }
 
+    public boolean contains(Player player) {
+        return this.players.contains(player);
+    }
+
     private Map<Category, Double> geometricMeans() {
         Map<Category, Double> statistics = new HashMap<>();
         Category[] categories = Category.values();

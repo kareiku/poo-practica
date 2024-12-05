@@ -19,7 +19,8 @@ public enum Error {
     PARTICIPANT_ON_TOURNAMENT_IN_PROGRESS("Error: Participant is currently participating in a tournament in progress."),
     NO_SUCH_OPTION("Error: Provided option is not available."),
     PLAYER_ALREADY_IN_TEAM("Error: That player already belongs to the provided team."),
-    PARTICIPANT_ALREADY_IN_TOURNAMENT("Error: That participant is already signed up in the tournament.");
+    PARTICIPANT_ALREADY_IN_TOURNAMENT("Error: That participant is already signed up in the tournament."),
+    TOURNAMENT_IN_PROGRESS("Error: Provided tournament is currently in progress.");
 
     private final String message;
 

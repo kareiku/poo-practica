@@ -1,8 +1,8 @@
 package org.example.views.commands;
 
-import org.example.utils.Error;
 import org.example.controllers.Controller;
 import org.example.models.Role;
+import org.example.utils.Error;
 
 public class PlayerDeleteCommand extends Command {
     public PlayerDeleteCommand(Controller controller) {
@@ -12,8 +12,11 @@ public class PlayerDeleteCommand extends Command {
     protected Error executeTemplate(String[] args) {
         Error error = Error.INCORRECT_ARGUMENT_FORMAT;
         if (args[0].matches("^\\d{8}[A-Za-z]$")) {
-            // fixme: A player musn't be deleted if it's participating in a currently-in-progress tournament.
-            error = this.getController().deletePlayer(args[0]);
+            if (!this.getController().isPlayerParticipatingInAInProgressTournament(args[0])) {
+                error = this.getController().deletePlayer(args[0]);
+            } else {
+                error = Error.PARTICIPANT_ON_TOURNAMENT_IN_PROGRESS;
+            }
         }
         return error;
     }

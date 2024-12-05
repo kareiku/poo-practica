@@ -1,9 +1,9 @@
 package org.example.views.commands;
 
-import org.example.utils.Console;
-import org.example.utils.Error;
 import org.example.controllers.Controller;
 import org.example.models.Role;
+import org.example.utils.Console;
+import org.example.utils.Error;
 
 public class StatisticsShowCommand extends Command {
     public StatisticsShowCommand(Controller controller) {

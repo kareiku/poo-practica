@@ -1,9 +1,7 @@
 package org.example.models;
 
 import java.time.Instant;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Tournament {
     private final String name;
@@ -12,6 +10,7 @@ public class Tournament {
     private final String league;
     private final String sport;
     private final Set<Participant> participants;
+    private final List<Match> matchups;
 
     public Tournament(String name, Date start, Date end, String league, String sport) {
         this.name = name;
@@ -20,6 +19,7 @@ public class Tournament {
         this.league = league;
         this.sport = sport;
         this.participants = new HashSet<>();
+        this.matchups = new LinkedList<>();
     }
 
     public String getName() {
@@ -50,5 +50,19 @@ public class Tournament {
 
     public String getFormat() {
         return String.format("%s\t[%s]-[%s]: %s, %s", name, start.toString(), end.toString(), league, sport);
+    }
+
+    public void manualMatchmakeAll() {
+    }
+
+    private void manualMatchmake(Participant... participants) {
+    }
+}
+
+class Match {
+    private Participant[] participants;
+
+    Match(Participant... participants) {
+        this.participants = new Participant[]{participants[0], participants[1]};
     }
 }

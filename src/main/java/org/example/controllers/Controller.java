@@ -23,6 +23,26 @@ public class Controller {
         this.users = this.database.loadUsers();
     }
 
+    private Player getPlayerFromCurrentUser() {
+        Player[] playerCurrentUser = {null};
+        this.players.forEach((DNI, player) -> {
+            if (player.isUser(this.currentUser)) {
+                playerCurrentUser[0] = player;
+            }
+        });
+        return playerCurrentUser[0];
+    }
+
+    private Team getTeamFromPlayer(Player player) {
+        Team[] teamWithPlayer = {null};
+        this.teams.forEach((name, team) -> {
+            if (team.contains(player)) {
+                teamWithPlayer[0] = team;
+            }
+        });
+        return teamWithPlayer[0];
+    }
+
     public boolean hasPermission(Role... roles) {
         boolean hasPermission = roles.length == 0;
         int i = 0;
@@ -62,14 +82,14 @@ public class Controller {
         return this.players.remove(DNI) != null ? Error.NONE : Error.INEXISTENT_PLAYER;
     }
 
+    public boolean isPlayerParticipatingInAInProgressTournament(String DNI) {
+        boolean[] isIt = {false};
+        this.tournaments.forEach((name, tournament) -> isIt[0] = tournament.contains(this.players.get(DNI)));
+        return isIt[0];
+    }
+
     public String showStats(String option) {
-        Player[] objective = new Player[]{null};
-        this.players.forEach((DNI, player) -> {
-            if (player.isUser(this.currentUser)) {
-                objective[0] = player;
-            }
-        });
-        return objective[0].getStatsFormat(option);
+        return this.getPlayerFromCurrentUser().getStatsFormat(option);
     }
 
     public Error addToTeam(String DNI, String teamName) {
@@ -89,8 +109,8 @@ public class Controller {
         return this.teams.remove(name) != null ? Error.NONE : Error.INEXISTENT_TEAM;
     }
 
-    public Error removeFromTeam(String DNI, String name) {
-        Team team = this.teams.get(name);
+    public Error removeFromTeam(String DNI) {
+        Team team = this.getTeamFromPlayer(this.players.get(DNI));
         if (team != null) {
             Player player = this.players.get(DNI);
             if (player != null) {
@@ -103,27 +123,36 @@ public class Controller {
         }
     }
 
-    public Error addToTournament(String identifier, String tournamentName) {
-        Participant participant = null;
-        if (identifier != null) {
-            if (identifier.matches("\\d{8}[A-Za-z]")) {
-                participant = this.players.get(identifier);
+    public Error addToTournament(String tournamentName, String option) {
+        Tournament tournament = this.tournaments.get(tournamentName);
+        if (!tournament.inProgress()) {
+            Player player = this.getPlayerFromCurrentUser();
+            if (player != null) {
+                if (!tournament.contains(player)) {
+                    if ("-e".equals(option)) {
+                        Team team = getTeamFromPlayer(player);
+                        if (team != null) {
+                            if (!tournament.contains(team)) {
+                                tournament.add(team);
+                            } else {
+                                return Error.PARTICIPANT_ALREADY_IN_TOURNAMENT;
+                            }
+                        } else {
+                            return Error.INEXISTENT_TEAM;
+                        }
+                    } else {
+                        tournament.add(player);
+                    }
+                } else {
+                    return Error.PARTICIPANT_ALREADY_IN_TOURNAMENT;
+                }
             } else {
-                participant = this.teams.get(identifier);
+                return Error.INEXISTENT_PLAYER;
             }
         } else {
-            return Error.INCORRECT_ARGUMENT_FORMAT;
+            return Error.TOURNAMENT_IN_PROGRESS;
         }
-        if (participant != null) {
-            Tournament tournament = this.tournaments.get(tournamentName);
-            if (tournament != null) {
-                if (!tournament.inProgress() && !tournament.contains(participant)) {
-                    return tournament.add(participant) ? Error.NONE : Error.PARTICIPANT_ALREADY_IN_TOURNAMENT;
-                } else {
-                    return Error.PARTICIPANT_ON_TOURNAMENT_IN_PROGRESS;
-                }
-            }
-        }
+        return Error.NONE;
     }
 
     public Error createTournament(String name, Date start, Date end, String league, String sport) {
@@ -161,19 +190,24 @@ public class Controller {
         return format.toString();
     }
 
-    public Error tournamentMatchmake(String option) {
-        if ("-m".equals(option)) {
-            // TODO
-            return null;
-        } else if ("-a".equals(option)) {
-            // TODO
-            return null;
+    public Error tournamentMatchmake(String tournamentName, String option) {
+        Tournament tournament = this.tournaments.get(tournamentName);
+        if (tournament != null) {
+            if ("-m".equals(option)) {
+                tournament.manualMatchmaking();
+                return Error.NONE;
+            } else if ("-a".equals(option)) {
+                tournament.randomMatchmaking();
+                return Error.NONE;
+            } else {
+                return Error.NO_SUCH_OPTION;
+            }
         } else {
-            return Error.NO_SUCH_OPTION;
+            return Error.INEXISTENT_TOURNAMENT;
         }
     }
 
-    public Error removeTournament(String tournamentName, String option) {
+    public Error removeFromTournament(String tournamentName, String option) {
         if ("-e".equals(option)) {
             // TODO
             return null;
