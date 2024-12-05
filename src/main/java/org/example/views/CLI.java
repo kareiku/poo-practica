@@ -1,6 +1,6 @@
 package org.example.views;
 
-import org.example.services.CommandFactory;
+import org.example.controllers.CommandFactory;
 import org.example.utils.Console;
 import org.example.models.Message;
 import org.example.utils.Error;

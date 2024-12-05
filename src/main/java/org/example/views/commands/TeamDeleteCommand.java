@@ -1,6 +1,6 @@
 package org.example.views.commands;
 
-import org.example.services.Controller;
+import org.example.controllers.Controller;
 
 public class TeamDeleteCommand extends Command {
     public TeamDeleteCommand(Controller controller) {

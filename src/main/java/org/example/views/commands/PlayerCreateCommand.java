@@ -1,7 +1,7 @@
 package org.example.views.commands;
 
 import org.example.utils.Error;
-import org.example.services.Controller;
+import org.example.controllers.Controller;
 import org.example.models.Role;
 
 public class PlayerCreateCommand extends Command {

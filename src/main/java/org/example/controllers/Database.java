@@ -1,4 +1,4 @@
-package org.example.services;
+package org.example.controllers;
 
 import org.example.models.Player;
 import org.example.models.Team;
