@@ -1,6 +1,6 @@
 package org.example.views.commands;
 
-import org.example.controllers.Controller;
+import org.example.services.Controller;
 
 public class TournamentAddCommand extends Command {
     public TournamentAddCommand(Controller controller) {

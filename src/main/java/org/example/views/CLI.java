@@ -1,9 +1,9 @@
 package org.example.views;
 
-import org.example.controllers.CommandFactory;
-import org.example.Console;
+import org.example.services.CommandFactory;
+import org.example.utils.Console;
 import org.example.models.Message;
-import org.example.Error;
+import org.example.utils.Error;
 import org.example.views.commands.Command;
 
 public class CLI {

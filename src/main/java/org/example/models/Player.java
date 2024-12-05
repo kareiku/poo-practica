@@ -8,7 +8,7 @@ public class Player implements Participant {
     private final String surname;
     private final String DNI;
     private final Map<Category, Double> stats;
-    private User user;
+    private final User user;
 
     public Player(String forename, String surname, String DNI) {
         this.forename = forename;
@@ -21,26 +21,22 @@ public class Player implements Participant {
         this.user = null;
     }
 
-    public void associateUser(User user) {
-        this.user = user;
+    public boolean isUser(User user) {
+        return this.user == user;
     }
 
-    public User getUser() {
-        return this.user;
-    }
-
-    public boolean matches(String identifier) {
-        return this.DNI.equals(identifier);
+    public boolean matches(String DNI) {
+        return this.DNI.equals(DNI);
     }
 
     public double getStat(Category category) {
         return this.stats.get(category);
     }
 
-    public String getStatisticsFormat(String option) {
-        if (option.equals("-csv")) {
+    public String getStatsFormat(String option) {
+        if ("-csv".equals(option)) {
             return this.statisticsCSV();
-        } else if (option.equals("-json")) {
+        } else if ("-json".equals(option)) {
             return this.statisticsJSON();
         } else {
             return this.statisticsDefault();
@@ -62,11 +58,11 @@ public class Player implements Participant {
 
     private String statisticsCSV() {
         StringBuilder format = new StringBuilder();
-        Double[] ratings = this.stats.values().toArray(new Double[0]);
-        for (int i = 0; i < ratings.length - 1; i++) {
-            format.append(ratings[i]).append(',');
+        Double[] scores = this.stats.values().toArray(new Double[0]);
+        for (int i = 0; i < scores.length - 1; i++) {
+            format.append(scores[i]).append(',');
         }
-        format.append(ratings[ratings.length - 1]);
+        format.append(scores[scores.length - 1]);
         return format.toString();
     }
 
@@ -78,7 +74,7 @@ public class Player implements Participant {
         for (int i = 0; i < categories.length - 1; i++) {
             format.append(String.format("\t\"%s\": %f,\n", categories[i].getName(), scores[i]));
         }
-        format.append(String.format("\t\"%s\": %f\n", categories[categories.length - 1].getName(), scores[categories.length]));
+        format.append(String.format("\t\"%s\": %f\n", categories[categories.length - 1].getName(), scores[scores.length - 1]));
         format.append('}').append('\n');
         return format.toString();
     }

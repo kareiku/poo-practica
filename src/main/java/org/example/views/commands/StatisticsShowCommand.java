@@ -1,27 +1,18 @@
 package org.example.views.commands;
 
-import org.example.Error;
-import org.example.controllers.Controller;
+import org.example.utils.Console;
+import org.example.utils.Error;
+import org.example.services.Controller;
 import org.example.models.Role;
 
 public class StatisticsShowCommand extends Command {
     public StatisticsShowCommand(Controller controller) {
-        super(controller);
+        super(controller, 0, Error.NO_PERMISSION, Role.PLAYER);
     }
 
-    protected Role[] templateRoles() {
-        return new Role[]{Role.PLAYER};
-    }
-
-    protected int templateArgumentCount() {
-        return 0;
-    }
-
-    protected Error templatePermissionError() {
-        return Error.NO_PERMISSION;
-    }
-
-    protected Error templateMethod(String[] args) {
-        return null; // TODO
+    protected Error executeTemplate(String[] args) {
+        String option = !args[0].isEmpty() ? args[0] : null;
+        Console.getInstance().println(this.getController().showStats(option));
+        return Error.NONE;
     }
 }

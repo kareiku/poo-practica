@@ -1,6 +1,6 @@
 package org.example.views.commands;
 
-import org.example.controllers.Controller;
+import org.example.services.Controller;
 
 public class TeamAddCommand extends Command {
     public TeamAddCommand(Controller controller) {
