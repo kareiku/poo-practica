@@ -10,6 +10,6 @@ public class TournamentMatchmakingCommand extends Command {
     }
 
     protected Error executeTemplate(String[] args) {
-
+        return this.getController().tournamentMatchmake(args[0], args[1], args);
     }
 }

@@ -190,14 +190,20 @@ public class Controller {
         return format.toString();
     }
 
-    public Error tournamentMatchmake(String tournamentName, String option) {
+    public Error tournamentMatchmake(String tournamentName, String option, String... participantIdentifiers) {
         Tournament tournament = this.tournaments.get(tournamentName);
         if (tournament != null) {
+            Participant[] participants = new Participant[participantIdentifiers.length];
+            for (int i = 2; i < participantIdentifiers.length; i++) {
+                participants[i] = participantIdentifiers[i].matches("^\\d{8}[A-Za-z]$") ?
+                        this.players.get(participantIdentifiers[i]) :
+                        this.teams.get(participantIdentifiers[i]);
+            }
             if ("-m".equals(option)) {
-                tournament.manualMatchmaking();
+                tournament.manualMatchmake(participants);
                 return Error.NONE;
             } else if ("-a".equals(option)) {
-                tournament.randomMatchmaking();
+                tournament.randomMatchmake(participants);
                 return Error.NONE;
             } else {
                 return Error.NO_SUCH_OPTION;

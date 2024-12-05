@@ -49,13 +49,25 @@ public class Tournament {
     }
 
     public String getFormat() {
-        return String.format("%s\t[%s]-[%s]: %s, %s", name, start.toString(), end.toString(), league, sport);
+        return String.format("Tournament \"%s\"\nFrom: %s, until: %s.\n%s league: \"%s\"", name, start.toString(), end.toString(), sport, league);
     }
 
-    public void manualMatchmakeAll() {
+    public void manualMatchmake(Participant... participants) {
+        List<Participant> participantList = Arrays.asList(participants);
+        for (int i = 0; i < participantList.size() / 2; i++) {
+            this.matchups.add(new Match(participantList.remove(0), participantList.remove(0)));
+        }
     }
 
-    private void manualMatchmake(Participant... participants) {
+    public void randomMatchmake(Participant... participants) {
+        Random random = new Random();
+        List<Participant> participantList = Arrays.asList(participants);
+        for (int i = 0; i < participantList.size() / 2; i++) {
+            this.matchups.add(new Match(
+                    participantList.remove(random.nextInt(participantList.size())),
+                    participantList.remove(random.nextInt(participantList.size()))
+            ));
+        }
     }
 }
 
