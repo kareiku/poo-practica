@@ -22,12 +22,12 @@ public class Team implements Participant {
         return this.name.equals(identifier);
     }
 
-    public void add(Player player) {
-        this.players.add(player);
+    public boolean add(Player player) {
+        return this.players.add(player);
     }
 
-    public void remove(Player player) {
-        this.players.remove(player);
+    public boolean remove(Player player) {
+        return this.players.remove(player);
     }
 
     private Map<Category, Double> geometricMeans() {

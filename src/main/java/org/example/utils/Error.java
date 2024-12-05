@@ -11,7 +11,15 @@ public enum Error {
     NOT_LOGGED_ON("Error: Attempted to log out without being logged on."),
     INCORRECT_ARGUMENT_FORMAT("Error: SOme arguments ay be having an incorrect format."),
     EXISTENT_PLAYER("Error: The player already exists."),
-    INEXISTENT_PLAYER("Error: That player doesn't exist.");
+    INEXISTENT_PLAYER("Error: That player doesn't exist."),
+    EXISTENT_TEAM("Error: Team with such name already exists."),
+    INEXISTENT_TEAM("Error: Team with such name doesn't exist."),
+    EXISTENT_TOURNAMENT("Error: Tournament with such name already exists."),
+    INEXISTENT_TOURNAMENT("Error: Tournament with such name doesn't exist."),
+    PARTICIPANT_ON_TOURNAMENT_IN_PROGRESS("Error: Participant is currently participating in a tournament in progress."),
+    NO_SUCH_OPTION("Error: Provided option is not available."),
+    PLAYER_ALREADY_IN_TEAM("Error: That player already belongs to the provided team."),
+    PARTICIPANT_ALREADY_IN_TOURNAMENT("Error: That participant is already signed up in the tournament.");
 
     private final String message;
 

@@ -26,16 +26,29 @@ public class Tournament {
         return this.name;
     }
 
-    public boolean isInProgress() {
+    public boolean inProgress() {
         Date now = Date.from(Instant.now());
         return now.after(this.start) && now.before(this.end);
     }
 
-    public void add(Participant participant) {
-        this.participants.add(participant);
+    public boolean hasFinished() {
+        Date now = Date.from(Instant.now());
+        return now.after(this.end);
     }
 
-    public void remove(Participant participant) {
-        this.participants.remove(participant);
+    public boolean add(Participant participant) {
+        return this.participants.add(participant);
+    }
+
+    public boolean remove(Participant participant) {
+        return this.participants.remove(participant);
+    }
+
+    public boolean contains(Participant participant) {
+        return this.participants.contains(participant);
+    }
+
+    public String getFormat() {
+        return String.format("%s\t[%s]-[%s]: %s, %s", name, start.toString(), end.toString(), league, sport);
     }
 }
