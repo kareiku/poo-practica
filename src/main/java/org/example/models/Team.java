@@ -14,15 +14,13 @@ public class Team implements Participant {
         this.name = name;
         this.adminEmail = adminEmail;
         this.players = new HashSet<>();
+        /*
         if (DNIs != null) {
             for (String DNI : DNIs) {
                 this.players.add(new Player(null, null, DNI));
             }
         }
-    }
-
-    public Team(String adminEmail, String name) {
-        this(adminEmail, name, null, null);
+        fixme ArrayOutOfBoundsException */
     }
 
     public String getIdentifier() {

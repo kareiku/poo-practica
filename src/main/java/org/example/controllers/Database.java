@@ -32,8 +32,8 @@ public class Database {
     public Map<String, Team> loadTeams() {
         Map<String, Team> teams = new HashMap<>();
         for (Team team : new Team[]{
-                new Team("Kanto starters", "61877850F|18039101V|17319361Q"),
-                new Team("RWBY", "28209915R|12393644W|06044066B|67112879Y")
+                new Team("Professor Oak", "Kanto starters", "61877850F", "18039101V", "17319361Q"),
+                new Team("Professor Ozpin", "RWBY", "28209915R", "12393644W", "06044066B", "67112879Y")
         }) {
             teams.putIfAbsent(team.getIdentifier(), team);
         }
@@ -55,10 +55,10 @@ public class Database {
         Map<String, User> users = new HashMap<>();
         for (User user : new User[]{
                 new User("root", "root", Role.ADMIN),
-        new User("eri@example.org", "eriri", Role.PLAYER),
-        new User("manzana@frutas.shop", "manzanita123", Role.PLAYER),
-        new User("lorem@ipsum.sit", "lipsum", Role.PLAYER),
-        new User("aaron.burr@hamilton.us", "sir", Role.ADMIN)
+                new User("eri@example.org", "eriri", Role.PLAYER),
+                new User("manzana@frutas.shop", "manzanita123", Role.PLAYER),
+                new User("lorem@ipsum.sit", "lipsum", Role.PLAYER),
+                new User("aaron.burr@hamilton.us", "sir", Role.ADMIN)
 
         }) {
             users.putIfAbsent(user.getEmail(), user);
