@@ -21,6 +21,10 @@ public class Player implements Participant {
         this.user = null;
     }
 
+    public String getIdentifier() {
+        return this.DNI;
+    }
+
     public boolean isUser(User user) {
         return this.user == user;
     }

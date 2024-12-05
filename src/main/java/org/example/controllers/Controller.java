@@ -26,7 +26,7 @@ public class Controller {
         boolean hasPermission = roles.length == 0;
         int i = 0;
         while (!hasPermission && i < roles.length) {
-            if (roles[i] == currentUser.getRole()) {
+            if (roles[i] == this.currentUser.getRole()) {
                 hasPermission = true;
             }
             i++;

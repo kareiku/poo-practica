@@ -1,12 +1,15 @@
 package org.example.views.commands;
 
 import org.example.controllers.Controller;
+import org.example.models.Role;
+import org.example.utils.Error;
 
 public class TeamAddCommand extends Command {
     public TeamAddCommand(Controller controller) {
-        super(controller);
+        super(controller, 1, Error.NO_PERMISSION, Role.ADMIN);
     }
 
-    public void execute(String[] args) {
+    protected Error executeTemplate(String[] args) {
+        return null; // TODO
     }
 }

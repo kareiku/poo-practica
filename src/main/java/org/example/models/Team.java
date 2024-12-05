@@ -14,6 +14,10 @@ public class Team implements Participant {
         this.players = new HashSet<>();
     }
 
+    public String getIdentifier() {
+        return this.name;
+    }
+
     public boolean matches(String identifier) {
         return this.name.equals(identifier);
     }
@@ -31,10 +35,10 @@ public class Team implements Participant {
         Category[] categories = Category.values();
         double product = 1.0;
         for (int i = 0; i < categories.length - 1; i++) {
-            for (Player player : players) {
+            for (Player player : this.players) {
                 product *= player.getStat(categories[i]);
             }
-            statistics.put(categories[i], Math.pow(product, 1. / players.size()));
+            statistics.put(categories[i], Math.pow(product, 1. / this.players.size()));
         }
         return statistics;
     }

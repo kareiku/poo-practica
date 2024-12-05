@@ -20,20 +20,20 @@ public class CommandFactory {
     }
 
     private void createCommands() {
-        this.commands.putIfAbsent("login", new LoginCommand(controller));
-        this.commands.putIfAbsent("logout", new LogoutCommand(controller));
-        this.commands.putIfAbsent("player-create", new PlayerCreateCommand(controller));
-        this.commands.putIfAbsent("player-delete", new PlayerDeleteCommand(controller));
-        this.commands.putIfAbsent("statistics-show", new StatisticsShowCommand(controller));
-        this.commands.putIfAbsent("team-add", new TeamAddCommand(controller));
-        this.commands.putIfAbsent("team-create", new TeamCreateCommand(controller));
-        this.commands.putIfAbsent("team-delete", new TeamDeleteCommand(controller));
-        this.commands.putIfAbsent("team-remove", new TeamRemoveCommand(controller));
-        this.commands.putIfAbsent("tournament-add", new TournamentAddCommand(controller));
-        this.commands.putIfAbsent("tournament-create", new TournamentCreateCommand(controller));
-        this.commands.putIfAbsent("tournament-delete", new TournamentDeleteCommand(controller));
-        this.commands.putIfAbsent("tournament-list", new TournamentListCommand(controller));
-        this.commands.putIfAbsent("tournament-matchmaking", new TournamentMatchmakingCommand(controller));
-        this.commands.putIfAbsent("tournament-remove", new TournamentRemoveCommand(controller));
+        this.commands.putIfAbsent("login", new LoginCommand(this.controller));
+        this.commands.putIfAbsent("logout", new LogoutCommand(this.controller));
+        this.commands.putIfAbsent("player-create", new PlayerCreateCommand(this.controller));
+        this.commands.putIfAbsent("player-delete", new PlayerDeleteCommand(this.controller));
+        this.commands.putIfAbsent("statistics-show", new StatisticsShowCommand(this.controller));
+        this.commands.putIfAbsent("team-add", new TeamAddCommand(this.controller));
+        this.commands.putIfAbsent("team-create", new TeamCreateCommand(this.controller));
+        this.commands.putIfAbsent("team-delete", new TeamDeleteCommand(this.controller));
+        this.commands.putIfAbsent("team-remove", new TeamRemoveCommand(this.controller));
+        this.commands.putIfAbsent("tournament-add", new TournamentAddCommand(this.controller));
+        this.commands.putIfAbsent("tournament-create", new TournamentCreateCommand(this.controller));
+        this.commands.putIfAbsent("tournament-delete", new TournamentDeleteCommand(this.controller));
+        this.commands.putIfAbsent("tournament-list", new TournamentListCommand(this.controller));
+        this.commands.putIfAbsent("tournament-matchmaking", new TournamentMatchmakingCommand(this.controller));
+        this.commands.putIfAbsent("tournament-remove", new TournamentRemoveCommand(this.controller));
     }
 }

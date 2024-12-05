@@ -22,6 +22,10 @@ public class Tournament {
         this.participants = new HashSet<>();
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     public boolean isInProgress() {
         Date now = Date.from(Instant.now());
         return now.after(this.start) && now.before(this.end);

@@ -20,7 +20,7 @@ public class CLI {
             statement = Console.getInstance().readLine();
             String commandName = statement.split("\\s+", 2)[0];
             String[] args = statement.split("\\s+", 2)[1].split((";")); // fixme possible ArrayOutOfBoundsException?
-            Command command = factory.getCommand(commandName);
+            Command command = this.factory.getCommand(commandName);
             if (command != null) {
                 command.execute(args);
             } else {
