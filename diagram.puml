@@ -13,9 +13,8 @@ package src.main.java.org.example {
         class Player implements Participant
         enum Role
         class Team implements Participant
-        class Tournament {
-            class Match
-        }
+        class Tournament
+        class Match
         class User
     }
 
@@ -29,11 +28,13 @@ package src.main.java.org.example {
             abstract Command
             class ConcreteCommand extends Command
         }
-        class CLI {
-            enum Message
-        }
+        class CLI
+        enum Message
     }
 }
+
+Tournament +-- Match
+CLI +-- Message
 
 CommandFactory --> CLI
 CommandFactory --> Controller
