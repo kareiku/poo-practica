@@ -67,9 +67,8 @@ public class Controller {
         return error;
     }
 
-    public Error logout() {
+    public void logout() {
         this.currentUser = new User(Role.GUEST);
-        return Error.NONE;
     }
 
     public Error createPlayer(String forename, String surname, String DNI) {

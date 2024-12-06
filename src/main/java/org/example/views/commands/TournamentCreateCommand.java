@@ -4,11 +4,6 @@ import org.example.controllers.Controller;
 import org.example.models.Role;
 import org.example.utils.Error;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-
 public class TournamentCreateCommand extends Command {
 
     public TournamentCreateCommand(Controller controller) {
@@ -22,9 +17,5 @@ public class TournamentCreateCommand extends Command {
         } else {
             return Error.INCORRECT_ARGUMENT_FORMAT;
         }
-    }
-
-    private Date toDate(String date) {
-        return Date.from(LocalDateTime.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy")).atZone(ZoneId.systemDefault()).toInstant());
     }
 }

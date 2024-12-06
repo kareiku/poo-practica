@@ -10,6 +10,7 @@ public class LogoutCommand extends Command {
     }
 
     protected Error executeTemplate(String[] args) {
-        return this.getController().logout();
+        this.getController().logout();
+        return Error.NONE;
     }
 }

@@ -10,7 +10,7 @@ public class TeamAddCommand extends Command {
     }
 
     protected Error executeTemplate(String[] args) {
-        if (args[0].matches("^\\d+{8}[A-Za-z]$") && args[1].matches("[A-Za-z]+")) {
+        if (args[0].matches("^\\d{8}[A-Za-z]$") && args[1].matches("[A-Za-z]+")) {
             return this.getController().addToTeam(args[0], args[1]);
         } else {
             return Error.INCORRECT_ARGUMENT_FORMAT;

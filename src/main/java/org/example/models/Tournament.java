@@ -79,7 +79,9 @@ public class Tournament {
 
     public String getSortedParticipantsFormat() {
         StringBuilder format = new StringBuilder();
-        this.participants.forEach((participant -> format.append(participant.getFormat()).append(("\n"))));
+        List<Participant> sortedParticipants = new LinkedList<>(this.participants);
+        sortedParticipants.sort(Comparator.comparingDouble(Participant::rating));
+        sortedParticipants.forEach((participant -> format.append(participant.getFormat()).append(("\n"))));
         return format.toString();
     }
 

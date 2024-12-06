@@ -14,13 +14,11 @@ public class Team implements Participant {
         this.name = name;
         this.adminEmail = adminEmail;
         this.players = new HashSet<>();
-        /*
         if (DNIs != null) {
             for (String DNI : DNIs) {
                 this.players.add(new Player(null, null, DNI));
             }
         }
-        fixme ArrayOutOfBoundsException */
     }
 
     public String getIdentifier() {
@@ -52,7 +50,7 @@ public class Team implements Participant {
         return statistics;
     }
 
-    public String getStatsFormat(String option) {
+    public String getStatsFormat() {
         StringBuilder format = new StringBuilder();
         Map<Category, Double> statistics = this.geometricMeans();
         statistics.forEach((key, value) -> format
