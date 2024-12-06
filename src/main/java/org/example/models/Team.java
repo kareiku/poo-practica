@@ -7,12 +7,12 @@ import java.util.Set;
 
 public class Team implements Participant {
     private final String name;
-    private final String adminEmail;
+    private final String adminCreator;
     private final Set<Player> players;
 
-    public Team(String adminEmail, String name, String... DNIs) {
+    public Team(String adminCreator, String name, String... DNIs) {
         this.name = name;
-        this.adminEmail = adminEmail;
+        this.adminCreator = adminCreator;
         this.players = new HashSet<>();
         if (DNIs != null) {
             for (String DNI : DNIs) {
@@ -65,6 +65,6 @@ public class Team implements Participant {
     }
 
     public String getFormat() {
-        return name + " (" + adminEmail + ")";
+        return name + " (" + adminCreator + ")";
     }
 }

@@ -87,7 +87,7 @@ public class Controller {
 
     public String showStats(String... options) {
         if ("-e".equals(options[0])) {
-            return this.getTeamFromPlayer(this.getPlayerFromCurrentUser()).getStatsFormat(null);
+            return this.getTeamFromPlayer(this.getPlayerFromCurrentUser()).getStatsFormat();
         }
         return this.getPlayerFromCurrentUser().getStatsFormat(options[1]);
     }

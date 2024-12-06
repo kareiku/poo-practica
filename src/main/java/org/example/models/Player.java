@@ -17,7 +17,7 @@ public class Player implements Participant {
         this.stats = new HashMap<>();
         Category[] categories = Category.values();
         for (int i = 0; i < categories.length; i++) {
-            this.stats.put(categories[i], stats != null ? stats[i] : 0.0);
+            this.stats.put(categories[i], stats.length > i ? stats[i] : 0.0);
         }
         this.user = new User(email, email, Role.PLAYER);
     }
@@ -90,7 +90,7 @@ public class Player implements Participant {
         return rating[0] / Category.values().length;
     }
 
-    public String getFormat(){
+    public String getFormat() {
         return forename + " " + surname + " (" + DNI + ")";
     }
 }
