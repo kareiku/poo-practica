@@ -38,7 +38,7 @@ public class CLI {
     }
 
     private enum Message {
-        WELCOME("Welcome to the Sport's Management System.\n"),
+        WELCOME("Welcome to the Sport's Management System."),
         PROMT("> "),
         BYE("Exiting the application...");
         private final String message;
