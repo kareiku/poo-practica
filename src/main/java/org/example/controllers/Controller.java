@@ -86,11 +86,11 @@ public class Controller {
         return isIt[0];
     }
 
-    public String showStats(String option) {
-        if ("-e".equals(option)) {
+    public String showStats(String... options) {
+        if ("-e".equals(options[0])) {
             return this.getTeamFromPlayer(this.getPlayerFromCurrentUser()).getStatsFormat(null);
         }
-        return this.getPlayerFromCurrentUser().getStatsFormat(option);
+        return this.getPlayerFromCurrentUser().getStatsFormat(options[1]);
     }
 
     public Error addToTeam(String DNI, String teamName) {
