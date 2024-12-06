@@ -5,6 +5,9 @@ import org.example.utils.Console;
 import org.example.utils.Error;
 import org.example.views.commands.Command;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 public class CLI {
     private final CommandFactory factory;
 
@@ -13,20 +16,32 @@ public class CLI {
     }
 
     public void start() {
-        String statement;
         Console.getInstance().println(Message.WELCOME.getMessage());
+        String statement;
         do {
             Console.getInstance().print(Message.PROMT.getMessage());
             statement = Console.getInstance().readLine();
+
+
             String commandName = statement.split("\\s+", 2)[0];
-            String[] args = statement.split("\\s+", 2)[1].split((";")); // fixme possible ArrayOutOfBoundsException?
-            Command command = this.factory.getCommand(commandName);
-            if (command != null) {
-                command.execute(args);
-            } else {
-                Console.getInstance().println(Error.COMMAND_NOT_FOUND.getMessage());
+            Deque<String> args = new ArrayDeque<>();
+            args.push(statement.split("\\s+", 2)[0]);
+            try {
+                String arguments = statement.split("\\s+", 2)[1];
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                assert false;
             }
-        } while (!statement.equals("exit"));
+            Command command = this.factory.getCommand(args.peek());
+
+
+            if (command != null) {
+                command.execute(args.toArray(new String[0]));
+            } else {
+                if (!statement.matches("^exit")) {
+                    Console.getInstance().println(Error.COMMAND_NOT_FOUND.getMessage());
+                }
+            }
+        } while (!statement.startsWith("exit"));
         Console.getInstance().println(Message.BYE.getMessage());
     }
 
