@@ -11,8 +11,9 @@ public class StatisticsShowCommand extends Command {
     }
 
     protected Error executeTemplate(String[] args) {
-        String option = !args[0].isEmpty() ? args[0] : null;
-        Console.getInstance().println(this.getController().showStats(option));
+        String teamOption = !args[0].isEmpty() ? args[0] : null;
+        String formatOption = !args[1].isEmpty() ? args[1] : null;
+        Console.getInstance().println(this.getController().showStats(teamOption, formatOption));
         return Error.NONE;
     }
 }

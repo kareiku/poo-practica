@@ -53,7 +53,10 @@ public class Tournament {
     }
 
     public String getFormat() {
-        return String.format("Tournament \"%s\"\nFrom: %s, until: %s.\n%s league: \"%s\"", name, startDate.toString(), endDate.toString(), sport, league);
+        StringBuilder format = new StringBuilder();
+        format.append(String.format("Tournament \"%s\"\nFrom: %s, until: %s.\n%s league: \"%s\"", name, startDate, endDate, sport, league));
+        this.matchups.forEach((match -> format.append(match.getFormat()).append("\n")));
+        return format.toString();
     }
 
     public void manualMatchmake(Participant... participants) {
@@ -79,12 +82,16 @@ public class Tournament {
         this.participants.forEach((participant -> format.append(participant.getFormat()).append(("\n"))));
         return format.toString();
     }
-}
 
-class Match {
-    private Participant[] participants;
+    private static class Match {
+        private final Participant[] participants;
 
-    Match(Participant... participants) {
-        this.participants = new Participant[]{participants[0], participants[1]};
+        Match(Participant... participants) {
+            this.participants = new Participant[]{participants[0], participants[1]};
+        }
+
+        String getFormat() {
+            return participants[0] + " vs. " + participants[1];
+        }
     }
 }
