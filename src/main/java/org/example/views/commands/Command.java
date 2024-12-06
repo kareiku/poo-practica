@@ -24,7 +24,7 @@ public abstract class Command {
 
     public void execute(String[] args) {
         if (this.getController().hasPermission(this.roles)) {
-            if (args != null && args.length >= this.requiredArgumentCount) {
+            if (args.length >= this.requiredArgumentCount) {
                 Error error = this.executeTemplate(args);
                 if (error != Error.NONE) {
                     Console.getInstance().println(error.getMessage());

@@ -6,6 +6,9 @@ import org.example.utils.Error;
 import org.example.views.commands.Command;
 import org.example.views.commands.CommandToExit;
 
+import java.util.Deque;
+import java.util.LinkedList;
+
 public class CLI {
     private final CommandFactory factory;
 
@@ -22,12 +25,9 @@ public class CLI {
         String statement;
         do {
             Console.getInstance().print(Message.PROMT.getMessage());
-            statement = Console.getInstance().readLine();
-            statement = statement.trim();
-            String[] parts = statement.split("\\s+", 2);
-            String commandName = parts[0];
-            String[] args = parts.length < 2 ? parts[1].split(";") : null;
-            Command command = this.factory.getCommand(commandName);
+            statement = Console.getInstance().readLine().trim();
+            Command command = this.getCommand(statement);
+            String[] args = this.getArguments(statement);
             if (command != null) {
                 command.execute(args);
             } else {
@@ -35,6 +35,22 @@ public class CLI {
             }
         } while (!(((CommandToExit) factory.getCommand("exit")).hasBeenExecuted()));
         Console.getInstance().println(Message.BYE.getMessage());
+    }
+
+    private Command getCommand(String statement) {
+        return this.factory.getCommand(statement.split("\\s+")[0]);
+    }
+
+    private String[] getArguments(String statement) {
+        Deque<String> args = new LinkedList<>();
+        String[] parts = statement.split("\\s+");
+        if (parts.length > 1) {
+            String[] arguments = parts[1].split(";");
+            for (String argument : arguments) {
+                args.push(argument);
+            }
+        }
+        return args.toArray(new String[0]);
     }
 
     private enum Message {
