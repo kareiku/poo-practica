@@ -17,27 +17,17 @@ public class CLI {
         new CLI().start();
     }
 
-    private void start() { // fixme
+    private void start() {
         Console.getInstance().println(Message.WELCOME.getMessage());
         String statement;
         do {
             Console.getInstance().print(Message.PROMT.getMessage());
             statement = Console.getInstance().readLine();
-
-
+            statement = statement.trim();
             String[] parts = statement.split("\\s+", 2);
             String commandName = parts[0];
             String[] args = parts[1] != null ? parts[1].split(";") : null;
-
-
-            try {
-                String arguments = statement.split("\\s+", 2)[1];
-            } catch (ArrayIndexOutOfBoundsException ex) {
-                assert false;
-            }
             Command command = this.factory.getCommand(commandName);
-
-
             if (command != null) {
                 command.execute(args);
             } else {

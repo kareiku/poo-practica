@@ -24,7 +24,7 @@ public class Database {
                 new Player(null, "Kirby", "Poyo", "77481570K", 67.5, 84.7, 54.1, 70.1, 60.5)
 
         }) {
-            players.putIfAbsent(player.getIdentifier(), player);
+            players.put(player.getIdentifier(), player);
         }
         return players;
     }
@@ -35,7 +35,7 @@ public class Database {
                 new Team("Professor Oak", "Kanto starters", "61877850F", "18039101V", "17319361Q"),
                 new Team("Professor Ozpin", "RWBY", "28209915R", "12393644W", "06044066B", "67112879Y")
         }) {
-            teams.putIfAbsent(team.getIdentifier(), team);
+            teams.put(team.getIdentifier(), team);
         }
         return teams;
     }
@@ -46,7 +46,7 @@ public class Database {
                 new Tournament("Nougat", "02-12-2024", "05-12-2024", "Flower Cup", "Karting"),
                 new Tournament("Fungi", "05-12-2024", "08-12-2024", "Mushroom Cup", "Karting")
         }) {
-            tournaments.putIfAbsent(tournament.getName(), tournament);
+            tournaments.put(tournament.getName(), tournament);
         }
         return tournaments;
     }
@@ -61,7 +61,7 @@ public class Database {
                 new User("aaron.burr@hamilton.us", "sir", Role.ADMIN)
 
         }) {
-            users.putIfAbsent(user.getEmail(), user);
+            users.put(user.getEmail(), user);
         }
         return users;
     }
