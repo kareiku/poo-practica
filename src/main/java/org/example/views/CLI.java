@@ -26,7 +26,7 @@ public class CLI {
             statement = statement.trim();
             String[] parts = statement.split("\\s+", 2);
             String commandName = parts[0];
-            String[] args = parts[1] != null ? parts[1].split(";") : null;
+            String[] args = parts.length < 2 ? parts[1].split(";") : null;
             Command command = this.factory.getCommand(commandName);
             if (command != null) {
                 command.execute(args);
@@ -38,9 +38,7 @@ public class CLI {
     }
 
     private enum Message {
-        WELCOME("Welcome to the Sport's Management System.\n" +
-                "Write a command to start using the app.\n" +
-                "If unsure, use the \"help\" command."),
+        WELCOME("Welcome to the Sport's Management System.\n"),
         PROMT("> "),
         BYE("Exiting the application...");
         private final String message;
