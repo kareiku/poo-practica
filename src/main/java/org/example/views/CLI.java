@@ -37,11 +37,11 @@ public class CLI {
             if (command != null) {
                 command.execute(args.toArray(new String[0]));
             } else {
-                if (!statement.matches("^exit")) {
+                if (!statement.matches("^\\s*exit")) {
                     Console.getInstance().println(Error.COMMAND_NOT_FOUND.getMessage());
                 }
             }
-        } while (!statement.startsWith("exit"));
+        } while (!statement.matches("^\\s*exit"));
         Console.getInstance().println(Message.BYE.getMessage());
     }
 

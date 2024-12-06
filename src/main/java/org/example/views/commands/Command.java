@@ -33,7 +33,9 @@ public abstract class Command {
                 Console.getInstance().println(Error.INCORRECT_ARGUMENT_COUNT.getMessage());
             }
         } else {
-            Console.getInstance().println(this.permissionError.getMessage());
+            if (this.permissionError != Error.NONE) {
+                Console.getInstance().println(this.permissionError.getMessage());
+            }
         }
     }
 

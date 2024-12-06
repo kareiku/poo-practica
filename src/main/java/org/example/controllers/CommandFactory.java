@@ -20,6 +20,7 @@ public class CommandFactory {
     }
 
     private void createCommands() {
+        this.commands.putIfAbsent("exit", new ExitCommand(this.controller));
         this.commands.putIfAbsent("login", new LoginCommand(this.controller));
         this.commands.putIfAbsent("logout", new LogoutCommand(this.controller));
         this.commands.putIfAbsent("player-create", new PlayerCreateCommand(this.controller));

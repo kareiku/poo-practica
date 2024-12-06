@@ -1,16 +1,14 @@
 package org.example.views.commands;
 
 import org.example.controllers.Controller;
-import org.example.utils.Console;
 import org.example.utils.Error;
 
-public class TournamentListCommand extends Command {
-    public TournamentListCommand(Controller controller) {
+public class ExitCommand extends Command {
+    public ExitCommand(Controller controller) {
         super(controller, 0, Error.NONE);
     }
 
     protected Error executeTemplate(String[] args) {
-        Console.getInstance().println(this.getController().listTournaments());
         return Error.NONE;
     }
 }
