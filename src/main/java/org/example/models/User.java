@@ -23,7 +23,7 @@ public class User {
         return this.role;
     }
 
-    public boolean isPasswordValid(String password) {
+    public boolean isPasswordCorrect(String password) {
         return this.password.equals(password);
     }
 }

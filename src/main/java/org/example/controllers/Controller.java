@@ -59,7 +59,7 @@ public class Controller {
         if (user == null) {
             error = Error.NO_SUCH_USER;
         } else {
-            error = user.isPasswordValid(password) ? Error.NONE : Error.INCORRECT_PASSWORD;
+            error = user.isPasswordCorrect(password) ? Error.NONE : Error.INCORRECT_PASSWORD;
             if (error == Error.NONE) {
                 this.currentUser = user;
             }
@@ -125,7 +125,7 @@ public class Controller {
 
     public Error addToTournament(String tournamentName, String option) {
         Tournament tournament = this.tournaments.get(tournamentName);
-        if (!tournament.inProgress()) {
+        if (!tournament.isInProgress()) {
             Player player = this.getPlayerFromCurrentUser();
             if (player != null) {
                 if (!tournament.contains(player)) {

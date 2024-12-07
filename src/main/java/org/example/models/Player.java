@@ -40,15 +40,15 @@ public class Player implements Participant {
 
     public String getStatsFormat(String option) {
         if ("-csv".equals(option)) {
-            return this.statisticsCSV();
+            return this.statsCSV();
         } else if ("-json".equals(option)) {
-            return this.statisticsJSON();
+            return this.statsJSON();
         } else {
-            return this.statisticsDefault();
+            return this.statsDefault();
         }
     }
 
-    private String statisticsDefault() {
+    private String statsDefault() {
         StringBuilder format = new StringBuilder();
         this.stats.forEach((key, value) -> format
                 .append("Player with DNI ")
@@ -61,7 +61,7 @@ public class Player implements Participant {
         return format.toString();
     }
 
-    private String statisticsCSV() {
+    private String statsCSV() {
         StringBuilder format = new StringBuilder();
         Double[] scores = this.stats.values().toArray(new Double[0]);
         for (int i = 0; i < scores.length - 1; i++) {
@@ -71,7 +71,7 @@ public class Player implements Participant {
         return format.toString();
     }
 
-    private String statisticsJSON() {
+    private String statsJSON() {
         StringBuilder format = new StringBuilder();
         Category[] categories = this.stats.keySet().toArray(new Category[0]);
         Double[] scores = this.stats.values().toArray(new Double[0]);

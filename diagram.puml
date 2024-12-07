@@ -44,17 +44,63 @@ package src.main.java.org.example {
             TOURNAMENTS_WON
             EARNINGS
         }
-        interface Participant
-        class Player implements Participant
+        interface Participant {
+            rating(): double
+            getFormat(): String
+        }
+        class Player implements Participant {
+            +Player(String, String, String, String, Double[])
+            +Player( String, String, String)
+            +getIdentifier(): String
+            +isUser(User): boolean
+            +getStat(Category): double
+            +getStatsFormat(String): String
+            -statsDefault(): String
+            -statsCSV(): String
+            -statsJSON(): String
+            +rating(): double
+            +getFormat(): String
+        }
         enum Role {
             ADMIN
             PLAYER
             GUEST
         }
-        class Team implements Participant
-        class Tournament
-        class Match
-        class User
+        class Team implements Participant {
+            +Team(String, String, String[])
+            +getIdentifier(): String
+            +add(Player): boolean
+            +remove(Player): boolean
+            +contains(Player): boolean
+            -geometricMeans(): Map
+            +getStatsFormat(): String
+            +rating(): double
+            +getFormat(): String
+        }
+        class Tournament {
+            +getName(): String
+            +isInProgress(): boolean
+            +hasFinished(): boolean
+            -toDate(String): Date
+            +add(Participant): boolean
+            +remove(Participant): boolean
+            +contains(Participant): boolean
+            +getFormat(): String
+            +manualMatchmake(Participant[])
+            +randomMatchmake(Participant[])
+            +getSortedParticipantsFormat(): String
+        }
+        class Match {
+            ~Match(Participant[])
+            ~getFormat(): String
+        }
+        class User {
+            +User(Role)
+            +User(String, String, Role)
+            +getEmail(): String
+            +getRole(): Role
+            +isPasswordCorrect(): boolean
+        }
     }
 
     package utils {
@@ -91,9 +137,13 @@ package src.main.java.org.example {
 
     package views {
         package commands {
-            abstract Command
-            interface CommandToExit
-            class ConcreteCommand extends Command
+            abstract Command {
+            }
+            interface CommandToExit {
+                #hasBeenExecuted(): boolean
+            }
+            class ConcreteCommand extends Command {
+            }
             class ExitCommand extends Command
         }
         class CLI {
@@ -121,6 +171,8 @@ Console <-- ConcreteCommand
 
 Tournament +-- Match
 Tournament o-- Match
+Participant o-- Match
+
 Message --+ CLI
 Message <.. CLI
 CommandToExit <-- CLI

@@ -26,7 +26,7 @@ public class Tournament {
         return this.name;
     }
 
-    public boolean inProgress() {
+    public boolean isInProgress() {
         Date now = Date.from(Instant.now());
         return now.after(this.toDate(this.startDate)) && now.before(this.toDate(this.endDate));
     }
