@@ -138,13 +138,23 @@ package src.main.java.org.example {
     package views {
         package commands {
             abstract Command {
+                #Command(Controller, int, Error, Role[])
+                #getController(): Controller
+                +execute(String[])
+                #{abstract}executeTemplate(String[]): Error
             }
             interface CommandToExit {
-                #hasBeenExecuted(): boolean
+                ~hasBeenExecuted(): boolean
             }
             class ConcreteCommand extends Command {
+                +ConcreteCommand(Controller)
+                #executeTemplate(String[]): Error
             }
-            class ExitCommand extends Command
+            class ExitCommand extends Command implements CommandToExit {
+                +ConcreteCommand(Controller)
+                #executeTemplate(String[]): Error
+                +hasBeenExecuted(): boolean
+            }
         }
         class CLI {
             +{static}main(String[])
