@@ -28,14 +28,29 @@ package src.main.java.org.example {
             +tournamentMatchmake(String, String, String[]): Error
             +removeFromTournament(String, String): Error
         }
-        class Database
+        class Database {
+            +loadPlayers()
+            +loadTeams()
+            +loadTournaments()
+            +loadUsers()
+        }
     }
 
     package models {
-        enum Category
+        enum Category {
+            POINTS_SCORED
+            MATCHES_WON
+            ASSIST_POINTS
+            TOURNAMENTS_WON
+            EARNINGS
+        }
         interface Participant
         class Player implements Participant
-        enum Role
+        enum Role {
+            ADMIN
+            PLAYER
+            GUEST
+        }
         class Team implements Participant
         class Tournament
         class Match
@@ -43,8 +58,35 @@ package src.main.java.org.example {
     }
 
     package utils {
-        class Console
-        enum Error
+        class Console {
+            -{static}instance
+            +{static}getInstance: Console
+            +print(String)
+            +println(String)
+            +readLine(): String
+        }
+        enum Error {
+            NONE
+            COMMAND_NOT_FOUND
+            NO_PERMISSION
+            INCORRECT_ARGUMENT_COUNT
+            ALREADY_LOGGED_ON
+            NO_SUCH_USER
+            INCORRECT_PASSWORD
+            NOT_LOGGED_ON
+            INCORRECT_ARGUMENT_FORMAT
+            EXISTENT_PLAYER
+            INEXISTENT_PLAYER
+            EXISTENT_TEAM
+            INEXISTENT_TEAM
+            EXISTENT_TOURNAMENT
+            INEXISTENT_TOURNAMENT
+            PARTICIPANT_ON_TOURNAMENT_IN_PROGRESS
+            NO_SUCH_OPTION
+            PLAYER_ALREADY_IN_TEAM
+            PARTICIPANT_ALREADY_IN_TOURNAMENT
+            TOURNAMENT_IN_PROGRESS
+        }
     }
 
     package views {
@@ -54,8 +96,17 @@ package src.main.java.org.example {
             class ConcreteCommand extends Command
             class ExitCommand extends Command
         }
-        class CLI
-        enum Message
+        class CLI {
+            +{static}main(String[])
+            -start()
+            -getCommand(String): Command
+            -getArguments(String): String[]
+        }
+        enum Message {
+            WELCOME
+            PROMT
+            BYE
+        }
     }
 }
 
