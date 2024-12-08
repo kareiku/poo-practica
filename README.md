@@ -1,5 +1,4 @@
 # Práctica de Programación Orientada a Objetos
-##### Versión: 1.1
 ## Alumnos implicados
 | Alumno                          | Email                             | Nº Mat. |
 |---------------------------------|-----------------------------------|---------|
