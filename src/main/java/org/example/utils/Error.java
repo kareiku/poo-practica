@@ -35,4 +35,8 @@ public enum Error {
     public String getMessage() {
         return this.message;
     }
+
+    public boolean isNotNone() {
+        return this != NONE;
+    }
 }

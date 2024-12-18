@@ -1,171 +1,216 @@
 @startuml
 
-package src.main.java.org.example {
-    package controllers {
-        class CommandFactory {
-            +getCommand(): Command
-            -createCommands()
+allowmixing
+left to right direction
+
+package src.main {
+    package java.org.example {
+        package controllers {
+            class CommandFactory {
+                -controller: Controller
+                +getCommand(): Command
+                -createCommands()
+            }
+            class Controller {
+                -getPlayerFromCurrentUser(): Player
+                -getTeamFromPlayer(Player): Team
+                +hasPermission(Role[]): boolean
+                +login(String, String): Error
+                +logout()
+                +createPlayer(String, String, String): Error
+                +deletePlayer(String): Error
+                +isPlayerParticipatingInAInProgressTournament(String): Error
+                +showStats(String[]): String
+                +addToTeam(String, String): Error
+                +createTeam(String): Error
+                +deleteTeam(String): Error
+                +removeFromTeam(String): Error
+                +addToTournament(String, String): Error
+                +createTournament(String, String, String, String, String): Error
+                +deleteTournament(String): Error
+                +listTournaments(): String
+                -tournamentListing(Role): String
+                +tournamentMatchmake(String, String, String[]): Error
+                +removeFromTournament(String, String): Error
+            }
         }
-        class Controller {
-            -getPlayerFromCurrentUser(): Player
-            -getTeamFromPlayer(Player): Team
-            +hasPermission(Role[]): boolean
-            +login(String, String): Error
-            +logout()
-            +createPlayer(String, String, String): Error
-            +deletePlayer(String): Error
-            +isPlayerParticipatingInAInProgressTournament(String): Error
-            +showStats(String[]): String
-            +addToTeam(String, String): Error
-            +createTeam(String): Error
-            +deleteTeam(String): Error
-            +removeFromTeam(String): Error
-            +addToTournament(String, String): Error
-            +createTournament(String, String, String, String, String): Error
-            +deleteTournament(String): Error
-            +listTournaments(): String
-            -tournamentListing(Role): String
-            +tournamentMatchmake(String, String, String[]): Error
-            +removeFromTournament(String, String): Error
+
+        package models {
+            enum Category {
+                POINTS_SCORED
+                MATCHES_WON
+                ASSIST_POINTS
+                TOURNAMENTS_WON
+                EARNINGS
+            }
+            interface Participant {
+                +rating(): double
+                +getFormat(): String
+            }
+            class Player implements Participant {
+                -forename: String
+                -surname: String
+                -DNI: String
+                -stats: Double[]
+                -user: User
+                +Player(String, String, String, String, Double[])
+                +Player( String, String, String)
+                +isUser(User): boolean
+                +getStat(Category): double
+                +getStatsFormat(String): String
+                -statsDefault(): String
+                -statsCSV(): String
+                -statsJSON(): String
+                +rating(): double
+                +asString(): String
+            }
+            enum Role {
+                ADMIN
+                PLAYER
+                GUEST
+            }
+            class Team implements Participant {
+                -admin: String
+                -name: String
+                -players: Player[]
+                +Team(String, String, String[])
+                +add(Player): boolean
+                +remove(Player): boolean
+                +contains(Player): boolean
+                -geometricMeans(): Map
+                +getStatsFormat(): String
+                +rating(): double
+                +asString(): String
+            }
+            class Tournament {
+                -name: String
+                -startDate: String
+                -endDate: String
+                -league: String
+                -sport: String
+                -participants: Set<Participant>
+                -matchups: List<Match>
+                +isInProgress(): boolean
+                +hasFinished(): boolean
+                -toDate(String): Date
+                +add(Participant): boolean
+                +remove(Participant): boolean
+                +contains(Participant): boolean
+                +getFormat(): String
+                +manualMatchmake(Participant[])
+                +randomMatchmake(Participant[])
+                +getSortedParticipantsFormat(): String
+            }
+            class Match {
+                -participants: PArticipant[]
+                ~Match(Participant[])
+                ~getFormat(): String
+            }
+            class User {
+                +User(Role)
+                +User(String, String, Role)
+                +isPasswordCorrect(): boolean
+            }
         }
-        class Database {
-            +loadPlayers()
-            +loadTeams()
-            +loadTournaments()
-            +loadUsers()
+
+        package utils {
+            class Console {
+                -{static}instance: Console
+                +{static}getInstance(): Console
+                +print(String)
+                +println(String)
+                +readLine(): String
+            }
+            enum Error {
+                NONE
+                COMMAND_NOT_FOUND
+                NO_PERMISSION
+                INCORRECT_ARGUMENT_COUNT
+                ALREADY_LOGGED_ON
+                NO_SUCH_USER
+                INCORRECT_PASSWORD
+                NOT_LOGGED_ON
+                INCORRECT_ARGUMENT_FORMAT
+                EXISTENT_PLAYER
+                INEXISTENT_PLAYER
+                EXISTENT_TEAM
+                INEXISTENT_TEAM
+                EXISTENT_TOURNAMENT
+                INEXISTENT_TOURNAMENT
+                PARTICIPANT_ON_TOURNAMENT_IN_PROGRESS
+                NO_SUCH_OPTION
+                PLAYER_ALREADY_IN_TEAM
+                PARTICIPANT_ALREADY_IN_TOURNAMENT
+                TOURNAMENT_IN_PROGRESS
+            }
+        }
+
+        package views {
+            package commands {
+                abstract Command {
+                    -controller: Controller
+                    -requiredArgumentCount: int
+                    -permissionError: Error
+                    -roles: Role[]
+                    #Command(Controller, int, Error, Role[])
+                    #getController(): Controller
+                    +execute(String[])
+                    #{abstract}executeTemplate(String[]): Error
+                }
+                interface CommandToExit {
+                    +hasBeenExecuted(): boolean
+                }
+                class ConcreteCommand extends Command {
+                    +ConcreteCommand(Controller)
+                    #executeTemplate(String[]): Error
+                }
+                class ExitCommand extends Command implements CommandToExit {
+                    -hasBeenExecuted: boolean
+                    +ExitCommand(Controller)
+                    #executeTemplate(String[]): Error
+                    +hasBeenExecuted(): boolean
+                }
+                class LoadDataCommand extends Command {
+                    -path: String
+                    +LoadDataCommand()
+                    +executeTemplate(String[])
+                    -readPlayers()
+                    -readTeams()
+                    -readTournaments()
+                    -readUsers()
+                }
+                class SaveDataCommand extends Command {
+                    -path: String
+                    +SaveDataCommand()
+                    +executeTemplate(String[])
+                    -storePlayers()
+                    -storeTeams()
+                    -storeTournaments()
+                }
+            }
+            class CLI {
+                -factory: CommandFactory
+                +{static}main(String[])
+                -start()
+                -getCommand(String): Command
+                -getArguments(String): String[]
+            }
+            enum Message {
+                WELCOME
+                PROMT
+                BYE
+            }
         }
     }
-
-    package models {
-        enum Category {
-            POINTS_SCORED
-            MATCHES_WON
-            ASSIST_POINTS
-            TOURNAMENTS_WON
-            EARNINGS
+    package resources {
+        package dbfiles {
+            file "players.json" as plyrs
+            file "teams.json" as tms
+            file "tournaments.json" as trnmnts
+            file "users.json" as usrs
         }
-        interface Participant {
-            rating(): double
-            getFormat(): String
-        }
-        class Player implements Participant {
-            +Player(String, String, String, String, Double[])
-            +Player( String, String, String)
-            +getIdentifier(): String
-            +isUser(User): boolean
-            +getStat(Category): double
-            +getStatsFormat(String): String
-            -statsDefault(): String
-            -statsCSV(): String
-            -statsJSON(): String
-            +rating(): double
-            +getFormat(): String
-        }
-        enum Role {
-            ADMIN
-            PLAYER
-            GUEST
-        }
-        class Team implements Participant {
-            +Team(String, String, String[])
-            +getIdentifier(): String
-            +add(Player): boolean
-            +remove(Player): boolean
-            +contains(Player): boolean
-            -geometricMeans(): Map
-            +getStatsFormat(): String
-            +rating(): double
-            +getFormat(): String
-        }
-        class Tournament {
-            +getName(): String
-            +isInProgress(): boolean
-            +hasFinished(): boolean
-            -toDate(String): Date
-            +add(Participant): boolean
-            +remove(Participant): boolean
-            +contains(Participant): boolean
-            +getFormat(): String
-            +manualMatchmake(Participant[])
-            +randomMatchmake(Participant[])
-            +getSortedParticipantsFormat(): String
-        }
-        class Match {
-            ~Match(Participant[])
-            ~getFormat(): String
-        }
-        class User {
-            +User(Role)
-            +User(String, String, Role)
-            +getEmail(): String
-            +getRole(): Role
-            +isPasswordCorrect(): boolean
-        }
-    }
-
-    package utils {
-        class Console {
-            -{static}instance
-            +{static}getInstance: Console
-            +print(String)
-            +println(String)
-            +readLine(): String
-        }
-        enum Error {
-            NONE
-            COMMAND_NOT_FOUND
-            NO_PERMISSION
-            INCORRECT_ARGUMENT_COUNT
-            ALREADY_LOGGED_ON
-            NO_SUCH_USER
-            INCORRECT_PASSWORD
-            NOT_LOGGED_ON
-            INCORRECT_ARGUMENT_FORMAT
-            EXISTENT_PLAYER
-            INEXISTENT_PLAYER
-            EXISTENT_TEAM
-            INEXISTENT_TEAM
-            EXISTENT_TOURNAMENT
-            INEXISTENT_TOURNAMENT
-            PARTICIPANT_ON_TOURNAMENT_IN_PROGRESS
-            NO_SUCH_OPTION
-            PLAYER_ALREADY_IN_TEAM
-            PARTICIPANT_ALREADY_IN_TOURNAMENT
-            TOURNAMENT_IN_PROGRESS
-        }
-    }
-
-    package views {
-        package commands {
-            abstract Command {
-                #Command(Controller, int, Error, Role[])
-                #getController(): Controller
-                +execute(String[])
-                #{abstract}executeTemplate(String[]): Error
-            }
-            interface CommandToExit {
-                ~hasBeenExecuted(): boolean
-            }
-            class ConcreteCommand extends Command {
-                +ConcreteCommand(Controller)
-                #executeTemplate(String[]): Error
-            }
-            class ExitCommand extends Command implements CommandToExit {
-                +ConcreteCommand(Controller)
-                #executeTemplate(String[]): Error
-                +hasBeenExecuted(): boolean
-            }
-        }
-        class CLI {
-            +{static}main(String[])
-            -start()
-            -getCommand(String): Command
-            -getArguments(String): String[]
-        }
-        enum Message {
-            WELCOME
-            PROMT
-            BYE
+        package logs {
+            file "example.log" as xmpl
         }
     }
 }
@@ -181,9 +226,9 @@ Console <-- ConcreteCommand
 
 Tournament +-- Match
 Tournament o-- Match
-Participant o-- Match
+Match +-- Participant
 
-Message --+ CLI
+CLI +-- Message
 Message <.. CLI
 CommandToExit <-- CLI
 Role <-- User
@@ -200,6 +245,23 @@ Controller o-- Player
 Controller o-- Team
 Controller o-- Tournament
 Controller o-- User
-Controller <-- Database
+
+Role <-- Command
+Role <-- ConcreteCommand
+
+LoadDataCommand ..> Controller
+SaveDataCommand ..> Controller
+
+LoadDataCommand --> plyrs
+LoadDataCommand --> tms
+LoadDataCommand --> trnmnts
+LoadDataCommand --> usrs
+
+plyrs <-- SaveDataCommand
+tms <-- SaveDataCommand
+trnmnts <-- SaveDataCommand
+usrs <-- SaveDataCommand
+
+CLI --> logs
 
 @enduml

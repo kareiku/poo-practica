@@ -1,5 +1,7 @@
 package org.example.models;
 
+import org.example.utils.Role;
+
 public class User {
     private final String email;
     private final String password;
@@ -15,11 +17,11 @@ public class User {
         this.role = role;
     }
 
-    public String getEmail() {
+    public String email() {
         return this.email;
     }
 
-    public Role getRole() {
+    public Role role() {
         return this.role;
     }
 

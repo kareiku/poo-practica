@@ -11,7 +11,7 @@ public class ExitCommand extends Command implements CommandToExit {
         this.executed = false;
     }
 
-    protected Error executeTemplate(String[] args) {
+    protected Error executionTemplate(String[] args) {
         this.executed = true;
         return Error.NONE;
     }

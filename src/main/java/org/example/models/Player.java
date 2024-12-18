@@ -1,5 +1,7 @@
 package org.example.models;
 
+import org.example.utils.Role;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,8 +28,24 @@ public class Player implements Participant {
         this(null, forename, surname, DNI);
     }
 
-    public String getIdentifier() {
+    public String forename() {
+        return this.forename;
+    }
+
+    public String surname() {
+        return this.surname;
+    }
+
+    public String DNI() {
         return this.DNI;
+    }
+
+    public User user() {
+        return this.user;
+    }
+
+    public Map<Category, Double> stats() {
+        return this.stats;
     }
 
     public boolean isUser(User user) {
@@ -90,7 +108,7 @@ public class Player implements Participant {
         return rating[0] / Category.values().length;
     }
 
-    public String getFormat() {
+    public String asString() {
         return forename + " " + surname + " (" + DNI + ")";
     }
 }

@@ -6,13 +6,13 @@ import java.util.Map;
 import java.util.Set;
 
 public class Team implements Participant {
+    private final String admin;
     private final String name;
-    private final String adminCreator;
     private final Set<Player> players;
 
-    public Team(String adminCreator, String name, String... DNIs) {
+    public Team(String admin, String name, String... DNIs) {
+        this.admin = admin;
         this.name = name;
-        this.adminCreator = adminCreator;
         this.players = new HashSet<>();
         if (DNIs != null) {
             for (String DNI : DNIs) {
@@ -21,8 +21,16 @@ public class Team implements Participant {
         }
     }
 
-    public String getIdentifier() {
+    public String admin() {
+        return this.admin;
+    }
+
+    public String name() {
         return this.name;
+    }
+
+    public Set<Player> players() {
+        return this.players;
     }
 
     public boolean add(Player player) {
@@ -64,7 +72,7 @@ public class Team implements Participant {
         return rating[0] / Category.values().length;
     }
 
-    public String getFormat() {
-        return name + " (" + adminCreator + ")";
+    public String asString() {
+        return name + " (" + admin + ")";
     }
 }

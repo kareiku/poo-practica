@@ -1,7 +1,7 @@
 package org.example.views.commands;
 
 import org.example.controllers.Controller;
-import org.example.models.Role;
+import org.example.utils.Role;
 import org.example.utils.Console;
 import org.example.utils.Error;
 
@@ -25,19 +25,19 @@ public abstract class Command {
     public void execute(String[] args) {
         if (this.getController().hasPermission(this.roles)) {
             if (args.length >= this.requiredArgumentCount) {
-                Error error = this.executeTemplate(args);
-                if (error != Error.NONE) {
+                Error error = this.executionTemplate(args);
+                if (error.isNotNone()) {
                     Console.getInstance().println(error.getMessage());
                 }
             } else {
                 Console.getInstance().println(Error.INCORRECT_ARGUMENT_COUNT.getMessage());
             }
         } else {
-            if (this.permissionError != Error.NONE) {
+            if (this.permissionError.isNotNone()) {
                 Console.getInstance().println(this.permissionError.getMessage());
             }
         }
     }
 
-    protected abstract Error executeTemplate(String[] args);
+    protected abstract Error executionTemplate(String[] args);
 }

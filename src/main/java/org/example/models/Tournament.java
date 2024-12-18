@@ -19,11 +19,27 @@ public class Tournament {
         this.league = league;
         this.sport = sport;
         this.participants = new HashSet<>();
-        this.matchups = new LinkedList<>();
+        this.matchups = new ArrayList<>();
     }
 
-    public String getName() {
+    public String name() {
         return this.name;
+    }
+
+    public String startDate() {
+        return this.startDate;
+    }
+
+    public String endDate() {
+        return this.endDate;
+    }
+
+    public String league() {
+        return this.league;
+    }
+
+    public String sport() {
+        return this.sport;
     }
 
     public boolean isInProgress() {
@@ -79,9 +95,9 @@ public class Tournament {
 
     public String getSortedParticipantsFormat() {
         StringBuilder format = new StringBuilder();
-        List<Participant> sortedParticipants = new LinkedList<>(this.participants);
+        List<Participant> sortedParticipants = new ArrayList<>(this.participants);
         sortedParticipants.sort(Comparator.comparingDouble(Participant::rating));
-        sortedParticipants.forEach((participant -> format.append(participant.getFormat()).append(("\n"))));
+        sortedParticipants.forEach((participant -> format.append(participant.asString()).append(("\n"))));
         return format.toString();
     }
 
