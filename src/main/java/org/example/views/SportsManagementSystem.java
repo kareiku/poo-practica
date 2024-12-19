@@ -3,8 +3,6 @@ package org.example.views;
 import org.example.controllers.CommandFactory;
 import org.example.utils.Console;
 import org.example.utils.Error;
-import org.example.views.commands.Command;
-import org.example.views.commands.CommandToExit;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -14,6 +12,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class SportsManagementSystem {
     public static void main(String[] args) {
@@ -35,22 +34,17 @@ public class SportsManagementSystem {
                     Console.getInstance().print(Message.PROMT.getMessage());
                     statement = Console.getInstance().readLine().trim();
                     writer.printf("[%s] %s%n", Instant.now(), statement);
-                    Command command = this.getCommand(statement);
+                    Optional<Command> optional = this.factory.getOptionalCommand(statement.split("\\s+")[0]);
                     String[] args = this.getArguments(statement);
-                    if (command != null) {
-                        command.execute(args);
-                    } else {
-                        Console.getInstance().println(Error.COMMAND_NOT_FOUND.getMessage());
-                    }
-                } while (!(((CommandToExit) this.factory.getCommand("exit")).hasBeenExecuted()));
+                    optional.ifPresentOrElse(
+                            command -> command.execute(args),
+                            () -> Console.getInstance().println(Error.COMMAND_NOT_FOUND.getMessage())
+                    );
+                } while (this.factory.getOptionalCommand("exit").isPresent());
                 Console.getInstance().println(Message.BYE.getMessage());
             } catch (IOException ex) {
                 assert false : ex.getMessage();
             }
-        }
-
-        private Command getCommand(String statement) {
-            return this.factory.getCommand(statement.split("\\s+")[0]);
         }
 
         private String[] getArguments(String statement) {
@@ -64,9 +58,9 @@ public class SportsManagementSystem {
         }
 
         private enum Message {
-            WELCOME("Welcome to the Sport's Management System."),
-            PROMT("> "),
-            BYE("Exiting the application...");
+            WELCOME("Welcome to the Sports' Management System."),
+            PROMT("SportsManagementSystem:~$ "),
+            BYE("Bye");
             private final String message;
 
             Message(String message) {

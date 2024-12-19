@@ -8,7 +8,7 @@ package src.main {
         package controllers {
             class CommandFactory {
                 -controller: Controller
-                +getCommand(): Command
+                +getOptionalCommand(): Optional<Command>
                 -createCommands()
             }
             class Controller {
@@ -190,7 +190,6 @@ package src.main {
             class CLI {
                 -factory: CommandFactory
                 -start()
-                -getCommand(String): Command
                 -getArguments(String): String[]
             }
             enum Message {

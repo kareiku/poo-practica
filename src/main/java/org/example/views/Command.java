@@ -1,4 +1,4 @@
-package org.example.views.commands;
+package org.example.views;
 
 import org.example.controllers.Controller;
 import org.example.utils.Role;

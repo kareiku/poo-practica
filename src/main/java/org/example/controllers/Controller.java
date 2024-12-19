@@ -266,7 +266,7 @@ public class Controller {
             values[i][0] = teams[i].admin();
             values[i][1] = teams[i].name();
             StringBuilder players = new StringBuilder();
-            teams[i].players().forEach((player) -> players.append(player.DNI()).append(','));
+            teams[i].players().forEach(player -> players.append(player.DNI()).append(','));
             players.deleteCharAt(players.length() - 1);
             values[i][2] = players.toString();
         }
