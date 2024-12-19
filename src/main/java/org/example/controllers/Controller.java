@@ -24,7 +24,7 @@ public class Controller {
     private Player getPlayerFromCurrentUser() {
         Player[] playerCurrentUser = {null};
         this.players.forEach((DNI, player) -> {
-            if (player.isUser(this.currentUser)) {
+            if (playerCurrentUser[0] == null && player.isUser(this.currentUser)) {
                 playerCurrentUser[0] = player;
             }
         });
@@ -34,7 +34,7 @@ public class Controller {
     private Team getTeamFromPlayer(Player player) {
         Team[] teamWithPlayer = {null};
         this.teams.forEach((name, team) -> {
-            if (team.contains(player)) {
+            if (teamWithPlayer[0] == null && team.contains(player)) {
                 teamWithPlayer[0] = team;
             }
         });
@@ -74,7 +74,7 @@ public class Controller {
     }
 
     public Error createPlayer(String email, String forename, String surname, String DNI, Double... stats) {
-        return this.players.putIfAbsent(DNI, new Player(email, forename, surname, DNI, stats)) != null ? Error.NONE : Error.EXISTENT_PLAYER;
+        return this.players.putIfAbsent(DNI, new Player(email, forename, surname, DNI, stats)) == null ? Error.NONE : Error.EXISTENT_PLAYER;
     }
 
     public Error deletePlayer(String DNI) {
@@ -88,7 +88,7 @@ public class Controller {
     }
 
     public String showStats(String... options) {
-        if ("-e".equals(options[0])) {
+        if (options.length >= 1 && "-e".equals(options[0])) {
             return this.getTeamFromPlayer(this.getPlayerFromCurrentUser()).getStatsFormat();
         }
         return this.getPlayerFromCurrentUser().getStatsFormat(options[1]);
@@ -96,7 +96,8 @@ public class Controller {
 
     public Error addToTeam(String DNI, String teamName) {
         Player player = this.players.get(DNI);
-        return player != null && this.teams.get(teamName).add(player) ? Error.NONE : Error.INEXISTENT_PLAYER;
+        Team team = this.teams.get(teamName);
+        return player != null && team != null && team.add(player) ? Error.NONE : Error.INEXISTENT_PLAYER;
     }
 
     public Error createTeam(String name) {
@@ -104,11 +105,7 @@ public class Controller {
     }
 
     public Error createTeam(String admin, String name, String... playerDNIs) {
-        if (!this.teams.containsKey(name)) {
-            this.teams.put(name, new Team(admin, name, playerDNIs));
-            return Error.NONE;
-        }
-        return Error.EXISTENT_TEAM;
+        return this.teams.putIfAbsent(name, new Team(admin, name, playerDNIs)) == null ? Error.NONE : Error.EXISTENT_TEAM;
     }
 
     public Error deleteTeam(String name) {
@@ -158,11 +155,7 @@ public class Controller {
     }
 
     public Error createTournament(String name, String startDate, String endDate, String league, String sport) {
-        if (!this.tournaments.containsKey(name)) {
-            this.tournaments.put(name, new Tournament(name, startDate, endDate, league, sport));
-            return Error.NONE;
-        }
-        return Error.EXISTENT_TOURNAMENT;
+        return this.tournaments.putIfAbsent(name, new Tournament(name, startDate, endDate, league, sport)) == null ? Error.NONE : Error.EXISTENT_TOURNAMENT;
     }
 
     public Error deleteTournament(String name) {

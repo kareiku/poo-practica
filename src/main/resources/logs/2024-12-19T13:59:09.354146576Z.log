@@ -1,0 +1,6 @@
+[2024-12-19T14:04:26.033036684Z] load-data
+[2024-12-19T14:04:47.241642611Z] login login aaron.burr@hamilton.us;sir
+[2024-12-19T14:04:58.451184632Z] login aaron.burr@hamilton.us;sir
+[2024-12-19T14:05:10.002165132Z] player-create Ex;ample;12345678Z
+[2024-12-19T14:05:14.977586278Z] team-create FNKI
+[2024-12-19T14:12:16.138948369Z] exit
