@@ -9,8 +9,8 @@ public class Tournament {
     private final String endDate;
     private final String league;
     private final String sport;
-    private final Set<Participant> participants;
-    private final List<Match> matchups;
+    private final Collection<Participant> participants;
+    private final Collection<Match> matchups;
 
     public Tournament(String name, String startDate, String endDate, String league, String sport) {
         this.name = name;

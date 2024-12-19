@@ -12,17 +12,20 @@ package src.main {
                 -createCommands()
             }
             class Controller {
+                -currentUser: User
                 -getPlayerFromCurrentUser(): Player
                 -getTeamFromPlayer(Player): Team
                 +hasPermission(Role[]): boolean
                 +login(String, String): Error
                 +logout()
                 +createPlayer(String, String, String): Error
+                +createPlayer(String, String, String, String, Double[]): Error
                 +deletePlayer(String): Error
                 +isPlayerParticipatingInAInProgressTournament(String): Error
                 +showStats(String[]): String
                 +addToTeam(String, String): Error
                 +createTeam(String): Error
+                +createTeam(String, String, String[]): Error
                 +deleteTeam(String): Error
                 +removeFromTeam(String): Error
                 +addToTournament(String, String): Error
@@ -32,6 +35,11 @@ package src.main {
                 -tournamentListing(Role): String
                 +tournamentMatchmake(String, String, String[]): Error
                 +removeFromTournament(String, String): Error
+                +loadUser(String, String, String)
+                -parseRole(String): Role
+                +getPlayers(): String[][]
+                +getTeams(): String[][]
+                +getTournaments(): String[][]
             }
         }
 
@@ -45,7 +53,7 @@ package src.main {
             }
             interface Participant {
                 +rating(): double
-                +getFormat(): String
+                +asString(): String
             }
             class Player implements Participant {
                 -forename: String
@@ -53,8 +61,6 @@ package src.main {
                 -DNI: String
                 -stats: Double[]
                 -user: User
-                +Player(String, String, String, String, Double[])
-                +Player( String, String, String)
                 +isUser(User): boolean
                 +getStat(Category): double
                 +getStatsFormat(String): String
@@ -64,20 +70,14 @@ package src.main {
                 +rating(): double
                 +asString(): String
             }
-            enum Role {
-                ADMIN
-                PLAYER
-                GUEST
-            }
             class Team implements Participant {
                 -admin: String
                 -name: String
-                -players: Player[]
-                +Team(String, String, String[])
+                -players: Collection<Player>
                 +add(Player): boolean
                 +remove(Player): boolean
                 +contains(Player): boolean
-                -geometricMeans(): Map
+                -geometricMeans(): Map<Category, Double>
                 +getStatsFormat(): String
                 +rating(): double
                 +asString(): String
@@ -88,8 +88,8 @@ package src.main {
                 -endDate: String
                 -league: String
                 -sport: String
-                -participants: Set<Participant>
-                -matchups: List<Match>
+                -participants: Collection<Participant>
+                -matchups: Collection<Match>
                 +isInProgress(): boolean
                 +hasFinished(): boolean
                 -toDate(String): Date
@@ -102,13 +102,11 @@ package src.main {
                 +getSortedParticipantsFormat(): String
             }
             class Match {
-                -participants: PArticipant[]
+                -participants: Participant[]
                 ~Match(Participant[])
                 ~getFormat(): String
             }
             class User {
-                +User(Role)
-                +User(String, String, Role)
                 +isPasswordCorrect(): boolean
             }
         }
@@ -143,6 +141,11 @@ package src.main {
                 PARTICIPANT_ALREADY_IN_TOURNAMENT
                 TOURNAMENT_IN_PROGRESS
             }
+            enum Role {
+                ADMIN
+                PLAYER
+                GUEST
+            }
         }
 
         package views {
@@ -159,10 +162,6 @@ package src.main {
                 }
                 interface CommandToExit {
                     +hasBeenExecuted(): boolean
-                }
-                class ConcreteCommand extends Command {
-                    +ConcreteCommand(Controller)
-                    #executeTemplate(String[]): Error
                 }
                 class ExitCommand extends Command implements CommandToExit {
                     -hasBeenExecuted: boolean
@@ -190,7 +189,6 @@ package src.main {
             }
             class CLI {
                 -factory: CommandFactory
-                +{static}main(String[])
                 -start()
                 -getCommand(String): Command
                 -getArguments(String): String[]
@@ -199,6 +197,9 @@ package src.main {
                 WELCOME
                 PROMT
                 BYE
+            }
+            class SportsManagementSystem {
+                +{static}main(String[])
             }
         }
     }
@@ -222,11 +223,10 @@ Command --> Controller
 
 Console <-- CLI
 Console <-- Command
-Console <-- ConcreteCommand
 
 Tournament +-- Match
 Tournament o-- Match
-Match +-- Participant
+Match o-- Participant
 
 CLI +-- Message
 Message <.. CLI
@@ -236,7 +236,6 @@ Team <.. Category
 Player <-- Category
 
 Error <.. Command
-Error <.. ConcreteCommand
 Error <.. Controller
 Error <.. CLI
 
@@ -263,5 +262,7 @@ trnmnts <-- SaveDataCommand
 usrs <-- SaveDataCommand
 
 CLI --> logs
+
+SportsManagementSystem +-- CLI
 
 @enduml

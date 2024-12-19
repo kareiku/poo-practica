@@ -1,14 +1,14 @@
 package org.example.models;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class Team implements Participant {
     private final String admin;
     private final String name;
-    private final Set<Player> players;
+    private final Collection<Player> players;
 
     public Team(String admin, String name, String... DNIs) {
         this.admin = admin;
@@ -29,7 +29,7 @@ public class Team implements Participant {
         return this.name;
     }
 
-    public Set<Player> players() {
+    public Collection<Player> players() {
         return this.players;
     }
 
