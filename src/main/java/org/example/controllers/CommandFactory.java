@@ -120,7 +120,7 @@ public class CommandFactory {
                 return this.getController().removeFromTeam(args[0]);
             }
         });
-        this.commands.put("tournament-add", new Command(this.controller, 1, Error.NO_PERMISSION, Role.ADMIN) {
+        this.commands.put("tournament-add", new Command(this.controller, 1, Error.NO_PERMISSION, Role.PLAYER) {
             @Override
             protected Error executionTemplate(String[] args) {
                 return this.getController().addToTournament(args[0], args.length > 1 ? args[1] : null);
@@ -153,7 +153,7 @@ public class CommandFactory {
         this.commands.put("tournament-matchmaking", new Command(this.controller, 1, Error.NO_PERMISSION, Role.ADMIN) {
             @Override
             protected Error executionTemplate(String[] args) {
-                return this.getController().tournamentMatchmake(args[0], args[1], args);
+                return this.getController().tournamentMatchmake(args[0], args.length > 1 ? args[1] : null, args);
             }
         });
         this.commands.put("tournament-remove", new Command(this.controller, 1, Error.NO_PERMISSION, Role.PLAYER) {
