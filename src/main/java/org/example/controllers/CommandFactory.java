@@ -122,7 +122,6 @@ public class CommandFactory {
         });
         this.commands.put("tournament-add", new Command(this.controller, 1, Error.NO_PERMISSION, Role.ADMIN) {
             @Override
-
             protected Error executionTemplate(String[] args) {
                 return this.getController().addToTournament(args[0], args.length > 1 ? args[1] : null);
             }
