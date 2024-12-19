@@ -86,9 +86,7 @@ public class CommandFactory {
         this.commands.put("statistics-show", new Command(this.controller, 0, Error.NO_PERMISSION, Role.PLAYER) {
             @Override
             protected Error executionTemplate(String[] args) {
-                String teamOption = !args[0].isEmpty() ? args[0] : null;
-                String formatOption = !args[1].isEmpty() ? args[1] : null;
-                Console.getInstance().println(this.getController().showStats(teamOption, formatOption));
+                Console.getInstance().println(this.getController().showStats(args.length >= 1 ? args[0] : null));
                 return Error.NONE;
             }
         });

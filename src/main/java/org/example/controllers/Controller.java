@@ -87,11 +87,15 @@ public class Controller {
         return isIt[0];
     }
 
-    public String showStats(String... options) {
-        if (options.length >= 1 && "-e".equals(options[0])) {
-            return this.getTeamFromPlayer(this.getPlayerFromCurrentUser()).getStatsFormat();
+    public String showStats(String option) {
+        if (option != null) {
+            if ("-e".equals(option)) {
+                return this.getTeamFromPlayer(this.getPlayerFromCurrentUser()).getStatsFormat();
+            } else {
+                return this.getPlayerFromCurrentUser().getStatsFormat(option);
+            }
         }
-        return this.getPlayerFromCurrentUser().getStatsFormat(options[1]);
+        return null;
     }
 
     public Error addToTeam(String DNI, String teamName) {
