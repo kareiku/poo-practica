@@ -83,11 +83,12 @@ public class Tournament {
     }
 
     public void randomMatchmake(Participant... participants) {
+        Random random = new Random();
         List<Participant> participantList = Arrays.asList(participants);
         for (int i = 0; i < participantList.size() / 2; i++) {
             this.matchups.add(new Match(
-                    participantList.remove((int) (Math.random() * participantList.size())),
-                    participantList.remove((int) (Math.random() * participantList.size()))
+                    participantList.remove(random.nextInt(participantList.size())),
+                    participantList.remove(random.nextInt(participantList.size()))
             ));
         }
     }
