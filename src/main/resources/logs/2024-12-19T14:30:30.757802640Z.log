@@ -1,0 +1,7 @@
+[2024-12-19T14:30:45.962053599Z] load-data
+[2024-12-19T14:30:52.723751058Z] login aaron.burr@hamilton.us;sir
+[2024-12-19T14:30:57.359688538Z] player-create Ex;ample;12345678Z
+[2024-12-19T14:31:01.635122919Z] team-create FNKI
+[2024-12-19T14:31:05.893791791Z] team-add 12345678Z;FNKI
+[2024-12-19T14:31:12.405860255Z] tournament-create New;17-12-2024;02-01-2025;Lightning Cup;Karting
+[2024-12-19T14:31:17.408085533Z] tournament-matchmaking New;-a

@@ -1,7 +1,11 @@
 package org.example.models;
 
-import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Tournament {
     private final String name;
@@ -43,17 +47,16 @@ public class Tournament {
     }
 
     public boolean isInProgress() {
-        Date now = Date.from(Instant.now());
-        return now.after(this.toDate(this.startDate)) && now.before(this.toDate(this.endDate));
+        long now = System.currentTimeMillis();
+        return now > this.toEpochMillis(this.startDate) && now < this.toEpochMillis(this.endDate);
     }
 
     public boolean hasFinished() {
-        Date now = Date.from(Instant.now());
-        return now.after(this.toDate(this.endDate));
+        return System.currentTimeMillis() > this.toEpochMillis(this.endDate);
     }
 
-    private Date toDate(String date) {
-        return Date.from(Instant.parse(date));
+    private long toEpochMillis(String date) {
+        return LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy")).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 
     public boolean add(Participant participant) {
@@ -70,34 +73,36 @@ public class Tournament {
 
     public String getFormat() {
         StringBuilder format = new StringBuilder();
-        format.append(String.format("Tournament \"%s\"\nFrom: %s, until: %s.\n%s league: \"%s\"", name, startDate, endDate, sport, league));
-        this.matchups.forEach((match -> format.append(match.getFormat()).append("\n")));
+        format.append(String.format("Tournament \"%s\"%nFrom: %s, until: %s.%n%s league: \"%s\"%n", name, startDate, endDate, sport, league));
+        this.matchups.forEach((match -> format.append(match.getFormat()).append(System.lineSeparator())));
         return format.toString();
     }
 
     public void manualMatchmake(Participant... participants) {
-        List<Participant> participantList = Arrays.asList(participants);
-        for (int i = 0; i < participantList.size() / 2; i++) {
-            this.matchups.add(new Match(participantList.remove(0), participantList.remove(0)));
+        if (participants != null) {
+            IntStream.range(0, participants.length - 2)
+                    .mapToObj(i -> new AbstractMap.SimpleEntry<>(participants[i], participants[i + 1]))
+                    .collect(Collectors.toList())
+                    .forEach(pair -> this.matchups.add(new Match(pair.getKey(), pair.getValue())));
         }
     }
 
     public void randomMatchmake(Participant... participants) {
-        Random random = new Random();
-        List<Participant> participantList = Arrays.asList(participants);
-        for (int i = 0; i < participantList.size() / 2; i++) {
-            this.matchups.add(new Match(
+        if (participants != null) {
+            Random random = new Random();
+            List<Participant> participantList = Arrays.asList(participants);
+            IntStream.range(0, participantList.size() / 2).forEach(i -> this.matchups.add(new Match(
                     participantList.remove(random.nextInt(participantList.size())),
                     participantList.remove(random.nextInt(participantList.size()))
-            ));
+            )));
         }
     }
 
     public String getSortedParticipantsFormat() {
         StringBuilder format = new StringBuilder();
-        List<Participant> sortedParticipants = new ArrayList<>(this.participants);
-        sortedParticipants.sort(Comparator.comparingDouble(Participant::rating));
-        sortedParticipants.forEach((participant -> format.append(participant.asString()).append(("\n"))));
+        this.participants.stream()
+                .sorted(Comparator.comparingDouble(Participant::rating))
+                .forEach(participant -> format.append(participant.getFormat()).append(System.lineSeparator()));
         return format.toString();
     }
 

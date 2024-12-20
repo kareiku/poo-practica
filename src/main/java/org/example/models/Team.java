@@ -1,24 +1,18 @@
 package org.example.models;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.BinaryOperator;
 
 public class Team implements Participant {
     private final String admin;
     private final String name;
     private final Collection<Player> players;
 
-    public Team(String admin, String name, String... DNIs) {
+    public Team(String admin, String name, Player... players) {
         this.admin = admin;
         this.name = name;
-        this.players = new HashSet<>();
-        if (DNIs != null) {
-            for (String DNI : DNIs) {
-                this.players.add(new Player(null, null, DNI));
-            }
-        }
+        this.players = new HashSet<>(Arrays.asList(players));
     }
 
     public String admin() {
@@ -47,32 +41,28 @@ public class Team implements Participant {
 
     private Map<Category, Double> geometricMeans() {
         Map<Category, Double> statistics = new HashMap<>();
-        Category[] categories = Category.values();
-        double product = 1.0;
-        for (int i = 0; i < categories.length - 1; i++) {
-            for (Player player : this.players) {
-                product *= player.getStat(categories[i]);
-            }
-            statistics.put(categories[i], Math.pow(product, 1. / this.players.size()));
-        }
+        BinaryOperator<Double> accumulate = (a, b) -> a * b;
+        Arrays.stream(Category.values()).forEach(category -> {
+            AtomicReference<Double> product = new AtomicReference<>(1.0);
+            this.players.forEach(player -> product.accumulateAndGet(player.getStat(category), accumulate));
+            statistics.put(category, Math.pow(product.get(), 1. / this.players.size()));
+        });
         return statistics;
     }
 
     public String getStatsFormat() {
         StringBuilder format = new StringBuilder();
-        Map<Category, Double> statistics = this.geometricMeans();
-        statistics.forEach((key, value) -> format
-                .append(key.getName()).append(":\t").append(value));
+        this.geometricMeans().forEach((key, value) -> format.append(key.getName()).append(": ").append(value));
         return format.toString();
     }
 
+    @Override
     public double rating() {
-        double[] rating = {0.0};
-        this.geometricMeans().forEach(((category, score) -> rating[0] += score));
-        return rating[0] / Category.values().length;
+        return this.geometricMeans().values().stream().reduce(Double::sum).orElse(0.0);
     }
 
-    public String asString() {
+    @Override
+    public String getFormat() {
         return name + " (" + admin + ")";
     }
 }

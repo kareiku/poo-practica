@@ -2,30 +2,32 @@ package org.example.models;
 
 import org.example.utils.Role;
 
-import java.util.HashMap;
+import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Player implements Participant {
+    private final User user;
     private final String forename;
     private final String surname;
     private final String DNI;
     private final Map<Category, Double> stats;
-    private final User user;
 
     public Player(String email, String forename, String surname, String DNI, Double... stats) {
+        this.user = email == null ? null : new User(email, email, Role.PLAYER);
         this.forename = forename;
         this.surname = surname;
         this.DNI = DNI;
-        this.stats = new HashMap<>();
-        Category[] categories = Category.values();
-        for (int i = 0; i < categories.length; i++) {
-            this.stats.put(categories[i], stats.length > i ? stats[i] : 0.0);
-        }
-        this.user = new User(email, email, Role.PLAYER);
+        this.stats = Arrays.stream(Category.values())
+                .map(i -> new AbstractMap.SimpleEntry<>(i, stats.length > Arrays.asList(Category.values())
+                        .indexOf(i) ? stats[Arrays.asList(Category.values())
+                        .indexOf(i)] : 0.0))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    public Player(String forename, String surname, String DNI) {
-        this(null, forename, surname, DNI);
+    public boolean isUser(User user) {
+        return this.user == user;
     }
 
     public String forename() {
@@ -48,67 +50,49 @@ public class Player implements Participant {
         return this.stats;
     }
 
-    public boolean isUser(User user) {
-        return this.user == user;
-    }
-
     public double getStat(Category category) {
         return this.stats.get(category);
     }
 
     public String getStatsFormat(String option) {
-        if ("-csv".equals(option)) {
-            return this.statsCSV();
-        } else if ("-json".equals(option)) {
-            return this.statsJSON();
-        } else {
-            return this.statsDefault();
+        switch (option) {
+            case "-csv":
+                return this.statsCSV();
+            case "-json":
+                return this.statsJSON();
+            default:
+                return this.statsDefault();
         }
     }
 
     private String statsDefault() {
         StringBuilder format = new StringBuilder();
-        this.stats.forEach((key, value) -> format
-                .append("Player with DNI ")
-                .append(this.DNI)
-                .append(" has a score of ")
-                .append(value)
-                .append(" in the category ")
-                .append(key.getName())
-                .append(".\n"));
+        this.stats.forEach((category, stat) -> format.append(String.format("The player with DNI %s has a score of %.2f in the category %s.%n", this.DNI, stat, category.getName())));
         return format.toString();
     }
 
     private String statsCSV() {
         StringBuilder format = new StringBuilder();
-        Double[] scores = this.stats.values().toArray(new Double[0]);
-        for (int i = 0; i < scores.length - 1; i++) {
-            format.append(scores[i]).append(',');
-        }
-        format.append(scores[scores.length - 1]);
-        return format.toString();
+        this.stats.values().forEach(score -> format.append(score).append(','));
+        return format.substring(0, format.length() - 1);
     }
 
     private String statsJSON() {
         StringBuilder format = new StringBuilder();
-        Category[] categories = this.stats.keySet().toArray(new Category[0]);
-        Double[] scores = this.stats.values().toArray(new Double[0]);
-        format.append('{').append('\n');
-        for (int i = 0; i < categories.length - 1; i++) {
-            format.append(String.format("\t\"%s\": %f,\n", categories[i].getName(), scores[i]));
-        }
-        format.append(String.format("\t\"%s\": %f\n", categories[categories.length - 1].getName(), scores[scores.length - 1]));
-        format.append('}').append('\n');
+        format.append('{').append(System.lineSeparator());
+        this.stats.forEach((category, stat) -> format.append(String.format("\t\"%s\": %f,%n", category.getName(), stat)));
+        format.deleteCharAt(format.lastIndexOf(","));
+        format.append('}').append(System.lineSeparator());
         return format.toString();
     }
 
+    @Override
     public double rating() {
-        double[] rating = {0.0};
-        this.stats.forEach(((category, score) -> rating[0] += score));
-        return rating[0] / Category.values().length;
+        return this.stats.values().stream().reduce(Double::sum).orElse(0.0);
     }
 
-    public String asString() {
+    @Override
+    public String getFormat() {
         return forename + " " + surname + " (" + DNI + ")";
     }
 }

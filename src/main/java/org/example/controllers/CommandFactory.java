@@ -14,10 +14,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class CommandFactory {
     private final Controller controller;
@@ -64,11 +61,9 @@ public class CommandFactory {
             protected Error executionTemplate(String[] args) {
                 Error error = Error.INCORRECT_ARGUMENT_FORMAT;
                 if (args[0].matches("^\\d{8}[A-Za-z]$")) {
-                    if (!this.getController().isPlayerParticipatingInAInProgressTournament(args[0])) {
-                        error = this.getController().deletePlayer(args[0]);
-                    } else {
-                        error = Error.PARTICIPANT_ON_TOURNAMENT_IN_PROGRESS;
-                    }
+                    error = !this.getController().isPlayerParticipatingInAInProgressTournament(args[0]) ?
+                            this.getController().deletePlayer(args[0]) :
+                            Error.PARTICIPANT_ON_TOURNAMENT_IN_PROGRESS;
                 }
                 return error;
             }
@@ -76,11 +71,9 @@ public class CommandFactory {
         this.commands.put("player-create", new Command(this.controller, 3, Error.NO_PERMISSION, Role.ADMIN) {
             @Override
             protected Error executionTemplate(String[] args) {
-                Error error = Error.INCORRECT_ARGUMENT_FORMAT;
-                if (args[2].matches("^\\d{8}[A-Za-z]$")) {
-                    error = this.getController().createPlayer(args[0], args[1], args[2]);
-                }
-                return error;
+                return args[2].matches("^\\d{8}[A-Za-z]$") ?
+                        this.getController().createPlayer(args[0], args[1], args[2]) :
+                        Error.INCORRECT_ARGUMENT_FORMAT;
             }
         });
         this.commands.put("statistics-show", new Command(this.controller, 0, Error.NO_PERMISSION, Role.PLAYER) {
@@ -93,11 +86,9 @@ public class CommandFactory {
         this.commands.put("team-add", new Command(this.controller, 2, Error.NO_PERMISSION, Role.ADMIN) {
             @Override
             protected Error executionTemplate(String[] args) {
-                if (args[0].matches("^\\d{8}[A-Za-z]$") && args[1].matches("[A-Za-z]+")) {
-                    return this.getController().addToTeam(args[0], args[1]);
-                } else {
-                    return Error.INCORRECT_ARGUMENT_FORMAT;
-                }
+                return args[0].matches("^\\d{8}[A-Za-z]$") && args[1].matches("[A-Za-z]+") ?
+                        this.getController().addToTeam(args[0], args[1]) :
+                        Error.INCORRECT_ARGUMENT_FORMAT;
             }
         });
         this.commands.put("team-create", new Command(this.controller, 1, Error.NO_PERMISSION, Role.ADMIN) {
@@ -128,11 +119,9 @@ public class CommandFactory {
             @Override
             protected Error executionTemplate(String[] args) {
                 String dateFormat = "\\d{2}-\\d{2}-\\d{4}";
-                if (args[1].matches(dateFormat) && args[2].matches(dateFormat)) {
-                    return this.getController().createTournament(args[0], args[1], args[2], args[3], args[4]);
-                } else {
-                    return Error.INCORRECT_ARGUMENT_FORMAT;
-                }
+                return args[1].matches(dateFormat) && args[2].matches(dateFormat) ?
+                        this.getController().createTournament(args[0], args[1], args[2], args[3], args[4]) :
+                        Error.INCORRECT_ARGUMENT_FORMAT;
             }
         });
         this.commands.put("tournament-delete", new Command(this.controller, 1, Error.NO_PERMISSION, Role.ADMIN) {
@@ -151,7 +140,7 @@ public class CommandFactory {
         this.commands.put("tournament-matchmaking", new Command(this.controller, 1, Error.NO_PERMISSION, Role.ADMIN) {
             @Override
             protected Error executionTemplate(String[] args) {
-                return this.getController().tournamentMatchmake(args[0], args.length > 1 ? args[1] : null, args);
+                return this.getController().tournamentMatchmake(args[0], args.length > 1 ? args[1] : null, Arrays.stream(args).skip(2).toArray(String[]::new));
             }
         });
         this.commands.put("tournament-remove", new Command(this.controller, 1, Error.NO_PERMISSION, Role.PLAYER) {

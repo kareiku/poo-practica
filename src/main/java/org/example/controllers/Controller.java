@@ -5,6 +5,8 @@ import org.example.utils.Error;
 import org.example.utils.Role;
 
 import java.util.*;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Controller {
     private User currentUser;
@@ -22,45 +24,26 @@ public class Controller {
     }
 
     private Player getPlayerFromCurrentUser() {
-        Player[] playerCurrentUser = {null};
-        this.players.forEach((DNI, player) -> {
-            if (playerCurrentUser[0] == null && player.isUser(this.currentUser)) {
-                playerCurrentUser[0] = player;
-            }
-        });
-        return playerCurrentUser[0];
+        return this.players.entrySet().stream().filter(entry -> entry.getValue().isUser(this.currentUser)).findFirst().map(Map.Entry::getValue).orElse(null);
     }
 
     private Team getTeamFromPlayer(Player player) {
-        Team[] teamWithPlayer = {null};
-        this.teams.forEach((name, team) -> {
-            if (teamWithPlayer[0] == null && team.contains(player)) {
-                teamWithPlayer[0] = team;
-            }
-        });
-        return teamWithPlayer[0];
+        return this.teams.entrySet().stream().filter(entry -> entry.getValue().contains(player)).findFirst().map(Map.Entry::getValue).orElse(null);
     }
 
     public boolean hasPermission(Role... roles) {
-        boolean hasPermission = roles == null || roles.length == 0;
-        int i = 0;
-        while (!hasPermission && i < roles.length) {
-            hasPermission = roles[i] == this.currentUser.role();
-            i++;
-        }
-        return hasPermission;
+        return roles == null || roles.length == 0 || Arrays.stream(roles).anyMatch(role -> role == this.currentUser.role());
     }
 
     public Error login(String email, String password) {
-        Error error;
+        Error error = Error.NONE;
         User user = this.users.get(email);
         if (user == null) {
             error = Error.NO_SUCH_USER;
+        } else if (user.isPasswordCorrect(password)) {
+            this.currentUser = user;
         } else {
-            error = user.isPasswordCorrect(password) ? Error.NONE : Error.INCORRECT_PASSWORD;
-            if (error == Error.NONE) {
-                this.currentUser = user;
-            }
+            error = Error.INCORRECT_PASSWORD;
         }
         return error;
     }
@@ -82,9 +65,7 @@ public class Controller {
     }
 
     public boolean isPlayerParticipatingInAInProgressTournament(String DNI) {
-        boolean[] isIt = {false};
-        this.tournaments.forEach((name, tournament) -> isIt[0] |= tournament.contains(this.players.get(DNI)));
-        return isIt[0];
+        return this.tournaments.entrySet().stream().anyMatch(entry -> entry.getValue().contains(this.players.get(DNI)));
     }
 
     public String showStats(String option) {
@@ -109,7 +90,9 @@ public class Controller {
     }
 
     public Error createTeam(String admin, String name, String... playerDNIs) {
-        return this.teams.putIfAbsent(name, new Team(admin, name, playerDNIs)) == null ? Error.NONE : Error.EXISTENT_TEAM;
+        return this.teams.putIfAbsent(name, new Team(admin, name, this.players.values()
+                .stream().filter(player -> Arrays.asList(playerDNIs).contains(player.DNI()))
+                .toArray(Player[]::new))) == null ? Error.NONE : Error.EXISTENT_TEAM;
     }
 
     public Error deleteTeam(String name) {
@@ -168,24 +151,24 @@ public class Controller {
 
     public String listTournaments() {
         if (this.currentUser.role() == Role.ADMIN) {
-            this.tournaments.forEach((name, tournament) -> {
-                if (tournament.hasFinished()) {
-                    tournaments.remove(name);
-                }
-            });
+            this.tournaments.entrySet().removeIf(entry -> entry.getValue().hasFinished());
         }
         return this.tournamentListing(this.currentUser.role());
     }
 
     private String tournamentListing(Role role) {
-        List<Tournament> tournaments = new ArrayList<>(this.tournaments.values());
         StringBuilder format = new StringBuilder();
-        if (role == Role.ADMIN || role == Role.PLAYER) {
-            tournaments.forEach((tournament -> format.append(tournament.getFormat()).append(tournament.getSortedParticipantsFormat())));
-        } else {
-            Collections.shuffle(tournaments);
+        List<Tournament> tournaments = new ArrayList<>(this.tournaments.values());
+        switch (role) {
+            case ADMIN:
+            case PLAYER:
+                tournaments.forEach((tournament -> format.append(tournament.getFormat()).append(tournament.getSortedParticipantsFormat())));
+                break;
+            case GUEST:
+                Collections.shuffle(tournaments);
+                break;
         }
-        tournaments.forEach((tournament -> format.append(tournament.getFormat()).append("\n")));
+        tournaments.forEach((tournament -> format.append(tournament.getFormat()).append(System.lineSeparator())));
         return format.toString();
     }
 
@@ -193,19 +176,20 @@ public class Controller {
         Tournament tournament = this.tournaments.get(tournamentName);
         if (tournament != null) {
             Participant[] participants = new Participant[participantIdentifiers.length];
-            for (int i = 2; i < participantIdentifiers.length; i++) {
-                participants[i] = participantIdentifiers[i].matches("^\\d{8}[A-Za-z]$") ?
-                        this.players.get(participantIdentifiers[i]) :
-                        this.teams.get(participantIdentifiers[i]);
-            }
-            if ("-m".equals(option)) {
-                tournament.manualMatchmake(participants);
-                return Error.NONE;
-            } else if ("-a".equals(option)) {
-                tournament.randomMatchmake(participants);
-                return Error.NONE;
-            } else {
-                return Error.NO_SUCH_OPTION;
+            IntStream.range(0, participantIdentifiers.length).forEach(i ->
+                    participants[i] = participantIdentifiers[i].matches("^\\d{8}[A-Za-z]$") ?
+                            this.players.get(participantIdentifiers[i]) :
+                            this.teams.get(participantIdentifiers[i])
+            );
+            switch (option) {
+                case "-m":
+                    tournament.manualMatchmake(participants);
+                    return Error.NONE;
+                case "-a":
+                    tournament.randomMatchmake(participants);
+                    return Error.NONE;
+                default:
+                    return Error.NO_SUCH_OPTION;
             }
         } else {
             return Error.INEXISTENT_TOURNAMENT;
@@ -226,18 +210,10 @@ public class Controller {
         this.users.putIfAbsent(email, new User(email, password, this.parseRole(role)));
     }
 
-    private Role parseRole(String inputRoleName) {
-        Map<String, Role> roles = new HashMap<>();
-        roles.put("admin", Role.ADMIN);
-        roles.put("player", Role.PLAYER);
-        roles.put("guest", Role.GUEST);
-        Role[] objectiveRole = {null};
-        roles.forEach((roleName, role) -> {
-            if (roleName.equalsIgnoreCase(inputRoleName)) {
-                objectiveRole[0] = role;
-            }
-        });
-        return objectiveRole[0];
+    private Role parseRole(String roleName) {
+        return Stream.of(new AbstractMap.SimpleEntry<>("admin", Role.ADMIN), new AbstractMap.SimpleEntry<>("player", Role.PLAYER), new AbstractMap.SimpleEntry<>("guest", Role.GUEST))
+                .filter(role -> role.getKey().equalsIgnoreCase(roleName))
+                .findFirst().map(Map.Entry::getValue).orElse(null);
     }
 
     public String[][] getPlayers() {
