@@ -106,7 +106,7 @@ public class CommandFactory {
         this.commands.put("team-remove", new Command(this.controller, 0, Error.NO_PERMISSION, Role.PLAYER) {
             @Override
             protected Error executionTemplate(String[] args) {
-                return this.getController().removeFromTeam(args[0]);
+                return this.getController().removeFromTeam();
             }
         });
         this.commands.put("tournament-add", new Command(this.controller, 1, Error.NO_PERMISSION, Role.PLAYER) {

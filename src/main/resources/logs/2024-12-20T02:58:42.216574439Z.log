@@ -1,0 +1,9 @@
+[2024-12-20T02:58:47.065424611Z] login eri@example.org;eriri
+[2024-12-20T02:58:50.239308918Z] load-data
+[2024-12-20T02:58:51.211434638Z] login eri@example.org;eriri
+[2024-12-20T02:58:55.849583576Z] tournament-remove
+[2024-12-20T02:59:06.144801231Z] tournament-remove Nougat
+[2024-12-20T02:59:29.262384904Z] tournament-add
+[2024-12-20T02:59:42.795743634Z] tournament-add Nougat
+[2024-12-20T02:59:54.153108097Z] tournament-add Nougat;
+[2024-12-20T03:00:13.291956015Z] exit

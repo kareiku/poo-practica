@@ -1,21 +1,19 @@
 package org.example.models;
 
-import org.example.utils.Role;
-
 import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Player implements Participant {
-    private final User user;
+    private final String email;
     private final String forename;
     private final String surname;
     private final String DNI;
     private final Map<Category, Double> stats;
 
     public Player(String email, String forename, String surname, String DNI, Double... stats) {
-        this.user = email == null ? null : new User(email, email, Role.PLAYER);
+        this.email = email;
         this.forename = forename;
         this.surname = surname;
         this.DNI = DNI;
@@ -27,7 +25,11 @@ public class Player implements Participant {
     }
 
     public boolean isUser(User user) {
-        return this.user == user;
+        return user.email().equals(this.email());
+    }
+
+    public String email() {
+        return this.email;
     }
 
     public String forename() {
@@ -42,10 +44,6 @@ public class Player implements Participant {
         return this.DNI;
     }
 
-    public User user() {
-        return this.user;
-    }
-
     public Map<Category, Double> stats() {
         return this.stats;
     }
@@ -55,7 +53,9 @@ public class Player implements Participant {
     }
 
     public String getStatsFormat(String option) {
-        switch (option) {
+        if (option == null) {
+            return this.statsDefault();
+        } else switch (option) {
             case "-csv":
                 return this.statsCSV();
             case "-json":

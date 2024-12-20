@@ -69,14 +69,11 @@ public class Controller {
     }
 
     public String showStats(String option) {
-        if (option != null) {
-            if ("-e".equals(option)) {
-                return this.getTeamFromPlayer(this.getPlayerFromCurrentUser()).getStatsFormat();
-            } else {
-                return this.getPlayerFromCurrentUser().getStatsFormat(option);
-            }
+        if ("-e".equals(option)) {
+            return this.getTeamFromPlayer(this.getPlayerFromCurrentUser()).getStatsFormat();
+        } else {
+            return this.getPlayerFromCurrentUser().getStatsFormat(option);
         }
-        return null;
     }
 
     public Error addToTeam(String DNI, String teamName) {
@@ -99,44 +96,48 @@ public class Controller {
         return this.teams.remove(name) != null ? Error.NONE : Error.INEXISTENT_TEAM;
     }
 
-    public Error removeFromTeam(String DNI) {
-        Team team = this.getTeamFromPlayer(this.players.get(DNI));
-        if (team != null) {
-            Player player = this.players.get(DNI);
-            if (player != null) {
+    public Error removeFromTeam() {
+        Player player = this.getPlayerFromCurrentUser();
+        if (player != null) {
+            Team team = this.getTeamFromPlayer(player);
+            if (team != null) {
                 return team.remove(player) ? Error.NONE : Error.PLAYER_ALREADY_IN_TEAM;
             } else {
-                return Error.INEXISTENT_PLAYER;
+                return Error.INEXISTENT_TEAM;
             }
         } else {
-            return Error.INEXISTENT_TEAM;
+            return Error.INEXISTENT_PLAYER;
         }
     }
 
     public Error addToTournament(String tournamentName, String option) {
         Tournament tournament = this.tournaments.get(tournamentName);
-        if (!tournament.isInProgress()) {
-            Player player = this.getPlayerFromCurrentUser();
-            if (player != null) {
-                if (!tournament.contains(player)) {
-                    if ("-e".equals(option)) {
-                        Team team = getTeamFromPlayer(player);
-                        if (team != null) {
-                            return tournament.add(team) ? Error.NONE : Error.PARTICIPANT_ALREADY_IN_TOURNAMENT;
+        if (tournament != null) {
+            if (!tournament.isInProgress()) {
+                Player player = this.getPlayerFromCurrentUser();
+                if (player != null) {
+                    if (!tournament.contains(player)) {
+                        if ("-e".equals(option)) {
+                            Team team = getTeamFromPlayer(player);
+                            if (team != null) {
+                                return tournament.add(team) ? Error.NONE : Error.PARTICIPANT_ALREADY_IN_TOURNAMENT;
+                            } else {
+                                return Error.INEXISTENT_TEAM;
+                            }
                         } else {
-                            return Error.INEXISTENT_TEAM;
+                            tournament.add(player);
                         }
                     } else {
-                        tournament.add(player);
+                        return Error.PARTICIPANT_ALREADY_IN_TOURNAMENT;
                     }
                 } else {
-                    return Error.PARTICIPANT_ALREADY_IN_TOURNAMENT;
+                    return Error.INEXISTENT_PLAYER;
                 }
             } else {
-                return Error.INEXISTENT_PLAYER;
+                return Error.TOURNAMENT_IN_PROGRESS;
             }
         } else {
-            return Error.TOURNAMENT_IN_PROGRESS;
+            return Error.INEXISTENT_TOURNAMENT;
         }
         return Error.NONE;
     }
@@ -166,9 +167,9 @@ public class Controller {
                 break;
             case GUEST:
                 Collections.shuffle(tournaments);
+                tournaments.forEach((tournament -> format.append(tournament.getFormat()).append(System.lineSeparator())));
                 break;
         }
-        tournaments.forEach((tournament -> format.append(tournament.getFormat()).append(System.lineSeparator())));
         return format.toString();
     }
 
@@ -220,7 +221,7 @@ public class Controller {
         String[][] values = new String[this.players.size()][5];
         Player[] players = this.players.values().toArray(new Player[0]);
         for (int i = 0; i < values.length; i++) {
-            values[i][0] = players[i].user().email();
+            values[i][0] = players[i].email();
             values[i][1] = players[i].forename();
             values[i][2] = players[i].surname();
             values[i][3] = players[i].DNI();
